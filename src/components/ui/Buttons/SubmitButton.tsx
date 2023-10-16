@@ -8,7 +8,7 @@ const SubmitButton = ({
   className = "",
 }: {
   title?: string;
-  style: any;
+  style?: any;
   disabled?: boolean;
   className?: string;
 }) => {

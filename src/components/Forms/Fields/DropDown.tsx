@@ -1,7 +1,9 @@
+"use client";
+
 import { Dropdown } from "flowbite-react";
 
 const DropDown = ({
-  label = "Small dropdown",
+  label = "Select any one",
   size = "sm",
   className = "",
   itemList = [],
@@ -45,7 +47,7 @@ const DropDown = ({
       style={{
         backgroundColor: "white",
         color: "black",
-        border: `${errors?.name?.type ? "1px solid red" : "1px solid black"}`,
+        border: `${errors[name] ? "1px solid red" : "1px solid black"}`,
         ...style,
       }}
       {...register(name, {

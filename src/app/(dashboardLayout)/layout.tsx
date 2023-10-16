@@ -3,10 +3,15 @@
 import Sidebar from "@/components/ui/Sidebar";
 import React, { useState } from "react";
 import HeaderSection from "../../components/ui/Header";
+import { isLoggedIn } from "@/services/auth.services";
+import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const [collapsed, setCollapsed] = useState(false);
-
+  const isLogIn = isLoggedIn();
+  const router = useRouter();
+  if (!isLogIn) {
+    router.push("/login");
+  }
   return (
     <section
       className="flex"

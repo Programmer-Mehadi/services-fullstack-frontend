@@ -23,28 +23,54 @@ const FormInput = ({
 }) => {
   return (
     <>
-      {type === "text" || type === "number" || type === "email" ? (
+      {type === "text" ||
+      type === "number" ||
+      type === "email" ||
+      type === "textArea" ? (
         <div>
-          <input
-            {...register(name, {
-              required: isRequired === "true" ? true : false,
-            })}
-            name={name}
-            placeholder={placeholder}
-            size={size}
-            defaultValue={value}
-            onChange={(e) => {
-              setValue(name, e.target.value);
-            }}
-            style={{
-              marginBottom: "0px",
-              borderColor: errors && errors[name] ? "red" : "#cdcdcd",
-              padding: "10px 10px",
-              width: "100%",
-              borderRadius: "8px",
-              border: "1px solid #d9d9d9",
-            }}
-          />
+          {type === "textArea" ? (
+            <textarea
+              {...register(name, {
+                required: isRequired === "true" ? true : false,
+              })}
+              name={name}
+              placeholder={placeholder}
+              size={size}
+              defaultValue={value}
+              onChange={(e) => {
+                setValue(name, e.target.value);
+              }}
+              style={{
+                marginBottom: "0px",
+                borderColor: errors && errors[name] ? "red" : "#cdcdcd",
+                padding: "10px 10px",
+                width: "100%",
+                borderRadius: "8px",
+                border: "1px solid #d9d9d9",
+              }}
+            />
+          ) : (
+            <input
+              {...register(name, {
+                required: isRequired === "true" ? true : false,
+              })}
+              name={name}
+              placeholder={placeholder}
+              size={size}
+              defaultValue={value}
+              onChange={(e) => {
+                setValue(name, e.target.value);
+              }}
+              style={{
+                marginBottom: "0px",
+                borderColor: errors && errors[name] ? "red" : "#cdcdcd",
+                padding: "10px 10px",
+                width: "100%",
+                borderRadius: "8px",
+                border: "1px solid #d9d9d9",
+              }}
+            />
+          )}
         </div>
       ) : (
         <>
