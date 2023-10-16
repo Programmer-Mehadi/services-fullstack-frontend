@@ -14,6 +14,7 @@ const HeaderSection = () => {
   const userInfo = getUserInfo();
   const isLogIn = isLoggedIn();
   const token: string = getLocalStorage("service-website-token") || "";
+  const [reFetch, setReFetch] = useState(false);
   const [profileImg, setProfileImg] = useState<string>("");
   useEffect(() => {
     const fetchData = async () => {
@@ -93,7 +94,7 @@ const HeaderSection = () => {
         },
       ]);
     }
-  }, [isLogIn, logout]);
+  }, [isLogIn, logout, reFetch]);
 
   return (
     <nav className="bg-white dark:bg-gray-900  w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
@@ -133,7 +134,11 @@ const HeaderSection = () => {
                         item.name === "Logout" ? "text-red-700" : ""
                       }`}
                       aria-current="page"
-                      onClick={() => logout("service-website-token")}
+                      onClick={() => {
+                        logout("service-website-token");
+                        setReFetch(!reFetch);
+                        toast.success("Logout successfully");
+                      }}
                     >
                       {item?.name}
                     </p>
