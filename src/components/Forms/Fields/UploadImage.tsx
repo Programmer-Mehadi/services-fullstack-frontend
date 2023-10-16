@@ -3,7 +3,7 @@ import React from "react";
 const UploadImage = ({
   name,
   style,
-  isRequired,
+  isRequired = "false",
   register = () => {},
   errors = {},
 }: {
@@ -26,7 +26,9 @@ const UploadImage = ({
         lineHeight: "1.5",
         borderRadius: "8px",
         color: "rgba(0, 0, 0, 0.88)",
-        border: "1px solid #d9d9d9",
+        border: ` ${
+          errors && errors[name] ? "1px solid red" : "1px solid #d9d9d9"
+        }`,
         ...style,
       }}
     />

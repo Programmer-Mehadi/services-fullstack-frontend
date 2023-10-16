@@ -109,7 +109,7 @@ const FaqCreatePage = () => {
               size="sm"
               label={
                 watch("status") === "" || watch("status") === undefined
-                  ? "Select Role"
+                  ? "Select Status"
                   : watch("status")
               }
               isRequired="true"

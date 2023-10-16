@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import DropDown from "@/components/Forms/Fields/DropDown";
 import { useRouter } from "next/navigation";
 import UploadImage from "@/components/Forms/Fields/UploadImage";
-const ManageBlogEditPage = () => {
+const ManageBlogViewPage = () => {
   const { blogID } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -71,41 +71,6 @@ const ManageBlogEditPage = () => {
     fetchData();
   }, [blogID]);
 
-  const formSubmit = async (data: any) => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("desc", data.desc);
-    formData.append("status", data.status);
-    formData.append("image", data.image[0]);
-
-    axios
-      .put(serverURL + `/blog/update/${blogID}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: getLocalStorage("service-website-token"),
-        },
-      })
-      .then((result) => {
-        if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(false);
-          toast.success(result?.data?.message);
-          reset();
-          router.push("/dashboard/admin/manage-blog");
-        } else {
-          console.log("error");
-          setLoading(false);
-          toast.error("Something went wrong");
-        }
-      })
-      .catch((err) => {
-        err?.response?.data?.errorMessages.forEach((element: any) => {
-          element?.message && toast.error(element?.message);
-        });
-        setLoading(false);
-      });
-  };
-
   return (
     <>
       {data === null ? (
@@ -122,12 +87,9 @@ const ManageBlogEditPage = () => {
                 margin: "auto",
               }}
             >
-              <h2 className="text-2xl font-semibold ">Update Blog</h2>
+              <h2 className="text-2xl font-semibold ">View Blog</h2>
               <hr />
-              <form
-                className="mt-8 grid gap-3"
-                onSubmit={handleSubmit(formSubmit)}
-              >
+              <div className="mt-8 grid gap-3">
                 <div className="grid gap-1">
                   <InputLabel title="Title" style={{}} />
                   <FormInput
@@ -139,6 +101,7 @@ const ManageBlogEditPage = () => {
                     isRequired="true"
                     register={register}
                     errors={errors}
+                    readOnly={true}
                   />
                 </div>
                 <div className="grid gap-1">
@@ -152,6 +115,7 @@ const ManageBlogEditPage = () => {
                     isRequired="true"
                     register={register}
                     errors={errors}
+                    readOnly={true}
                   />
                 </div>
                 <div className="grid gap-1">
@@ -168,43 +132,34 @@ const ManageBlogEditPage = () => {
                     alt=""
                   />
                 </div>
-                <div className="grid gap-1">
-                  <InputLabel title="Image" />
-                  <UploadImage
-                    isRequired="false"
-                    name="image"
-                    register={register}
-                    errors={errors}
-                  />
-                </div>
+
                 <div className="grid gap-1">
                   <InputLabel title="Status" style={{}} />
-                  <DropDown
+                  <FormInput
                     setValue={setValue}
                     name="status"
-                    size="sm"
-                    label={
-                      watch("status") === "" || watch("status") === undefined
-                        ? "Select Status"
-                        : watch("status")
-                    }
+                    size="large"
+                    placeholder="Type description"
+                    type="text"
                     isRequired="true"
-                    itemList={statusList}
                     register={register}
                     errors={errors}
-                    watch={watch}
+                    readOnly={true}
                   />
                 </div>
 
-                <SubmitButton
-                  title="Submit Blog"
-                  disabled={loading}
-                  style={{
-                    marginTop: "20px",
-                    width: "fit-content",
-                  }}
-                />
-              </form>
+                <div
+                  onClick={() => router.push("/dashboard/admin/manage-blog")}
+                >
+                  <SubmitButton
+                    title="Back to Blog List"
+                    disabled={loading}
+                    style={{
+                      marginTop: "20px",
+                    }}
+                  />
+                </div>
+              </div>
             </Card>
           </div>
         </>
@@ -213,4 +168,4 @@ const ManageBlogEditPage = () => {
   );
 };
 
-export default ManageBlogEditPage;
+export default ManageBlogViewPage;

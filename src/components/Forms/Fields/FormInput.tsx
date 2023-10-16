@@ -9,6 +9,7 @@ const FormInput = ({
   setValue = () => {},
   value = "",
   watch = () => {},
+  readOnly = false,
 }: {
   name?: string;
   type?: string;
@@ -20,6 +21,7 @@ const FormInput = ({
   setValue?: any;
   value?: any;
   watch?: any;
+  readOnly?: boolean;
 }) => {
   return (
     <>
@@ -30,6 +32,7 @@ const FormInput = ({
         <div>
           {type === "textArea" ? (
             <textarea
+              readOnly={readOnly}
               {...register(name, {
                 required: isRequired === "true" ? true : false,
               })}
@@ -51,6 +54,7 @@ const FormInput = ({
             />
           ) : (
             <input
+              readOnly={readOnly}
               {...register(name, {
                 required: isRequired === "true" ? true : false,
               })}
@@ -75,6 +79,7 @@ const FormInput = ({
       ) : (
         <>
           <input
+            readOnly={readOnly}
             {...register(name, {
               required: isRequired === "true" ? true : false,
             })}
