@@ -6,11 +6,12 @@ import { getLocalStorage } from "@/utils/local-storage";
 import { serverURL } from "@/utils/serverUrl";
 import axios from "axios";
 import { Button, Modal } from "flowbite-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IoMdAdd } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
+import UploadImage from "@/components/Forms/Fields/UploadImage";
 
 export default function EditCategoryModal({
   isOpen = false,
@@ -37,9 +38,10 @@ export default function EditCategoryModal({
   } = useForm({
     defaultValues: {
       title: "",
+      image: "",
     },
   });
-
+  const [preData, setPreData] = useState(null);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -51,6 +53,8 @@ export default function EditCategoryModal({
         });
         if (result?.data?.success) {
           setValue("title", result?.data?.data?.title);
+          setValue("image", result?.data?.data?.image);
+          setPreData(result?.data?.data);
         } else {
           toast.error(result?.data?.message);
           setOpenModal(false);
@@ -68,12 +72,15 @@ export default function EditCategoryModal({
 
   async function formSubmit(data: any) {
     try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("image", data.image[0]);
       const result = await axios.put(
         serverURL + "/category/update/" + editId,
-        data,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             authorization: getLocalStorage("service-website-token"),
           },
         }
@@ -103,7 +110,7 @@ export default function EditCategoryModal({
       >
         <Modal.Header>Edit Category</Modal.Header>
         <form onSubmit={handleSubmit(formSubmit)} className="overflow-auto">
-          <Modal.Body>
+          <Modal.Body className="grid gap-8">
             <div className="space-y-1">
               <InputLabel title="Category Name" />
               <FormInput
@@ -115,6 +122,21 @@ export default function EditCategoryModal({
                 type="text"
                 placeholder="Give a Name"
                 isRequired="true"
+              />
+            </div>
+
+            <div className="grid space-y-1">
+              <InputLabel title="Previous Image" />
+              <img src={preData?.image} className="h-20 w-20" alt="" />
+            </div>
+
+            <div className="grid space-y-1">
+              <InputLabel title="Category Image" />
+              <UploadImage
+                register={register}
+                errors={errors}
+                name="image"
+                isRequired="false"
               />
             </div>
           </Modal.Body>

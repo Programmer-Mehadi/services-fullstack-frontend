@@ -63,7 +63,13 @@ const CategoryListTable = ({
               <Table.Head>
                 <Table.HeadCell className="bg-cyan-800 text-white"></Table.HeadCell>
                 <Table.HeadCell className="bg-cyan-800 text-white">
+                  Image
+                </Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
                   Title
+                </Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
+                  Author Name
                 </Table.HeadCell>
                 <Table.HeadCell className="bg-cyan-800 text-white">
                   <span>Actions</span>
@@ -71,6 +77,7 @@ const CategoryListTable = ({
               </Table.Head>
               <Table.Body className="divide-y border">
                 {data.map((item: any, index: number) => {
+                  console.log(item);
                   return (
                     <Table.Row
                       key={index}
@@ -91,7 +98,21 @@ const CategoryListTable = ({
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
+                        {item?.image ? (
+                          <img src={item?.image} className="w-10 h-10" alt="" />
+                        ) : (
+                          "---"
+                        )}
+                      </Table.Cell>
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
                         {item?.title ? ` ${item?.title}` : "---"}
+                      </Table.Cell>
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
+                        {item?.user?.name ? ` ${item?.user?.name}` : "---"}
                       </Table.Cell>
 
                       <Table.Cell

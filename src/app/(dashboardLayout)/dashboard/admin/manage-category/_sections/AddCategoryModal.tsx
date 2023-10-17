@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IoMdAdd } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
+import UploadImage from "@/components/Forms/Fields/UploadImage";
 export default function AddCategoryModal({
   isOpen = false,
   setOpenModal,
@@ -34,9 +35,12 @@ export default function AddCategoryModal({
 
   async function formSubmit(data: any) {
     try {
-      const result = await axios.post(serverURL + "/category", data, {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("image", data.image[0]);
+      const result = await axios.post(serverURL + "/category", formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
           authorization: getLocalStorage("service-website-token"),
         },
       });
@@ -65,7 +69,7 @@ export default function AddCategoryModal({
       >
         <Modal.Header>Add New Category</Modal.Header>
         <form onSubmit={handleSubmit(formSubmit)}>
-          <Modal.Body>
+          <Modal.Body className="grid gap-8">
             <div className="space-y-1">
               <InputLabel title="Category Name" />
               <FormInput
@@ -76,6 +80,15 @@ export default function AddCategoryModal({
                 name="title"
                 type="text"
                 placeholder="Give a Name"
+                isRequired="true"
+              />
+            </div>
+            <div className="grid space-y-1">
+              <InputLabel title="Category Image" />
+              <UploadImage
+                register={register}
+                errors={errors}
+                name="image"
                 isRequired="true"
               />
             </div>
