@@ -8,21 +8,30 @@ import SubmitButton from "@/components/ui/Buttons/SubmitButton";
 import { getLocalStorage } from "@/utils/local-storage";
 import { serverURL } from "@/utils/serverUrl";
 import axios from "axios";
-import { Button, Card, Label, Radio, Select } from "flowbite-react";
+import { Button, Card, Label, Radio, Select, TextInput } from "flowbite-react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 const CreateServicePage = () => {
-  const [serviceListLength, setServiceListLength] = useState([{}]);
+  const router = useRouter();
+
+  const [serviceListLength, setServiceListLength] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const {
     setValue,
     watch,
+    reset,
     register,
     handleSubmit,
+    unregister,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      features: [],
+    },
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -45,8 +54,52 @@ const CreateServicePage = () => {
     fetchData();
   }, []);
 
-  function addService(data: any) {
-    console.log(data);
+  async function addService(data: any) {
+    data.features = serviceListLength;
+    try {
+      let price = parseFloat(data.price);
+      if (Number.isNaN(price)) {
+        toast.error("Price Must be a number or float.");
+        return;
+      }
+    } catch (err) {
+      toast.error("Price Must be a number or float.");
+      return;
+    }
+
+    let featuresText = "";
+    data.features.forEach((feature: any) => {
+      featuresText += `///${feature.title}`;
+    });
+
+    data.features = featuresText;
+
+    const formData = new FormData();
+    formData.append("features", data.features);
+    formData.append("image", data.image[0]);
+    formData.append("title", data.title);
+    formData.append("categoryId", data.categoryID);
+    formData.append("price", data.price);
+    formData.append("description", data.description);
+    formData.append("availability", data.availability);
+
+    try {
+      const result = await axios.post(serverURL + "/service", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: getLocalStorage("service-website-token"),
+        },
+      });
+      if (result?.data?.success) {
+        router.push("/dashboard/admin/manage-service");
+        reset();
+        toast.success(result?.data?.message);
+      } else {
+        toast.success(result?.data?.message);
+      }
+    } catch (err) {
+      toast(err?.response?.data?.message);
+    }
   }
 
   return (
@@ -69,11 +122,11 @@ const CreateServicePage = () => {
               <InputLabel title="Service Category" />
               <Select
                 id="category"
-                {...register("category", { required: true })}
+                {...register("categoryID", { required: true })}
                 style={{
                   maxHeight: "200px",
                   overflow: "auto",
-                  border: `${errors["category"] ? " 1px solid red " : ""}`,
+                  border: `${errors["categoryID"] ? " 1px solid red " : ""}`,
                 }}
               >
                 <option className="text-base py-1" value="" selected>
@@ -150,35 +203,51 @@ const CreateServicePage = () => {
               <InputLabel title="Service Features" />
               {serviceListLength.map((item, index) => (
                 <div className="flex justify-between gap-2" key={index}>
-                  <FormInput
+                  <TextInput
+                    id={`email${index}`}
+                    placeholder="Type feature"
                     type="text"
-                    register={register}
-                    name={`features.${index}.title`}
+                    value={item?.title}
+                    style={{
+                      width: "100%",
+                    }}
+                    className="flex-1"
+                    onChange={(e) => {
+                      let newList = [];
+                      serviceListLength.forEach((item, i) => {
+                        if (index === i) {
+                          item = {
+                            title: e.target.value,
+                          };
+                          newList.push(item);
+                        } else {
+                          newList.push(item);
+                        }
+                      });
+                      setServiceListLength([...newList]);
+                    }}
                   />
-                  {index === serviceListLength.length - 1 ? (
-                    <Button
-                      onClick={() =>
-                        setServiceListLength([...serviceListLength, {}])
-                      }
-                    >
-                      <AiOutlinePlus className="text-lg  text-white font-bold" />
-                    </Button>
-                  ) : (
-                    <Button
-                      color="failure"
-                      onClick={() => {
-                        console.log(index);
-                        const newList = serviceListLength.filter(
-                          (item, i) => index !== i
-                        );
-                        setServiceListLength(newList);
-                      }}
-                    >
-                      <AiOutlineMinus className="text-lg  text-white font-bold" />
-                    </Button>
-                  )}
+                  <Button
+                    color="failure"
+                    onClick={() => {
+                      const newList = serviceListLength.filter(
+                        (item, i) => index !== i
+                      );
+                      setServiceListLength([...newList]);
+                    }}
+                  >
+                    <AiOutlineMinus className="text-lg  text-white font-bold" />
+                  </Button>
                 </div>
               ))}
+              <Button
+                style={{
+                  width: "fit-content",
+                }}
+                onClick={() => setServiceListLength([...serviceListLength, {}])}
+              >
+                <AiOutlinePlus className="text-lg  text-white font-bold" />
+              </Button>
             </div>
           </div>
 

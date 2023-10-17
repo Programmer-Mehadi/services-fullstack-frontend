@@ -159,13 +159,19 @@ const LoginPage = () => {
 
             <SubmitButton
               title="Login"
-              style={{ width: "100%", marginTop: 20 }}
+              style={{
+                width: "fit-content",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              className="text-center flex justify-center px-3"
               disabled={loading}
             />
             <div>
               <p className="text-sm">
                 Haven{"'"}t an account?{" "}
-                <Link href="/register" className="text-blue-700">
+                <Link href="/register" className="text-blue-700 w-fit">
                   Register
                 </Link>
               </p>

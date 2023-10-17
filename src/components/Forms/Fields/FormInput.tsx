@@ -10,6 +10,7 @@ const FormInput = ({
   value = "",
   watch = () => {},
   readOnly = false,
+  onChangeFnc = () => {},
 }: {
   name?: string;
   type?: string;
@@ -22,6 +23,7 @@ const FormInput = ({
   value?: any;
   watch?: any;
   readOnly?: boolean;
+  onChangeFnc?: any;
 }) => {
   return (
     <>
@@ -42,6 +44,7 @@ const FormInput = ({
               defaultValue={value}
               onChange={(e) => {
                 setValue(name, e.target.value);
+                onChangeFnc();
               }}
               style={{
                 marginBottom: "0px",
@@ -65,6 +68,7 @@ const FormInput = ({
               defaultValue={value}
               onChange={(e) => {
                 setValue(name, e.target.value);
+                onChangeFnc;
               }}
               style={{
                 marginBottom: "0px",
@@ -90,8 +94,8 @@ const FormInput = ({
             size={size}
             defaultValue={value}
             onChange={(e) => {
-              console.log(e.target.value);
               setValue(name, e.target.value);
+              onChangeFnc;
             }}
             style={{
               marginBottom: "0px",

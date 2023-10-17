@@ -202,13 +202,18 @@ const RegisterPage = () => {
 
             <SubmitButton
               title="Register"
-              style={{ width: "100%", marginTop: 20 }}
+              style={{
+                width: "fit-content",
+                marginTop: 20,
+                textAlign: "center",
+              }}
               disabled={loading}
+              className="px-3"
             />
             <div>
               <p className="text-sm">
                 Already have an account?{" "}
-                <Link href="/login" className="text-blue-700">
+                <Link href="/login" className="text-blue-700 w-fit">
                   Login
                 </Link>
               </p>
