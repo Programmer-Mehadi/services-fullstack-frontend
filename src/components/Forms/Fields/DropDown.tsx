@@ -42,10 +42,14 @@ const DropDown = ({
     <Dropdown
       label={label}
       size={size}
-      className={className}
+      className={className + " customDropdown"}
       name={name}
       style={{
+        width: "100%",
+        textAlign: "left",
         backgroundColor: "white",
+        marginLeft: "0",
+        justifyContent: "space-between",
         color: "black",
         border: `${errors[name] ? "1px solid red" : "1px solid black"}`,
         ...style,

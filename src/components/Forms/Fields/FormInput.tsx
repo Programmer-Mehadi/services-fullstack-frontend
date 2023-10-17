@@ -29,7 +29,7 @@ const FormInput = ({
       type === "number" ||
       type === "email" ||
       type === "textArea" ? (
-        <div>
+        <>
           {type === "textArea" ? (
             <textarea
               readOnly={readOnly}
@@ -54,6 +54,7 @@ const FormInput = ({
             />
           ) : (
             <input
+              type={type}
               readOnly={readOnly}
               {...register(name, {
                 required: isRequired === "true" ? true : false,
@@ -72,10 +73,11 @@ const FormInput = ({
                 width: "100%",
                 borderRadius: "8px",
                 border: "1px solid #d9d9d9",
+                height: "42px",
               }}
             />
           )}
-        </div>
+        </>
       ) : (
         <>
           <input
@@ -98,6 +100,7 @@ const FormInput = ({
               width: "100%",
               borderRadius: "8px",
               border: "1px solid #d9d9d9",
+              height: "42px",
             }}
           />
         </>

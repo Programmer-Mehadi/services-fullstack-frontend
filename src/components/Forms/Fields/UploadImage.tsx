@@ -1,3 +1,4 @@
+import { FileInput } from "flowbite-react";
 import React from "react";
 
 const UploadImage = ({
@@ -14,14 +15,14 @@ const UploadImage = ({
   errors?: any;
 }) => {
   return (
-    <input
+    <FileInput
       type="file"
       name={name}
       {...register(name, {
         required: isRequired === "true" ? true : false,
       })}
       style={{
-        padding: "7px 11px",
+        padding: "1px 11px",
         fontSize: "16px",
         lineHeight: "1.5",
         borderRadius: "8px",
