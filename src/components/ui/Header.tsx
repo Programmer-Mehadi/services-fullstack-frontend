@@ -1,5 +1,6 @@
 "use client";
 
+import { clearUser, setUser } from "@/redux/slices/userSlice";
 import { getUserInfo, isLoggedIn, logout } from "@/services/auth.services";
 import { getLocalStorage } from "@/utils/local-storage";
 import { serverURL } from "@/utils/serverUrl";
@@ -8,6 +9,7 @@ import { Avatar } from "flowbite-react";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 const HeaderSection = () => {
   const [list, setList] = useState<any>([]);
@@ -16,24 +18,32 @@ const HeaderSection = () => {
   const token: string = getLocalStorage("service-website-token") || "";
   const [reFetch, setReFetch] = useState(false);
   const [profileImg, setProfileImg] = useState<string>("");
+  const dispatch = useDispatch();
+  // dispatch(setUser(userInfo));
+
+  const user = useSelector((state: any) => state.user);
+
   useEffect(() => {
     const fetchData = async () => {
-      const user = await axios.get(serverURL + "/profile/get-info", {
+      const userData = await axios.get(serverURL + "/profile/get-info", {
         headers: {
           "Content-Type": "application/json",
           authorization: token,
         },
       });
-      if (user?.data?.data) {
-        setProfileImg(user?.data.data?.profileImg);
+      if (userData?.data?.data) {
+        setProfileImg(userData?.data.data?.profileImg);
       } else {
-        toast.error(user?.data?.message);
+        setProfileImg("");
+        toast.error(userData?.data?.message);
       }
     };
     if (isLogIn) {
       fetchData();
+    } else {
+      setProfileImg("");
     }
-  }, [userInfo]);
+  }, [user]);
 
   useEffect(() => {
     if (!isLogIn) {
@@ -94,7 +104,7 @@ const HeaderSection = () => {
         },
       ]);
     }
-  }, [isLogIn, logout, reFetch]);
+  }, [user, reFetch, isLogIn]);
 
   return (
     <nav className="bg-white dark:bg-gray-900  w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
@@ -136,6 +146,7 @@ const HeaderSection = () => {
                       aria-current="page"
                       onClick={() => {
                         logout("service-website-token");
+                        dispatch(clearUser());
                         setReFetch(!reFetch);
                         toast.success("Logout successfully");
                       }}

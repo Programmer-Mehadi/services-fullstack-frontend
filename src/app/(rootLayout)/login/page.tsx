@@ -12,10 +12,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import { setLocalStorage } from "@/utils/local-storage";
-import { isLoggedIn } from "@/services/auth.services";
+import { getUserInfo, isLoggedIn } from "@/services/auth.services";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
 import { Dropdown } from "flowbite-react";
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/slices/userSlice";
+import Link from "next/link";
 const LoginPage = () => {
   const router = useRouter();
   const [isLogIn, setIsLogIn] = useState<boolean | null>(null);
@@ -25,6 +28,7 @@ const LoginPage = () => {
   }, []);
 
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -44,6 +48,8 @@ const LoginPage = () => {
           setLocalStorage("service-website-token", result?.data?.token);
           toast.success(result?.data?.message);
           // reset();
+          const userInfo = getUserInfo();
+          dispatch(setUser(userInfo));
           router.push("/");
         } else {
           console.log("error");
@@ -150,11 +156,20 @@ const LoginPage = () => {
                 errors={errors}
               />
             </div>
+
             <SubmitButton
               title="Login"
               style={{ width: "100%", marginTop: 20 }}
               disabled={loading}
             />
+            <div>
+              <p className="text-sm">
+                Haven{"'"}t an account?{" "}
+                <Link href="/register" className="text-blue-700">
+                  Register
+                </Link>
+              </p>
+            </div>
           </form>
         </Card>
       </div>

@@ -76,117 +76,123 @@ const ManageFaqList = ({
         </div>
       ) : (
         <section className="overflow-auto">
-          <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell className="bg-cyan-800 text-white"></Table.HeadCell>
-              <Table.HeadCell className="bg-cyan-800 text-white">
-                Question
-              </Table.HeadCell>
-              <Table.HeadCell className="bg-cyan-800 text-white">
-                Answer
-              </Table.HeadCell>
-              <Table.HeadCell className="bg-cyan-800 text-white">
-                Author name
-              </Table.HeadCell>
-              <Table.HeadCell className="bg-cyan-800 text-white">
-                Status
-              </Table.HeadCell>
-              <Table.HeadCell className="bg-cyan-800 text-white">
-                <span>Actions</span>
-              </Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y border">
-              {data.map((faq: any, index: number) => {
-                return (
-                  <Table.Row
-                    key={index}
-                    className={`bg-white dark:border-gray-700 dark:bg-gray-800 border ${
-                      index % 2 === 1
-                    }
+          {data?.length === 0 ? (
+            <div className="flex justify-center py-8">
+              <h1 className="text-2xl font-bold">No Data Found</h1>
+            </div>
+          ) : (
+            <Table hoverable>
+              <Table.Head>
+                <Table.HeadCell className="bg-cyan-800 text-white"></Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
+                  Question
+                </Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
+                  Answer
+                </Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
+                  Author name
+                </Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
+                  Status
+                </Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
+                  <span>Actions</span>
+                </Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y border">
+                {data.map((faq: any, index: number) => {
+                  return (
+                    <Table.Row
+                      key={index}
+                      className={`bg-white dark:border-gray-700 dark:bg-gray-800 border ${
+                        index % 2 === 1
+                      }
               ? "bg-cyan-400"
               : ""`}
-                  >
-                    <Table.Cell
-                      className={`whitespace-nowrap font-medium text-gray-900 dark:text-white ${
-                        index % 2 === 1 ? " bg-cyan-50 " : ""
-                      }`}
                     >
-                      {index + 1}
-                    </Table.Cell>
+                      <Table.Cell
+                        className={`whitespace-nowrap font-medium text-gray-900 dark:text-white ${
+                          index % 2 === 1 ? " bg-cyan-50 " : ""
+                        }`}
+                      >
+                        {index + 1}
+                      </Table.Cell>
 
-                    <Table.Cell
-                      className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
-                    >
-                      {faq?.ques}
-                    </Table.Cell>
-                    <Table.Cell
-                      className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
-                    >
-                      {faq?.ans}
-                    </Table.Cell>
-                    <Table.Cell
-                      className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
-                    >
-                      {faq?.user?.name}
-                    </Table.Cell>
-                    <Table.Cell
-                      className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
-                    >
-                      <div>
-                        <Dropdown
-                          label={
-                            faq?.status.charAt(0).toUpperCase() +
-                            faq?.status.slice(1)
-                          }
-                          size="sm"
-                          style={{
-                            backgroundColor: "white",
-                            color: "black",
-                            border: "1px solid black",
-                          }}
-                        >
-                          <Dropdown.Item
-                            onClick={() => {
-                              statusChange(faq?.id, "active");
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
+                        {faq?.ques}
+                      </Table.Cell>
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
+                        {faq?.ans}
+                      </Table.Cell>
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
+                        {faq?.user?.name}
+                      </Table.Cell>
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
+                        <div>
+                          <Dropdown
+                            label={
+                              faq?.status.charAt(0).toUpperCase() +
+                              faq?.status.slice(1)
+                            }
+                            size="sm"
+                            style={{
+                              backgroundColor: "white",
+                              color: "black",
+                              border: "1px solid black",
                             }}
                           >
-                            Active
-                          </Dropdown.Item>
-                          <Dropdown.Item
+                            <Dropdown.Item
+                              onClick={() => {
+                                statusChange(faq?.id, "active");
+                              }}
+                            >
+                              Active
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => {
+                                statusChange(faq?.id, "inactive");
+                              }}
+                            >
+                              InActive
+                            </Dropdown.Item>
+                          </Dropdown>
+                        </div>
+                      </Table.Cell>
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
+                        <div className="flex gap-2 text-lg">
+                          <AiFillEdit
                             onClick={() => {
-                              statusChange(faq?.id, "inactive");
+                              router.push(
+                                `/dashboard/admin/manage-faqs/edit/${faq?.id}`
+                              );
                             }}
-                          >
-                            InActive
-                          </Dropdown.Item>
-                        </Dropdown>
-                      </div>
-                    </Table.Cell>
-                    <Table.Cell
-                      className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
-                    >
-                      <div className="flex gap-2 text-lg">
-                        <AiFillEdit
-                          onClick={() => {
-                            router.push(
-                              `/dashboard/admin/manage-faqs/edit/${faq?.id}`
-                            );
-                          }}
-                          className="cursor-pointer text-blue-600"
-                        />
-                        <AiFillDelete
-                          onClick={() => {
-                            deleteFaq(faq?.id);
-                          }}
-                          className=" text-red-700 cursor-pointer"
-                        />
-                      </div>
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              })}
-            </Table.Body>
-          </Table>
+                            className="cursor-pointer text-blue-600"
+                          />
+                          <AiFillDelete
+                            onClick={() => {
+                              deleteFaq(faq?.id);
+                            }}
+                            className=" text-red-700 cursor-pointer"
+                          />
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })}
+              </Table.Body>
+            </Table>
+          )}
         </section>
       )}
     </>

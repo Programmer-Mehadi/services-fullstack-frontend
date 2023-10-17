@@ -19,17 +19,16 @@ const ManageFaqPage = () => {
   useEffect(() => {
     const token: string = getLocalStorage("service-website-token") || "";
     const fetchData = async () => {
-      const userInfo = await axios.get(serverURL + "/faq/get-all", {
+      const dataInfo = await axios.get(serverURL + "/faq/get-all", {
         headers: {
           "Content-Type": "application/json",
           authorization: token,
         },
       });
-      if (userInfo?.data?.data) {
-        console.log(userInfo.data.data);
-        setDataList(userInfo.data.data);
+      if (dataInfo?.data?.data) {
+        setDataList(dataInfo.data.data);
       } else {
-        toast.error(userInfo?.data?.message);
+        toast.error(dataInfo?.data?.message);
       }
     };
     fetchData();
@@ -43,7 +42,7 @@ const ManageFaqPage = () => {
       }}
     >
       <div className="flex justify-end pb-8">
-        <Link href="/dashboard/super-admin/manage-admin/create">
+        <Link href="/dashboard/admin/manage-faqs/create">
           <Button className="bg-blue-700" size="sm">
             <AiOutlinePlus className="text-white font-bold text-base mr-3" />
             Add FAQ

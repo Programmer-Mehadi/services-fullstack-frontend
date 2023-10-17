@@ -13,6 +13,7 @@ import InputLabel from "@/components/Forms/Labels/InputLabel";
 import { isLoggedIn } from "@/services/auth.services";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
 import { Card } from "flowbite-react";
+import Link from "next/link";
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -198,11 +199,20 @@ const RegisterPage = () => {
                 errors={errors}
               />
             </div>
+
             <SubmitButton
               title="Register"
               style={{ width: "100%", marginTop: 20 }}
               disabled={loading}
             />
+            <div>
+              <p className="text-sm">
+                Already have an account?{" "}
+                <Link href="/login" className="text-blue-700">
+                  Login
+                </Link>
+              </p>
+            </div>
           </form>
         </Card>
       </div>

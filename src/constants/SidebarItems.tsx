@@ -18,11 +18,15 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { FaQuestionCircle } from "react-icons/fa";
 import { RiAdminFill, RiFeedbackFill } from "react-icons/ri";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+
 export const SidebarItems = ({ role = "" }: { role: string }) => {
+  const url = usePathname();
+
   const superAdminRoutes = [
     {
       name: "Manage Admin",
-      href: "adshboard/super-admin/manage-admin",
+      href: "/dashboard/super-admin/manage-admin",
       icon: RiAdminFill,
       children: [
         {
@@ -207,13 +211,19 @@ export const SidebarItems = ({ role = "" }: { role: string }) => {
                       label={item?.name}
                       style={{
                         color: "black",
+                        // backgroundColor: `${item?.href === url ? "green" : ""}`,
+                        backgroundColor: "red",
                       }}
+                      className="bg-green-800"
                     >
                       {item.children.map((child, i) => (
                         <Sidebar.Item
                           href={child?.href}
                           key={i}
                           icon={child?.icon}
+                          style={{
+                            backgroundColor: "red",
+                          }}
                         >
                           {child?.name}
                         </Sidebar.Item>

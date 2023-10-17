@@ -8,7 +8,8 @@ import axios from "axios";
 import { Button, Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-
+import { IoMdAdd } from "react-icons/io";
+import { AiOutlineClose } from "react-icons/ai";
 export default function AddCategoryModal({
   isOpen = false,
   setOpenModal,
@@ -32,7 +33,6 @@ export default function AddCategoryModal({
   } = useForm();
 
   async function formSubmit(data: any) {
-    console.log(data);
     try {
       const result = await axios.post(serverURL + "/category", data, {
         headers: {
@@ -82,10 +82,10 @@ export default function AddCategoryModal({
           </Modal.Body>
           <Modal.Footer>
             <Button type="submit" color="blue">
-              Add
+              <IoMdAdd className="text-lg mr-2" /> Add
             </Button>
             <Button color="red" onClick={() => setOpenModal(false)}>
-              Close
+              <AiOutlineClose className="text-lg mr-2" /> Close
             </Button>
           </Modal.Footer>
         </form>

@@ -9,6 +9,8 @@ import { Button, Modal } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { IoMdAdd } from "react-icons/io";
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function EditCategoryModal({
   isOpen = false,
@@ -118,10 +120,10 @@ export default function EditCategoryModal({
           </Modal.Body>
           <Modal.Footer>
             <Button type="submit" color="blue">
-              Add
+              <IoMdAdd className="text-lg mr-2" /> Add
             </Button>
             <Button color="red" onClick={() => setOpenModal(false)}>
-              Close
+              <AiOutlineClose className="text-lg mr-2" /> Close
             </Button>
           </Modal.Footer>
         </form>
