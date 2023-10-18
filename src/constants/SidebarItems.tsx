@@ -17,6 +17,7 @@ import { GrFormView } from "react-icons/gr";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { FaQuestionCircle } from "react-icons/fa";
 import { RiAdminFill, RiFeedbackFill } from "react-icons/ri";
+import { SiCodereview } from "react-icons/si";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
@@ -201,6 +202,23 @@ export const SidebarItems = ({ role = "" }: { role: string }) => {
           name: "Booking List",
           href: "/dashboard/user/manage-booking",
           icon: BiListUl,
+        },
+      ],
+    },
+    {
+      name: "Review",
+      href: "/dashboard/user/manage-review",
+      icon: SiCodereview,
+      children: [
+        {
+          name: "Review List",
+          href: "/dashboard/user/manage-review",
+          icon: BiListUl,
+        },
+        {
+          name: "Create Review",
+          href: "/dashboard/user/manage-review/create",
+          icon: AiOutlineAppstoreAdd,
         },
       ],
     },
