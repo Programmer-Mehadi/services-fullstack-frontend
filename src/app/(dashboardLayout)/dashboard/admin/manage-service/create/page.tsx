@@ -8,7 +8,15 @@ import SubmitButton from "@/components/ui/Buttons/SubmitButton";
 import { getLocalStorage } from "@/utils/local-storage";
 import { serverURL } from "@/utils/serverUrl";
 import axios from "axios";
-import { Button, Card, Label, Radio, Select, TextInput } from "flowbite-react";
+import {
+  Button,
+  Card,
+  Label,
+  Radio,
+  Select,
+  TextInput,
+  ToggleSwitch,
+} from "flowbite-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -82,7 +90,7 @@ const CreateServicePage = () => {
     "Tangail",
     "Thakurgaon",
   ];
-
+  const [upcoming, setUpcoming] = useState<boolean | string>(false);
   const [serviceListLength, setServiceListLength] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const {
@@ -149,7 +157,7 @@ const CreateServicePage = () => {
     formData.append("description", data.description);
     formData.append("availability", data.availability);
     formData.append("location", data.location);
-
+    formData.append("upcoming", upcoming);
     try {
       const result = await axios.post(serverURL + "/service", formData, {
         headers: {
@@ -290,6 +298,10 @@ const CreateServicePage = () => {
                 isRequired="true"
                 errors={errors}
               />
+            </div>
+            <div className="grid gap-1 lg:col-span-1 xl:col-span-2">
+              <InputLabel title="Upcoming" />
+              <ToggleSwitch checked={upcoming} onChange={setUpcoming} />
             </div>
           </div>
 

@@ -101,11 +101,6 @@ export const SidebarItems = ({ role = "" }: { role: string }) => {
           href: "/dashboard/admin/manage-category",
           icon: BiListUl,
         },
-        {
-          name: "Create Category",
-          href: "/dashboard/admin/manage-category/create",
-          icon: AiOutlineAppstoreAdd,
-        },
       ],
     },
     {

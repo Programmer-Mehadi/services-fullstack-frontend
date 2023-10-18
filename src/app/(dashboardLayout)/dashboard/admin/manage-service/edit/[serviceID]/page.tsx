@@ -9,7 +9,15 @@ import SpinLoader from "@/components/ui/Loader/SpinLoader";
 import { getLocalStorage } from "@/utils/local-storage";
 import { serverURL } from "@/utils/serverUrl";
 import axios from "axios";
-import { Button, Card, Label, Radio, Select, TextInput } from "flowbite-react";
+import {
+  Button,
+  Card,
+  Label,
+  Radio,
+  Select,
+  TextInput,
+  ToggleSwitch,
+} from "flowbite-react";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -84,7 +92,7 @@ const EditServicePage = () => {
     "Tangail",
     "Thakurgaon",
   ];
-
+  const [upcoming, setUpcoming] = useState(false);
   const [serviceListLength, setServiceListLength] = useState([]);
   const [categoryList, setCategoryList] = useState(null);
   const [previousData, setPreviousData] = useState<null | {} | any>(null);
@@ -152,6 +160,7 @@ const EditServicePage = () => {
             setValue("title", res?.data?.data?.title);
             setValue("description", res?.data?.data?.description);
             setValue("categoryID", res?.data?.data?.category?.id);
+            setUpcoming(res?.data?.data?.upcoming);
             let featuresArray = res?.data?.data?.features?.split("///");
             if (featuresArray.length > 1) {
               featuresArray = featuresArray.slice(1);
@@ -206,7 +215,7 @@ const EditServicePage = () => {
     formData.append("description", data.description);
     formData.append("availability", data.availability);
     formData.append("location", data.location);
-
+    formData.append("upcoming", upcoming);
     try {
       const result = await axios.put(
         serverURL + `/service/update/${param.serviceID}`,
@@ -372,6 +381,10 @@ const EditServicePage = () => {
                     isRequired="true"
                     errors={errors}
                   />
+                </div>
+                <div className="grid gap-1 lg:col-span-1 xl:col-span-2">
+                  <InputLabel title="Upcoming" />
+                  <ToggleSwitch checked={upcoming} onChange={setUpcoming} />
                 </div>
               </div>
 
