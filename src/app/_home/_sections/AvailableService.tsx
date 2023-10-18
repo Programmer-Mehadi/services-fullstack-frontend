@@ -50,19 +50,28 @@ const AvailableService = () => {
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white pb-14 text-center">
             Available Service
           </h2>
-          <Swiper
-            spaceBetween={20}
-            slidesPerView={4}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
-          >
-            {data &&
-              data?.map((item: any, i: number) => (
-                <SwiperSlide key={i}>
-                  <ServiceCard data={item} />
-                </SwiperSlide>
-              ))}
-          </Swiper>
+          {/* list */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 overflow-y-auto py-10 pb-0">
+            {data === null ? (
+              <div className="flex justify-center items-center h-[300px]">
+                <SpinLoader />
+              </div>
+            ) : (
+              <>
+                {data?.length === 0 ? (
+                  <h1 className="text-center text-xl md:col-span-2 lg:col-span-3 xl:col-span-4">
+                    No Data Found
+                  </h1>
+                ) : (
+                  <>
+                    {data?.map((item: any) => (
+                      <ServiceCard key={item?.id} data={item} />
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+          </div>
         </div>
       )}
     </section>

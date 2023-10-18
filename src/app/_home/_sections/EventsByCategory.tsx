@@ -72,7 +72,7 @@ const EventsByCategory = () => {
           <SpinLoader />
         </div>
       ) : (
-        <div className="px-4 py-16 mx-auto md:px-24 lg:px-8 lg:py-20">
+        <div className="px-4 py-16 mx-auto md:px-24 lg:px-8 lg:py-0">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white pb-14 text-center">
             Events By Category
           </h2>
