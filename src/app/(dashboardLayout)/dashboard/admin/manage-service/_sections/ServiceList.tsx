@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-const { parseISO, format } = require("date-fns");
+import { parseISO, format } from "date-fns";
 
 const ServiceList = ({
   dataList: data,
@@ -74,7 +74,7 @@ const ServiceList = ({
           <SpinLoader />
         </div>
       ) : (
-        <section className="overflow-auto">
+        <section className="overflow-auto pt-8">
           {data?.length === 0 ? (
             <div className="flex justify-center py-8">
               <h1 className="text-2xl font-bold">No Data Found</h1>
@@ -100,6 +100,9 @@ const ServiceList = ({
                 </Table.HeadCell>
                 <Table.HeadCell className="bg-cyan-800 text-white">
                   Publication Date
+                </Table.HeadCell>
+                <Table.HeadCell className="bg-cyan-800 text-white">
+                  Location
                 </Table.HeadCell>
                 <Table.HeadCell className="bg-cyan-800 text-white">
                   Availability
@@ -162,6 +165,11 @@ const ServiceList = ({
                         {faq?.publicationDate
                           ? format(parseISO(faq?.publicationDate), "yyyy-MM-dd")
                           : "---"}
+                      </Table.Cell>
+                      <Table.Cell
+                        className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
+                      >
+                        {faq?.location ? faq?.location : "---"}
                       </Table.Cell>
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}

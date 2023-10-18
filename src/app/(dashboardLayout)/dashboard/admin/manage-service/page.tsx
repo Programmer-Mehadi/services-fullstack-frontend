@@ -26,7 +26,6 @@ const ServiceHomePage = () => {
         },
       });
       if (dataInfo?.data?.data) {
-        console.log(dataInfo?.data?.data);
         setDataList(dataInfo.data.data);
       } else {
         toast.error(dataInfo?.data?.message);
@@ -42,7 +41,7 @@ const ServiceHomePage = () => {
         overflowX: "auto",
       }}
     >
-      <div className="flex justify-end pb-8">
+      <div className="flex justify-end">
         <Link href="/dashboard/admin/manage-service/create">
           <Button className="bg-blue-700" size="sm">
             <AiOutlinePlus className="text-white font-bold text-base mr-3" />

@@ -16,6 +16,72 @@ import toast from "react-hot-toast";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 const CreateServicePage = () => {
   const router = useRouter();
+  const bangladeshDistricts = [
+    "Bagerhat",
+    "Bandarban",
+    "Barguna",
+    "Barishal",
+    "Bhola",
+    "Bogra",
+    "Brahmanbaria",
+    "Chandpur",
+    "Chapainawabganj",
+    "Chattogram",
+    "Chuadanga",
+    "Comilla",
+    "Cox's Bazar",
+    "Dhaka",
+    "Dinajpur",
+    "Faridpur",
+    "Feni",
+    "Gaibandha",
+    "Gazipur",
+    "Gopalganj",
+    "Habiganj",
+    "Jamalpur",
+    "Jashore (Jessore)",
+    "Jhalokati",
+    "Jhenaidah",
+    "Joypurhat",
+    "Khagrachari",
+    "Khulna",
+    "Kishoreganj",
+    "Kurigram",
+    "Kushtia",
+    "Lakshmipur",
+    "Lalmonirhat",
+    "Madaripur",
+    "Magura",
+    "Manikganj",
+    "Meherpur",
+    "Moulvibazar",
+    "Munshiganj",
+    "Mymensingh",
+    "Naogaon",
+    "Narail",
+    "Narayanganj",
+    "Narsingdi",
+    "Natore",
+    "Nawabganj",
+    "Netrokona",
+    "Nilphamari",
+    "Noakhali",
+    "Pabna",
+    "Panchagarh",
+    "Pirojpur",
+    "Rajbari",
+    "Rajshahi",
+    "Rangamati",
+    "Rangpur",
+    "Satkhira",
+    "Shariatpur",
+    "Sherpur",
+    "Sirajganj",
+    "Sunamganj",
+    "Sylhet",
+    "Tangail",
+    "Thakurgaon",
+  ];
 
   const [serviceListLength, setServiceListLength] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -82,6 +148,7 @@ const CreateServicePage = () => {
     formData.append("price", data.price);
     formData.append("description", data.description);
     formData.append("availability", data.availability);
+    formData.append("location", data.location);
 
     try {
       const result = await axios.post(serverURL + "/service", formData, {
@@ -155,7 +222,12 @@ const CreateServicePage = () => {
               />
             </div>
             <div className="grid gap-1">
-              <InputLabel title="Service Availability" />
+              <InputLabel
+                title="Service Availability"
+                style={{
+                  height: "fit-content",
+                }}
+              />
               <Select
                 id="availability"
                 {...register("availability", { required: true })}
@@ -177,6 +249,29 @@ const CreateServicePage = () => {
               </Select>
             </div>
             <div className="grid gap-1 h-fit">
+              <InputLabel title="Location" />
+              <Select
+                id="location"
+                {...register("location", { required: true })}
+                style={{
+                  maxHeight: "200px",
+                  overflow: "auto",
+                  border: `${errors["location"] ? " 1px solid red " : ""}`,
+                }}
+              >
+                <option className="text-base py-1" value="" selected>
+                  Select Location
+                </option>
+                {bangladeshDistricts.map((d, i) => {
+                  return (
+                    <option key={i} className="text-base py-1" value={d}>
+                      {d}
+                    </option>
+                  );
+                })}
+              </Select>
+            </div>
+            <div className="grid gap-1 h-fit">
               <InputLabel title="Service Price" />
               <FormInput
                 type="text"
@@ -186,7 +281,7 @@ const CreateServicePage = () => {
                 errors={errors}
               />
             </div>
-            <div className="grid gap-1 lg:col-span-2 xl:col-span-3">
+            <div className="grid gap-1 lg:col-span-1 xl:col-span-2">
               <InputLabel title="Service Description" />
               <FormInput
                 type="textArea"
