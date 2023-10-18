@@ -11,7 +11,7 @@ import { Fragment, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdLogOut } from "react-icons/io";
-
+import { BsCartFill } from "react-icons/bs";
 const HeaderSection = () => {
   const [list, setList] = useState<any>([]);
   const userInfo = getUserInfo();
@@ -23,6 +23,7 @@ const HeaderSection = () => {
   // dispatch(setUser(userInfo));
 
   const user = useSelector((state: any) => state.user);
+  const { cart } = useSelector((state: any) => state.cart);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -160,7 +161,20 @@ const HeaderSection = () => {
             })}
           </ul>
         </div>
-        <div className="flex md:order-2 pl-3">
+        <div className="flex items-center md:order-2 gap-2 pl-3">
+          <div
+            className="relative top-0 left-0 px-2 cursor-pointer"
+            onClick={() => {
+              document
+                .getElementById("cart-drawer-navigation")
+                ?.classList.toggle("hidden");
+            }}
+          >
+            <BsCartFill className="text-slate-800 text-lg" />
+            <span className="absolute top-[-10px] right-0 text-green-700 font-bold">
+              {cart?.items?.length}
+            </span>
+          </div>
           <Avatar alt="avatar of Jese" img={profileImg} rounded />
           <button
             data-collapse-toggle="navbar-sticky"

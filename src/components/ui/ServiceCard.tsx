@@ -1,8 +1,13 @@
 "use client";
+import { cartSetLocalStorage, setCart } from "@/redux/slices/cartSlice";
 import { Badge, Card } from "flowbite-react";
 import React from "react";
+import toast from "react-hot-toast";
 import { TbCurrencyTaka } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
 const ServiceCard = (data: any) => {
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state: any) => state.cart);
   const { data: cardData } = data;
   const { title, price, image, location, category } = cardData;
   return (
@@ -34,12 +39,31 @@ const ServiceCard = (data: any) => {
         <span className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
           <TbCurrencyTaka /> {price}
         </span>
-        <a
-          className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-          href="#"
+        <div
+          className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800 cursor-pointer"
+          onClick={() => {
+            let found = cart?.items?.find(
+              (item: any) => item.id == cardData?.id
+            );
+
+            if (!found) {
+              dispatch(
+                setCart({
+                  id: cardData.id,
+                  title: cardData.title,
+                  price: cardData.price,
+                  image: cardData.image,
+                })
+              );
+              toast.success("Added to cart");
+              dispatch(cartSetLocalStorage());
+            } else {
+              toast.error("Already added to cart");
+            }
+          }}
         >
           <p>Add to cart</p>
-        </a>
+        </div>
       </div>
     </Card>
   );

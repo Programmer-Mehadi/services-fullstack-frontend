@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import HeaderSection from "@/components/ui/Header";
+import CartSection from "@/components/ui/CartSection";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className + " max-w-[1600px] w-full mx-auto"}>
           <HeaderSection />
-          {children}
+          <section className="z-40">{children}</section>
+          <CartSection />
           <Toaster position="top-right" reverseOrder={false} />
         </body>
       </html>
