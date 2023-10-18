@@ -191,6 +191,55 @@ export const SidebarItems = ({ role = "" }: { role: string }) => {
     },
   ];
 
+  const userRoutes = [
+    {
+      name: "Booking",
+      href: "/dashboard/user/manage-booking",
+      icon: TbBrandBooking,
+      children: [
+        {
+          name: "Booking List",
+          href: "/dashboard/user/manage-booking",
+          icon: BiListUl,
+        },
+      ],
+    },
+    {
+      name: "Feedback",
+      href: "/dashboard/user/manage-feedback",
+      icon: RiFeedbackFill,
+      children: [
+        {
+          name: "Feedback List",
+          href: "/dashboard/user/manage-feedback",
+          icon: BiListUl,
+        },
+        {
+          name: "Create Feedback",
+          href: "/dashboard/user/manage-feedback/create",
+          icon: AiOutlineAppstoreAdd,
+        },
+      ],
+    },
+    {
+      name: "Profile",
+      href: "/profile",
+      icon: AiFillProfile,
+      children: [
+        {
+          name: "View Profile",
+          href: "/dashboard/user/profile",
+          icon: GrFormView,
+        },
+        {
+          name: "Edit Profile",
+          href: "/dashboard/user/profile/edit",
+          icon: AiTwotoneEdit,
+        },
+      ],
+    },
+  ];
+
   return (
     <>
       <Sidebar
@@ -238,6 +287,28 @@ export const SidebarItems = ({ role = "" }: { role: string }) => {
               ))}
             {role === "admin" &&
               adminRoutes.map((item, index) => (
+                <>
+                  {item?.children.length > 0 ? (
+                    <Sidebar.Collapse icon={item?.icon} label={item?.name}>
+                      {item.children.map((child, i) => (
+                        <Sidebar.Item
+                          href={child?.href}
+                          key={i}
+                          icon={child?.icon}
+                        >
+                          {child?.name}
+                        </Sidebar.Item>
+                      ))}
+                    </Sidebar.Collapse>
+                  ) : (
+                    <Sidebar.Item href="#" icon={item?.icon} key={index}>
+                      <p>{item?.name}</p>
+                    </Sidebar.Item>
+                  )}
+                </>
+              ))}
+            {role === "user" &&
+              userRoutes.map((item, index) => (
                 <>
                   {item?.children.length > 0 ? (
                     <Sidebar.Collapse icon={item?.icon} label={item?.name}>

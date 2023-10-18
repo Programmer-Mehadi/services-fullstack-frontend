@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { IoMdLogOut } from "react-icons/io";
 
 const HeaderSection = () => {
   const [list, setList] = useState<any>([]);
@@ -140,7 +141,7 @@ const HeaderSection = () => {
                     </Link>
                   ) : (
                     <p
-                      className={`block py-2 pl-3 pr-4 text-black  rounded md:bg-transparent md:p-0 cursor-pointer ${
+                      className={`py-2 pl-3 pr-4 text-black flex items-center gap-2  rounded md:bg-transparent md:p-0 cursor-pointer ${
                         item.name === "Logout" ? "text-red-700" : ""
                       }`}
                       aria-current="page"
@@ -151,7 +152,7 @@ const HeaderSection = () => {
                         toast.success("Logout successfully");
                       }}
                     >
-                      {item?.name}
+                      <IoMdLogOut /> {item?.name}
                     </p>
                   )}
                 </li>

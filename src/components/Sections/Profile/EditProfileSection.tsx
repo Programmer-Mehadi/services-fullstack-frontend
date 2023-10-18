@@ -256,9 +256,13 @@ const EditProfileSection = ({
                   </div>
                 </div>
                 <SubmitButton
-                  className="md:col-span-2 lg:col-span-3 bg-blue-500"
+                  className="md:col-span-2 lg:col-span-3 bg-blue-500 w-fit px-4"
                   title="Update"
-                  style={{ maxWidth: "300px", width: "100%", marginTop: 20 }}
+                  style={{
+                    maxWidth: "300px",
+                    width: "fit-content",
+                    marginTop: 20,
+                  }}
                   disabled={loading}
                 />
               </form>
