@@ -7,7 +7,7 @@ const ServiceCard = (data: any) => {
   const { title, price, image, location, category } = cardData;
   return (
     <Card
-      className="h-full p-0 m-0 service_card"
+      className="h-full p-0 m-0 service_card relative top-0 left-0"
       style={{
         padding: "0",
         margin: "0",
@@ -19,7 +19,7 @@ const ServiceCard = (data: any) => {
           <p>{title ? title : "No Title Found"}</p>
         </h5>
         <Badge
-          color="indigo"
+          color="warning"
           className="w-fit my-2 absolute top-3 right-3 text-lg"
         >
           {category?.title}

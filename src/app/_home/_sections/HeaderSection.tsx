@@ -16,7 +16,7 @@ export default function HeaderSection() {
         className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
       >
         <div className="w-full h-full bg-[#00000070] text-white flex justify-center items-center">
-          <div className="max-w-[500px] text-center">
+          <div className=" max-w-[250px] md:max-w-[400px] lg:max-w-[500px] text-center">
             Turning Dreams into Beautiful Spaces
           </div>
         </div>
@@ -29,7 +29,7 @@ export default function HeaderSection() {
         className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
       >
         <div className="w-full h-full bg-[#00000070] text-white flex justify-center items-center">
-          <div className="max-w-[500px] text-center">
+          <div className=" max-w-[250px] md:max-w-[400px] lg:max-w-[500px] text-center">
             Elevating Your Lifestyle, One Room at a Time
           </div>
         </div>
@@ -42,7 +42,7 @@ export default function HeaderSection() {
         className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
       >
         <div className="w-full h-full bg-[#00000070] text-white flex justify-center items-center">
-          <div className="max-w-[500px] text-center">
+          <div className=" max-w-[250px] md:max-w-[400px] lg:max-w-[500px] text-center">
             Where Style Meets Comfort and Elegance
           </div>
         </div>

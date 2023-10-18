@@ -1,3 +1,4 @@
+import FooterSection from "@/components/ui/FooterSection";
 import AvailableService from "./_sections/AvailableService";
 import EventsByCategory from "./_sections/EventsByCategory";
 import HeaderSection from "./_sections/HeaderSection";
@@ -10,6 +11,7 @@ const HomePage = () => {
       <AvailableService />
       <UpcomingService />
       <EventsByCategory />
+      <FooterSection />
     </section>
   );
 };
