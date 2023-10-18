@@ -1,10 +1,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import HomePage from "./_home/Home";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <h1>Welcome to Next.js Home Page</h1>
+      <HomePage />
     </main>
   );
 }

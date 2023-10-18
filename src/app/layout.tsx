@@ -21,13 +21,7 @@ export default function RootLayout({
   return (
     <Providers>
       <html lang="en">
-        <body
-          style={{
-            margin: 0,
-            padding: 0,
-          }}
-          className={inter.className}
-        >
+        <body className={inter.className + " max-w-[1600px] w-full mx-auto"}>
           <HeaderSection />
           {children}
           <Toaster position="top-right" reverseOrder={false} />
