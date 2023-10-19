@@ -138,6 +138,18 @@ export const SidebarItems = ({ role = "" }: { role: string }) => {
       ],
     },
     {
+      name: "Review",
+      href: "/dashboard/admin/manage-review",
+      icon: SiCodereview,
+      children: [
+        {
+          name: "Review List",
+          href: "/dashboard/admin/manage-review",
+          icon: BiListUl,
+        },
+      ],
+    },
+    {
       name: "Feedback",
       href: "/dashboard/admin/manage-admin",
       icon: RiFeedbackFill,

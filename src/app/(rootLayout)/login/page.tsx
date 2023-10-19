@@ -47,7 +47,7 @@ const LoginPage = () => {
           setLoading(true);
           setLocalStorage("service-website-token", result?.data?.token);
           toast.success(result?.data?.message);
-          // reset();
+          reset();
           const userInfo = getUserInfo();
           dispatch(setUser(userInfo));
           router.push("/");

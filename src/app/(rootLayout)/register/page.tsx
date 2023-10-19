@@ -43,21 +43,26 @@ const RegisterPage = () => {
     formData.append("contactNo", data.contactNo);
     formData.append("address", data.address);
 
-    const result = await axios.post(
-      serverURL + "/user/user-register",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    try {
+      const result = await axios.post(
+        serverURL + "/user/user-register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (result?.data?.statusCode || result?.data?.success) {
+        setLoading(false);
+        toast.success(result?.data?.message);
+        reset();
+        router.push("/login");
+      } else {
+        setLoading(false);
+        toast.error("Something went wrong");
       }
-    );
-    if (result?.data?.statusCode || result?.data?.success) {
-      setLoading(false);
-      toast.success(result?.data?.message);
-      reset();
-      router.push("/login");
-    } else {
+    } catch (err) {
       setLoading(false);
       toast.error("Something went wrong");
     }
@@ -80,6 +85,9 @@ const RegisterPage = () => {
       </section>
     );
   }
+
+  console.log(loading);
+
   return (
     <div
       style={{

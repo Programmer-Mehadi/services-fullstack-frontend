@@ -26,7 +26,7 @@ const ReviewCreatePage = () => {
   } = useForm();
 
   const [serviceList, setServiceList] = useState<null | []>(null);
-
+  const [selectedService, setSelectedService] = useState({});
   const [rating, setRating] = useState(0);
   useEffect(() => {
     async function fetchData() {
@@ -52,7 +52,7 @@ const ReviewCreatePage = () => {
   const formSubmit = async (data: any) => {
     setLoading(true);
     data.rating = rating;
-    data.serviceId = serviceList[0]?.service?.id;
+    data.serviceId = selectedService?.id;
     axios
       .post(serverURL + "/review", data, {
         headers: {
@@ -97,17 +97,27 @@ const ReviewCreatePage = () => {
             <Select
               id="service"
               {...register("serviceId", { required: true })}
+              defaultValue={selectedService?.id}
               style={{
                 maxHeight: "200px",
                 overflow: "auto",
                 border: `${errors["serviceId"] ? " 1px solid red " : ""}`,
               }}
+              onChange={(e) =>
+                setSelectedService({
+                  id: e.target.value,
+                })
+              }
             >
               <option className="text-base py-1" value="" selected>
                 Select Service
               </option>
               {serviceList?.map((item: any, index: number) => (
-                <option key={index} value={item?.id} className="text-base py-1">
+                <option
+                  key={index}
+                  value={item?.service?.id}
+                  className="text-base py-1"
+                >
                   {item?.service?.title}
                 </option>
               ))}
