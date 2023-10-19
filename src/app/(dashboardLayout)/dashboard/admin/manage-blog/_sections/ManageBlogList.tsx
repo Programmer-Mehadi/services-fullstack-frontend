@@ -1,14 +1,13 @@
 "use client";
 
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { Dropdown, Table } from "flowbite-react";
-import { useRouter } from "next/navigation";
-import React from "react";
+import {Dropdown, Table} from "flowbite-react";
+import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
-import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
+import {AiFillDelete, AiFillEdit, AiFillEye} from "react-icons/ai";
 
 const ManageBlogList = ({
   dataList: data,

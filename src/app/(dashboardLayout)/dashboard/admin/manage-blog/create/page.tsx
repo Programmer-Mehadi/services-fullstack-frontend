@@ -1,18 +1,18 @@
 "use client";
 
+import DropDown from "@/components/Forms/Fields/DropDown";
 import FormInput from "@/components/Forms/Fields/FormInput";
+import UploadImage from "@/components/Forms/Fields/UploadImage";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import { getLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { Card } from "flowbite-react";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import {Card} from "flowbite-react";
+import {useRouter} from "next/navigation";
+import {useState} from "react";
+import {useForm} from "react-hook-form";
 import toast from "react-hot-toast";
-import DropDown from "@/components/Forms/Fields/DropDown";
-import { useRouter } from "next/navigation";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
 
 const BlogCreatePage = () => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const BlogCreatePage = () => {
     reset,
     setValue,
     watch,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
 
   const statusList = [

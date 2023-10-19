@@ -1,15 +1,13 @@
 "use client";
 
-import DropDown from "@/components/Forms/Fields/DropDown";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { Dropdown, Table } from "flowbite-react";
-import { useRouter } from "next/navigation";
-import React from "react";
+import {Dropdown, Table} from "flowbite-react";
+import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import {AiFillDelete, AiFillEdit} from "react-icons/ai";
 
 const ManageFaqList = ({
   dataList: data,
@@ -122,12 +120,20 @@ const ManageFaqList = ({
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
-                        {faq?.ques}
+                        {faq?.ques
+                          ? faq?.ques.length > 50
+                            ? faq?.ques.slice(0, 50) + "..."
+                            : faq?.ques
+                          : "---"}
                       </Table.Cell>
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
-                        {faq?.ans}
+                        {faq?.ans
+                          ? faq?.ans.length > 100
+                            ? faq?.ans.slice(0, 100) + "..."
+                            : faq?.ans
+                          : "---"}
                       </Table.Cell>
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}

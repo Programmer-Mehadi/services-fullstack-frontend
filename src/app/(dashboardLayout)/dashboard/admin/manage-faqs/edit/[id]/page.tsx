@@ -1,22 +1,22 @@
 "use client";
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import FormInput from "@/components/Forms/Fields/FormInput";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
+import SpinLoader from "@/components/ui/Loader/SpinLoader";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
+import axios from "axios";
+import {useParams} from "next/navigation";
+import {useEffect, useState} from "react";
 
-import { Card } from "flowbite-react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import DropDown from "@/components/Forms/Fields/DropDown";
-import { useRouter } from "next/navigation";
+import {Card} from "flowbite-react";
+import {useRouter} from "next/navigation";
+import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
 const ManageFaqEditPage = () => {
-  const { id } = useParams();
+  const {id} = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -26,7 +26,7 @@ const ManageFaqEditPage = () => {
     reset,
     setValue,
     watch,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       status: "",
@@ -170,6 +170,7 @@ const ManageFaqEditPage = () => {
                   disabled={loading}
                   style={{
                     marginTop: "20px",
+                    width: "fit-content",
                   }}
                 />
               </form>
