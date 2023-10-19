@@ -1,7 +1,8 @@
+"use client";
+
 import { format } from "date-fns";
 import Link from "next/link";
 import React from "react";
-
 const BlogCard = ({ id, title, createdAt, user, image, desc }) => {
   return (
     <div className="mx-auto p-4 w-full h-full">

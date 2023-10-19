@@ -18,7 +18,7 @@ export default function FooterSection() {
             <Footer.Brand
               alt="Flowbite Logo"
               href="https://flowbite.com"
-              name="Service Website"
+              name="EleganceInteriors"
               src="https://flowbite.com/docs/images/logo.svg"
             />
           </div>
@@ -53,7 +53,7 @@ export default function FooterSection() {
         <Footer.Divider />
         <div className="w-full sm:flex sm:items-center sm:justify-between">
           <Footer.Copyright
-            by="Copyright 2023 Service Website"
+            by="Copyright 2023 EleganceInteriors"
             href="#"
             year={2023}
           />

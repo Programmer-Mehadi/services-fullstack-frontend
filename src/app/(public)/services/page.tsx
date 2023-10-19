@@ -22,7 +22,7 @@ const ServicesHomePage = () => {
   }, []);
 
   return (
-    <section className="min-h-[90vh]">
+    <section className="min-h-[90vh] py-14">
       {serviceList === null ? (
         <div className="flex justify-center items-center min-h-[400px]">
           <SpinLoader />
