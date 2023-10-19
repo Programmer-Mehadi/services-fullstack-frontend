@@ -11,7 +11,7 @@ import {
 
 export default function FooterSection() {
   return (
-    <Footer container>
+    <Footer container className="mt-10">
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:flex-col lg:flex-row sm:justify-between md:flex md:grid-cols-1 gap-2">
           <div>
