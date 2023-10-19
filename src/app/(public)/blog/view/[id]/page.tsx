@@ -1,5 +1,5 @@
 "use client";
-
+// @ts-ignore
 import { serverURL } from "@/utils/serverUrl";
 import axios from "axios";
 import { useParams } from "next/navigation";

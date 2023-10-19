@@ -1,5 +1,5 @@
 "use client";
-
+// @ts-ignore
 import FormInput from "@/components/Forms/Fields/FormInput";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
 import UploadImage from "@/components/Forms/Fields/UploadImage";
