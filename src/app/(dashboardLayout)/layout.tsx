@@ -3,13 +3,17 @@
 import Sidebar from "@/components/ui/Sidebar";
 import React, { useState } from "react";
 import HeaderSection from "../../components/ui/Header";
-import { isLoggedIn } from "@/services/auth.services";
+import { getUserInfo, isLoggedIn } from "@/services/auth.services";
 import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const isLogIn = isLoggedIn();
   const router = useRouter();
   if (!isLogIn) {
+    router.push("/login");
+  }
+  const userInfo = getUserInfo();
+  if (!userInfo?.role) {
     router.push("/login");
   }
   return (
