@@ -1,92 +1,86 @@
 "use client";
 
+import DropDown from "@/components/Forms/Fields/DropDown";
 import FormInput from "@/components/Forms/Fields/FormInput";
 import UploadImage from "@/components/Forms/Fields/UploadImage";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {isLoggedIn} from "@/services/auth.services";
+import {getLocalStorage} from "@/utils/local-storage";
 import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
 import {Card} from "flowbite-react";
-import Link from "next/link";
 import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useForm} from "react-hook-form";
 import toast from "react-hot-toast";
 
-const RegisterPage = () => {
+const ManageAdminAddPage = () => {
   const router = useRouter();
-  const [isLogIn, setIsLogIn] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    setIsLogIn(isLoggedIn());
-    if (isLogIn) {
-      router.push("/");
-    }
-  }, []);
   const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: {errors},
-  } = useForm();
-
+  } = useForm({
+    defaultValues: {
+      role: "admin",
+    },
+  });
+  const roleList = [
+    {
+      label: "Admin",
+      value: "admin",
+    },
+    {
+      label: "Super Admin",
+      value: "super_admin",
+    },
+  ];
   const formSubmit = async (data: any) => {
     setLoading(true);
-    data.role = "user";
     const formData = new FormData();
     formData.append("profileImg", data.profileImg[0]);
     formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("role", data.role);
     formData.append("contactNo", data.contactNo);
     formData.append("address", data.address);
+    formData.append("role", data.role);
 
     try {
       const result = await axios.post(
-        serverURL + "/user/user-register",
+        serverURL + "/user/create-admin",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            authorization: getLocalStorage("service-website-token") || "",
           },
         }
       );
+      console.log(result);
       if (result?.data?.statusCode || result?.data?.success) {
         setLoading(false);
         toast.success(result?.data?.message);
         reset();
-        router.push("/login");
+        router.push("/dashboard/admin/manage-admin");
       } else {
         setLoading(false);
         toast.error("Something went wrong");
       }
+      setLoading(false);
     } catch (err) {
       setLoading(false);
-      toast.error("Something went wrong");
+      console.log(err?.response?.data?.errorMessages);
+      err?.response?.data?.errorMessages?.forEach((item: any) => {
+        toast.error(item?.message);
+      });
     }
   };
-
-  if (isLogIn === null) {
-    return (
-      <section
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "80vh",
-        }}
-      >
-        <SpinLoader />
-      </section>
-    );
-  }
-
-  console.log(loading);
 
   return (
     <div
@@ -119,7 +113,7 @@ const RegisterPage = () => {
             }}
           >
             <div>
-              <h1 className="text-3xl font-bold">Please Register Here</h1>
+              <h1 className="text-3xl font-bold">Create New Admin</h1>
             </div>
           </div>
 
@@ -183,7 +177,6 @@ const RegisterPage = () => {
                 errors={errors}
               />
             </div>
-
             <div>
               <InputLabel title="Address" style={{}} />
               <FormInput
@@ -197,6 +190,23 @@ const RegisterPage = () => {
                 errors={errors}
               />
             </div>
+            <div className="w-full">
+              <DropDown
+                name="role"
+                style={{}}
+                isRequired="false"
+                register={register}
+                errors={errors}
+                label={
+                  watch("role") === "" || watch("role") === undefined
+                    ? "Select Role"
+                    : watch("role")
+                }
+                size="sm"
+                itemList={roleList}
+                setValue={setValue}
+              />
+            </div>
             <div>
               <InputLabel title="Profile Image" style={{}} />
               <UploadImage
@@ -207,25 +217,11 @@ const RegisterPage = () => {
                 errors={errors}
               />
             </div>
-
             <SubmitButton
-              title="Register"
-              style={{
-                width: "fit-content",
-                marginTop: 20,
-                textAlign: "center",
-              }}
+              title="Create Admin"
+              style={{width: "fit-content", marginTop: 20}}
               disabled={loading}
-              className="px-3"
             />
-            <div>
-              <p className="text-sm">
-                Already have an account?{" "}
-                <Link href="/login" className="text-blue-700 w-fit">
-                  Login
-                </Link>
-              </p>
-            </div>
           </form>
         </Card>
       </div>
@@ -233,4 +229,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ManageAdminAddPage;

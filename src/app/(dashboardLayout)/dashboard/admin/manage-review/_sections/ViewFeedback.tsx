@@ -1,22 +1,17 @@
 "use client";
-
+// @ts-ignore
 import FormInput from "@/components/Forms/Fields/FormInput";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import { getLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Card, Modal, Rating, Select } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import DropDown from "@/components/Forms/Fields/DropDown";
-import { useParams, useRouter } from "next/navigation";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { BiHappyBeaming, BiSad } from "react-icons/bi";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
+import axios from "axios";
+import {Modal, Rating} from "flowbite-react";
+import {useEffect, useState} from "react";
+import toast from "react-hot-toast";
 
-const ViewFeedback = ({ id = null, closeModal = (v) => {} }) => {
-  const [previousData, setPreviousData] = useState<null | {}>(null);
+const ViewFeedback = ({id = null, closeModal = (v) => {}}) => {
+  const [previousData, setPreviousData] = useState<null | {} | any>(null);
 
   useEffect(() => {
     async function fetchData() {

@@ -1,6 +1,7 @@
 "use client";
 
-import { Footer } from "flowbite-react";
+import {Footer} from "flowbite-react";
+import Link from "next/link";
 import {
   BsDribbble,
   BsFacebook,
@@ -26,12 +27,12 @@ export default function FooterSection() {
             <div>
               <Footer.Title title="Pages" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Home</Footer.Link>
-                <Footer.Link href="#">About</Footer.Link>
-                <Footer.Link href="#">Services</Footer.Link>
-                <Footer.Link href="#">Blog</Footer.Link>
-                <Footer.Link href="#">Faq</Footer.Link>
-                <Footer.Link href="#">Contact</Footer.Link>
+                <Link href="/">Home</Link>
+
+                <Link href="/services">Services</Link>
+                <Link href="/blog">Blog</Link>
+                <Link href="/faqs">Faq</Link>
+                <Link href="/contact">Contact</Link>
               </Footer.LinkGroup>
             </div>
             <div>

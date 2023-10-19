@@ -15,14 +15,14 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px grey;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 /* Handle */
@@ -34,4 +34,48 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #000000;
+}
+
+/* table design */
+
+table thead th,
+table tbody td {
+  padding: 10px 5px;
+  text-align: left;
+}
+table thead th:first-child {
+  border-radius: 8px 0px 0px 0px;
+}
+table thead th:last-child {
+  border-radius: 0px 8px 0px 0px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+.Sidebar button:hover {
+  color: black;
+  background-color: rgb(243, 244, 246, 1) !important;
+}
+.Sidebar button a:hover {
+  color: black;
+  background-color: rgb(243, 244, 246, 1) !important;
+}
+.Sidebar button {
+  color: black;
+  background-color: transparent !important;
+}
+.Sidebar button a {
+  color: black;
+  background-color: transparent !important;
 }

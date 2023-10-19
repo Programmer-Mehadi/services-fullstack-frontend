@@ -1,11 +1,12 @@
 "use client";
 
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import ViewProfileSection from "../../../../../components/Sections/Profile/ViewProfileSection";
-import { serverURL } from "@/utils/serverUrl";
-import { getLocalStorage } from "@/utils/local-storage";
-import { useEffect, useState } from "react";
+import Head from "next/head";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
+import ViewProfileSection from "../../../../../components/Sections/Profile/ViewProfileSection";
 
 const ProfileViewPage = () => {
   const [userData, setUserData] = useState(null);
@@ -29,13 +30,18 @@ const ProfileViewPage = () => {
     fetchData();
   }, []);
   return (
-    <div
-      style={{
-        padding: "20px",
-      }}
-    >
-      <ViewProfileSection userData={userData} />
-    </div>
+    <>
+      <div
+        style={{
+          padding: "20px",
+        }}
+      >
+        <Head>
+          <title>Profile</title>
+        </Head>
+        <ViewProfileSection userData={userData} />
+      </div>
+    </>
   );
 };
 

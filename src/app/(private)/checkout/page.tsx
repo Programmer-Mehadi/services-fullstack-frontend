@@ -1,9 +1,6 @@
 "use client";
 
-import { Table } from "flowbite-react";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { TbCurrencyTaka } from "react-icons/tb";
+import SpinLoader from "@/components/ui/Loader/SpinLoader";
 import {
   cartSetLocalStorage,
   clearCart,
@@ -11,16 +8,18 @@ import {
   setServiceDate,
   setServiceTime,
 } from "@/redux/slices/cartSlice";
-import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { format } from "date-fns";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { serverURL } from "@/utils/serverUrl";
-import { getLocalStorage } from "@/utils/local-storage";
+import {format} from "date-fns";
+import {Table} from "flowbite-react";
+import React from "react";
+import toast from "react-hot-toast";
+import {TbCurrencyTaka} from "react-icons/tb";
+import {useDispatch, useSelector} from "react-redux";
 
 const CheckoutPage = () => {
-  const { cart } = useSelector((state: any) => state.cart);
+  const {cart} = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
 
   const [error, setError] = React.useState([]);
@@ -88,7 +87,11 @@ const CheckoutPage = () => {
         }
       })
       .catch((err) => {
-        toast.success(err?.data?.message);
+        if (Array.isArray(err?.response?.data?.errorMessages)) {
+          err?.response?.data?.errorMessages.forEach((element: any) => {
+            toast.error(element?.message);
+          });
+        }
         toast.error("Something went wrong");
       });
   }

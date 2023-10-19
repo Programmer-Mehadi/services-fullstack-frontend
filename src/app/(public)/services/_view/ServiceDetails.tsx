@@ -1,10 +1,9 @@
-import { cartSetLocalStorage, setCart } from "@/redux/slices/cartSlice";
-import React from "react";
+import {cartSetLocalStorage, setCart} from "@/redux/slices/cartSlice";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { BsFillCartFill } from "react-icons/bs";
+import {BsFillCartFill} from "react-icons/bs";
+import {useDispatch, useSelector} from "react-redux";
 
-const ServiceDetails = ({ data }) => {
+const ServiceDetails = ({data}) => {
   const {
     id,
     title,
@@ -20,7 +19,7 @@ const ServiceDetails = ({ data }) => {
 
   // Split the features string into an array
   const featureList = features.split("///").slice(1);
-  const { cart } = useSelector((state) => state.cart);
+  const {cart} = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
 
   return (

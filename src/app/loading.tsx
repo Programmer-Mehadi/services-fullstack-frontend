@@ -1,5 +1,4 @@
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { Spin } from "antd";
 
 const Loading = () => {
   return (

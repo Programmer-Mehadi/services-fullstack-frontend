@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import {Card} from "flowbite-react";
 import TeamMemberCard from "./_sections/TeamMemberCard";
-import { Card } from "flowbite-react";
 
 const ContactPage = () => {
   const teamMembers = [
@@ -87,7 +86,7 @@ const ContactPage = () => {
                 <textarea
                   id="message"
                   name="message"
-                  rows="4"
+                  rows={4}
                   className="mt-1 p-2 block w-full border rounded-md"
                 ></textarea>
               </div>

@@ -2,29 +2,30 @@
 // @ts-ignore
 import FormInput from "@/components/Forms/Fields/FormInput";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import { serverURL } from "@/utils/serverUrl";
+import {serverURL} from "@/utils/serverUrl";
 
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
-import { setLocalStorage } from "@/utils/local-storage";
-import { getUserInfo, isLoggedIn } from "@/services/auth.services";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { Dropdown } from "flowbite-react";
-import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/slices/userSlice";
+import {setUser} from "@/redux/slices/userSlice";
+import {getUserInfo, isLoggedIn} from "@/services/auth.services";
+import {setLocalStorage} from "@/utils/local-storage";
+import axios from "axios";
+import {Card} from "flowbite-react";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
+import {useDispatch} from "react-redux";
 const LoginPage = () => {
   const router = useRouter();
   const [isLogIn, setIsLogIn] = useState<boolean | null>(null);
 
   useEffect(() => {
     setIsLogIn(isLoggedIn());
+    if (isLogIn) {
+      router.push("/");
+    }
   }, []);
 
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ const LoginPage = () => {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
 
   const formSubmit = async (data: any) => {
@@ -64,10 +65,6 @@ const LoginPage = () => {
         setLoading(false);
       });
   };
-
-  if (isLogIn) {
-    router.push("/");
-  }
 
   if (isLogIn === null) {
     return (

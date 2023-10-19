@@ -3,17 +3,15 @@
 import FormInput from "@/components/Forms/Fields/FormInput";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import { getLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Card, Rating, Select } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import DropDown from "@/components/Forms/Fields/DropDown";
-import { useParams, useRouter } from "next/navigation";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { BiHappyBeaming, BiSad } from "react-icons/bi";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
+import axios from "axios";
+import {Card, Rating, Select} from "flowbite-react";
+import {useParams, useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
 
 const FeedbackEditPage = () => {
   const [loading, setLoading] = useState(false);
@@ -26,7 +24,7 @@ const FeedbackEditPage = () => {
     reset,
     setValue,
     watch,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       experience: "",
@@ -35,7 +33,7 @@ const FeedbackEditPage = () => {
     },
   });
 
-  const [previousData, setPreviousData] = useState<null | {}>(null);
+  const [previousData, setPreviousData] = useState<null | {} | any>(null);
   const [serviceList, setServiceList] = useState<null | []>(null);
   const [experience, setExperience] = useState(1);
   useEffect(() => {
@@ -143,7 +141,7 @@ const FeedbackEditPage = () => {
                 <InputLabel title="Service Name" />
                 <Select
                   id="service"
-                  {...register("serviceId", { required: true })}
+                  {...register("serviceId", {required: true})}
                   defaultValue={previousData?.service?.id}
                   style={{
                     maxHeight: "200px",

@@ -1,29 +1,23 @@
 "use client";
 
-import { Sidebar } from "flowbite-react";
+import {Sidebar} from "flowbite-react";
 
 import {
   AiFillProfile,
-  AiOutlineUser,
-  AiTwotoneEdit,
   AiOutlineAppstoreAdd,
+  AiTwotoneEdit,
 } from "react-icons/ai";
-import { BsPersonFillAdd } from "react-icons/bs";
-import { GrServices } from "react-icons/gr";
-import { IoSettingsOutline } from "react-icons/io5";
-import { BiListUl, BiLogoBlogger } from "react-icons/bi";
-import { TbBrandBooking, TbCategory } from "react-icons/tb";
-import { GrFormView } from "react-icons/gr";
-import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import { FaQuestionCircle } from "react-icons/fa";
-import { RiAdminFill, RiFeedbackFill } from "react-icons/ri";
-import { SiCodereview } from "react-icons/si";
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import {BiListUl, BiLogoBlogger} from "react-icons/bi";
+import {BsPersonFillAdd} from "react-icons/bs";
+import {FaQuestionCircle} from "react-icons/fa";
+import {GrFormView} from "react-icons/gr";
+import {IoSettingsOutline} from "react-icons/io5";
+import {MdOutlineAdminPanelSettings} from "react-icons/md";
+import {RiAdminFill, RiFeedbackFill} from "react-icons/ri";
+import {SiCodereview} from "react-icons/si";
+import {TbBrandBooking, TbCategory} from "react-icons/tb";
 
-export const SidebarItems = ({ role = "" }: { role: string }) => {
-  const url = usePathname();
-
+export const SidebarItems = ({role = ""}: {role: string}) => {
   const superAdminRoutes = [
     {
       name: "Manage Admin",
@@ -269,7 +263,7 @@ export const SidebarItems = ({ role = "" }: { role: string }) => {
     <>
       <Sidebar
         aria-label="Sidebar with multi-level dropdown example"
-        className="h-full"
+        className="h-full Sidebar"
         style={{
           height: "calc(100vh - 80px)",
         }}

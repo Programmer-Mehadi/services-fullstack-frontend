@@ -1,20 +1,20 @@
 "use client";
 
 import FormInput from "@/components/Forms/Fields/FormInput";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
 import UploadImage from "@/components/Forms/Fields/UploadImage";
-import { serverURL } from "@/utils/serverUrl";
+import SubmitButton from "@/components/ui/Buttons/SubmitButton";
+import {serverURL} from "@/utils/serverUrl";
 
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
-import { getUserInfo, isLoggedIn } from "@/services/auth.services";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { Card } from "flowbite-react";
+import {getUserInfo} from "@/services/auth.services";
+import {getLocalStorage} from "@/utils/local-storage";
+import axios from "axios";
+import {Card} from "flowbite-react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
 
 const EditProfileSection = ({
   userData,
@@ -26,7 +26,7 @@ const EditProfileSection = ({
   setReFetch: any;
 }) => {
   const router = useRouter();
-  const userInfo = getUserInfo();
+  const userInfo: any = getUserInfo();
 
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState<string | null>("");
@@ -36,7 +36,7 @@ const EditProfileSection = ({
     reset,
     setValue,
     watch,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       name: userData?.name,
@@ -228,7 +228,7 @@ const EditProfileSection = ({
                     <InputLabel title="Profile Image" style={{}} />
                     <UploadImage
                       name="profileImg"
-                      style={{ width: "100%" }}
+                      style={{width: "100%"}}
                       isRequired="false"
                       register={register}
                       errors={errors}
@@ -250,7 +250,7 @@ const EditProfileSection = ({
                     />
                     <img
                       src={userData?.profileImg}
-                      style={{ width: "50%" }}
+                      style={{width: "50%"}}
                       alt=""
                     />
                   </div>

@@ -3,16 +3,14 @@
 import FormInput from "@/components/Forms/Fields/FormInput";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import { getLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { Card, Rating, Select } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import {Card, Rating, Select} from "flowbite-react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
 import toast from "react-hot-toast";
-import DropDown from "@/components/Forms/Fields/DropDown";
-import { useRouter } from "next/navigation";
-import { BiHappyBeaming, BiSad } from "react-icons/bi";
 const ReviewCreatePage = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -22,11 +20,11 @@ const ReviewCreatePage = () => {
     reset,
     setValue,
     watch,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
 
   const [serviceList, setServiceList] = useState<null | []>(null);
-  const [selectedService, setSelectedService] = useState({});
+  const [selectedService, setSelectedService] = useState<{} | any>({});
   const [rating, setRating] = useState(0);
   useEffect(() => {
     async function fetchData() {
@@ -96,7 +94,7 @@ const ReviewCreatePage = () => {
             <InputLabel title="Service Name" />
             <Select
               id="service"
-              {...register("serviceId", { required: true })}
+              {...register("serviceId", {required: true})}
               defaultValue={selectedService?.id}
               style={{
                 maxHeight: "200px",

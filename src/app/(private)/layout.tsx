@@ -1,19 +1,19 @@
 "use client";
 
 import FooterSection from "@/components/ui/FooterSection";
-import { setUser } from "@/redux/slices/userSlice";
-import { getUserInfo } from "@/services/auth.services";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {getUserInfo} from "@/services/auth.services";
+import {useRouter} from "next/navigation";
+import {useEffect} from "react";
 
-const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
+const PrivateLayout = ({children}: {children: React.ReactNode}) => {
   const router = useRouter();
-  const userInfo = getUserInfo();
+  const userInfo: any = getUserInfo();
 
-  if (!userInfo?.role) {
-    router.push("/login");
-  }
+  useEffect(() => {
+    if (!userInfo?.role) {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div>

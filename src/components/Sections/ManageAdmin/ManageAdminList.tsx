@@ -1,15 +1,14 @@
 "use client";
 
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { Dropdown, Table } from "flowbite-react";
-import { useRouter } from "next/navigation";
-import React from "react";
+import {Dropdown, Table} from "flowbite-react";
+import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { getUserInfo } from "../../../services/auth.services";
+import {AiFillDelete, AiFillEdit} from "react-icons/ai";
+import {getUserInfo} from "../../../services/auth.services";
 const ManageAdminList = ({
   dataList: data,
   reFetch,
@@ -20,7 +19,7 @@ const ManageAdminList = ({
   setReFetch: any;
 }) => {
   const router = useRouter();
-  const userInfo = getUserInfo();
+  const userInfo: any = getUserInfo();
   const roleChange = async (id: string, value: string) => {
     try {
       const result = await axios.post(
@@ -43,7 +42,6 @@ const ManageAdminList = ({
         toast.error("Something went wrong");
       }
     } catch (err) {
-      console.log(err);
       err?.response?.data?.errorMessages?.forEach((item: any) => {
         toast.error(item?.message);
       });

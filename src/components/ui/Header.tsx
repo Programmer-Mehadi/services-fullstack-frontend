@@ -1,18 +1,19 @@
 "use client";
 
-import { clearUser, setUser } from "@/redux/slices/userSlice";
-import { getUserInfo, isLoggedIn, logout } from "@/services/auth.services";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {cartSetLocalStorage, clearCart} from "@/redux/slices/cartSlice";
+import {clearUser, setUser} from "@/redux/slices/userSlice";
+import {getUserInfo, isLoggedIn, logout} from "@/services/auth.services";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { Avatar } from "flowbite-react";
+import {Avatar} from "flowbite-react";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { IoMdLogOut } from "react-icons/io";
-import { BsCartFill } from "react-icons/bs";
-import { cartSetLocalStorage, clearCart } from "@/redux/slices/cartSlice";
+import {BsCartFill} from "react-icons/bs";
+import {IoMdLogOut} from "react-icons/io";
+import {useDispatch, useSelector} from "react-redux";
 const HeaderSection = () => {
   const [list, setList] = useState<any>([]);
   const userInfo = getUserInfo();
@@ -24,7 +25,12 @@ const HeaderSection = () => {
   // dispatch(setUser(userInfo));
 
   const user = useSelector((state: any) => state.user);
-  const { cart } = useSelector((state: any) => state.cart);
+  const {cart} = useSelector((state: any) => state.cart);
+  const router = useRouter();
+  useEffect(() => {
+    const userInfo = getUserInfo();
+    dispatch(setUser(userInfo));
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,6 +155,7 @@ const HeaderSection = () => {
                       aria-current="page"
                       onClick={() => {
                         logout("service-website-token");
+                        router.push("/");
                         dispatch(clearUser());
                         setProfileImg("");
                         dispatch(clearCart());
@@ -179,7 +186,9 @@ const HeaderSection = () => {
               {cart?.items?.length}
             </span>
           </div>
-          <Avatar alt="avatar of Jese" img={profileImg} rounded />
+          {profileImg && (
+            <Avatar alt="avatar of Jese" img={profileImg} rounded />
+          )}
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"

@@ -1,27 +1,18 @@
 "use client";
-
-import DropDown from "@/components/Forms/Fields/DropDown";
+// @ts-ignore
 import FormInput from "@/components/Forms/Fields/FormInput";
 import UploadImage from "@/components/Forms/Fields/UploadImage";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import {
-  Button,
-  Card,
-  Label,
-  Radio,
-  Select,
-  TextInput,
-  ToggleSwitch,
-} from "flowbite-react";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import {Button, Card, Select, TextInput, ToggleSwitch} from "flowbite-react";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
 import toast from "react-hot-toast";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
 const CreateServicePage = () => {
   const router = useRouter();
   const bangladeshDistricts = [
@@ -90,7 +81,9 @@ const CreateServicePage = () => {
     "Tangail",
     "Thakurgaon",
   ];
-  const [upcoming, setUpcoming] = useState<boolean | string>(false);
+  const [upcoming, setUpcoming] = useState<boolean | string | number | any>(
+    false
+  );
   const [serviceListLength, setServiceListLength] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const {
@@ -100,8 +93,8 @@ const CreateServicePage = () => {
     register,
     handleSubmit,
     unregister,
-    formState: { errors },
-  } = useForm({
+    formState: {errors},
+  } = useForm<any>({
     defaultValues: {
       features: [],
     },
@@ -197,7 +190,7 @@ const CreateServicePage = () => {
               <InputLabel title="Service Category" />
               <Select
                 id="category"
-                {...register("categoryID", { required: true })}
+                {...register("categoryID", {required: true})}
                 style={{
                   maxHeight: "200px",
                   overflow: "auto",
@@ -208,7 +201,7 @@ const CreateServicePage = () => {
                   Select Category
                 </option>
                 {categoryList.map(
-                  (item: { id: string; title: string }, index) => (
+                  (item: {id: string; title: string}, index) => (
                     <option
                       key={index}
                       value={item?.id}
@@ -238,7 +231,7 @@ const CreateServicePage = () => {
               />
               <Select
                 id="availability"
-                {...register("availability", { required: true })}
+                {...register("availability", {required: true})}
                 style={{
                   maxHeight: "200px",
                   overflow: "auto",
@@ -260,7 +253,7 @@ const CreateServicePage = () => {
               <InputLabel title="Location" />
               <Select
                 id="location"
-                {...register("location", { required: true })}
+                {...register("location", {required: true})}
                 style={{
                   maxHeight: "200px",
                   overflow: "auto",

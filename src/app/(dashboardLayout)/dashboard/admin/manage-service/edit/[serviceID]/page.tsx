@@ -1,28 +1,19 @@
 "use client";
-
-import DropDown from "@/components/Forms/Fields/DropDown";
+// @ts-ignore
 import FormInput from "@/components/Forms/Fields/FormInput";
 import UploadImage from "@/components/Forms/Fields/UploadImage";
 import InputLabel from "@/components/Forms/Labels/InputLabel";
 import SubmitButton from "@/components/ui/Buttons/SubmitButton";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import {
-  Button,
-  Card,
-  Label,
-  Radio,
-  Select,
-  TextInput,
-  ToggleSwitch,
-} from "flowbite-react";
-import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import {Button, Card, Select, TextInput, ToggleSwitch} from "flowbite-react";
+import {useParams, useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
 import toast from "react-hot-toast";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
 const EditServicePage = () => {
   const router = useRouter();
   const param = useParams();
@@ -92,7 +83,7 @@ const EditServicePage = () => {
     "Tangail",
     "Thakurgaon",
   ];
-  const [upcoming, setUpcoming] = useState(false);
+  const [upcoming, setUpcoming] = useState<boolean | undefined | any>(false);
   const [serviceListLength, setServiceListLength] = useState([]);
   const [categoryList, setCategoryList] = useState(null);
   const [previousData, setPreviousData] = useState<null | {} | any>(null);
@@ -103,7 +94,7 @@ const EditServicePage = () => {
     register,
     handleSubmit,
     unregister,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       id: "",
@@ -164,7 +155,7 @@ const EditServicePage = () => {
             let featuresArray = res?.data?.data?.features?.split("///");
             if (featuresArray.length > 1) {
               featuresArray = featuresArray.slice(1);
-              let features: { title: string }[] = [];
+              let features: {title: string}[] = [];
               featuresArray.forEach((feature: any) => {
                 features.push({
                   title: feature,
@@ -265,7 +256,7 @@ const EditServicePage = () => {
                   <InputLabel title="Service Category" />
                   <Select
                     id="category"
-                    {...register("categoryID", { required: true })}
+                    {...register("categoryID", {required: true})}
                     style={{
                       maxHeight: "200px",
                       overflow: "auto",
@@ -279,7 +270,7 @@ const EditServicePage = () => {
                       Select Category
                     </option>
                     {categoryList.map(
-                      (item: { id: string; title: string }, index) => (
+                      (item: {id: string; title: string}, index) => (
                         <option
                           key={index}
                           value={item?.id}
@@ -319,7 +310,7 @@ const EditServicePage = () => {
                   />
                   <Select
                     id="availability"
-                    {...register("availability", { required: true })}
+                    {...register("availability", {required: true})}
                     style={{
                       maxHeight: "200px",
                       overflow: "auto",
@@ -343,7 +334,7 @@ const EditServicePage = () => {
                   <InputLabel title="Location" />
                   <Select
                     id="location"
-                    {...register("location", { required: true })}
+                    {...register("location", {required: true})}
                     style={{
                       maxHeight: "200px",
                       overflow: "auto",
