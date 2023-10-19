@@ -22,7 +22,7 @@ const ViewFeedback = ({ id = null, closeModal = (v) => {} }) => {
     async function fetchData() {
       try {
         const token: string = getLocalStorage("service-website-token") || "";
-        const result = await axios.get(serverURL + "/feedback/get/" + id, {
+        const result = await axios.get(serverURL + "/review/get/" + id, {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
@@ -55,10 +55,10 @@ const ViewFeedback = ({ id = null, closeModal = (v) => {} }) => {
           }}
         >
           <Modal.Header>
-            <h2 className="text-2xl font-semibold ">View Feedback</h2>
+            <h2 className="text-2xl font-semibold ">View Review</h2>
           </Modal.Header>
           <Modal.Body>
-            <div className="mt-8 grid gap-3">
+            <div className="mt-2 grid gap-3">
               <div className="grid gap-1">
                 <InputLabel title="Service Name" />
                 <FormInput
@@ -82,6 +82,7 @@ const ViewFeedback = ({ id = null, closeModal = (v) => {} }) => {
                   size="large"
                   placeholder="Type your feedback"
                   type="textArea"
+                  className="h-40"
                   isRequired="true"
                   value={previousData?.review ? previousData?.review : "---"}
                   readOnly={true}
@@ -90,32 +91,12 @@ const ViewFeedback = ({ id = null, closeModal = (v) => {} }) => {
               <div className="grid gap-1">
                 <InputLabel title="Give Rating" style={{}} />
                 <div className="flex gap-2 text-base">
-                  {previousData?.experience == 1 && (
-                    <>
-                      <BiHappyBeaming
-                        style={{ fontSize: "25px" }}
-                        className={`${
-                          previousData?.experience === 1 ? "text-green-500" : ""
-                        }`}
-                      />
-                    </>
-                  )}
-                  {previousData?.experience == 2 && (
-                    <>
-                      <BiSad
-                        style={{ fontSize: "25px" }}
-                        className={`${
-                          previousData?.experience === 2 ? "text-red-500" : ""
-                        }`}
-                      />
-                    </>
-                  )}
-                  {previousData?.experience != 1 &&
-                    previousData?.experience != 2 && (
-                      <>
-                        <span>---</span>
-                      </>
-                    )}
+                  <div className="flex gap-2 text-base">
+                    {previousData?.rating}
+                    <Rating>
+                      <Rating.Star />
+                    </Rating>
+                  </div>
                 </div>
               </div>
             </div>

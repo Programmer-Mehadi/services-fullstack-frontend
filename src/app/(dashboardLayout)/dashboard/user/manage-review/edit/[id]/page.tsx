@@ -19,6 +19,7 @@ const FeedbackEditPage = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const params = useParams();
+  const [rating, setRating] = useState(0);
   const {
     register,
     handleSubmit,
@@ -41,7 +42,7 @@ const FeedbackEditPage = () => {
     async function fetchData() {
       try {
         const token: string = getLocalStorage("service-website-token") || "";
-        const result = await axios.get(serverURL + "/service/get-all-list", {
+        const result = await axios.get(serverURL + "/booking/get-all", {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
@@ -62,7 +63,7 @@ const FeedbackEditPage = () => {
       try {
         const token: string = getLocalStorage("service-website-token") || "";
         const result = await axios.get(
-          serverURL + "/feedback/get/" + params?.id,
+          serverURL + "/review/get/" + params?.id,
           {
             headers: {
               "Content-Type": "application/json",
@@ -71,8 +72,8 @@ const FeedbackEditPage = () => {
           }
         );
         if (result?.data?.success) {
-          console.log(result?.data?.data);
           setExperience(result?.data?.data?.experience);
+          setRating(result?.data?.data?.rating);
           setValue("review", result?.data?.data?.review);
           setValue("serviceId", result?.data?.data?.service?.id);
           setPreviousData(result?.data?.data);
@@ -87,9 +88,12 @@ const FeedbackEditPage = () => {
 
   const formSubmit = async (data: any) => {
     setLoading(true);
-    data.experience = experience;
+    data.rating = rating;
+
+    delete data.experience;
+
     axios
-      .put(serverURL + "/feedback/update/" + params.id, data, {
+      .put(serverURL + "/review/update/" + params.id, data, {
         headers: {
           "Content-Type": "application/json",
           authorization: getLocalStorage("service-website-token"),
@@ -97,12 +101,11 @@ const FeedbackEditPage = () => {
       })
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(false);
+          setLoading(true);
           toast.success(result?.data?.message);
           reset();
-          router.push("/dashboard/user/manage-feedback");
+          router.push("/dashboard/user/manage-review");
         } else {
-          console.log("error");
           setLoading(false);
           toast.error("Something went wrong");
         }
@@ -130,7 +133,7 @@ const FeedbackEditPage = () => {
               margin: "auto",
             }}
           >
-            <h2 className="text-2xl font-semibold ">Update Feedback</h2>
+            <h2 className="text-2xl font-semibold ">Give Review</h2>
             <hr />
             <form
               className="mt-8 grid gap-3"
@@ -141,6 +144,7 @@ const FeedbackEditPage = () => {
                 <Select
                   id="service"
                   {...register("serviceId", { required: true })}
+                  defaultValue={previousData?.service?.id}
                   style={{
                     maxHeight: "200px",
                     overflow: "auto",
@@ -150,26 +154,28 @@ const FeedbackEditPage = () => {
                   <option className="text-base py-1" value="" selected>
                     Select Service
                   </option>
-                  {serviceList?.map(
-                    (item: { id: string; title: string }, index: number) => (
-                      <option
-                        key={index}
-                        value={item?.id}
-                        className="text-base py-1"
-                      >
-                        {item?.title}
-                      </option>
-                    )
-                  )}
+                  {serviceList?.map((item: any, index: number) => (
+                    <option
+                      key={index}
+                      value={item?.service?.id}
+                      className="text-base py-1"
+                      onClick={(e) => {
+                        setValue("serviceId", item?.service?.id);
+                      }}
+                    >
+                      {item?.service?.title}
+                    </option>
+                  ))}
                 </Select>
               </div>
               <div className="grid gap-1">
-                <InputLabel title="Give a Feedback" style={{}} />
+                <InputLabel title="Give a Review" style={{}} />
                 <FormInput
                   setValue={setValue}
                   name="review"
                   size="large"
-                  placeholder="Type your feedback"
+                  className="h-40"
+                  placeholder="Type your review"
                   type="textArea"
                   isRequired="true"
                   register={register}
@@ -177,18 +183,44 @@ const FeedbackEditPage = () => {
                 />
               </div>
               <div className="grid gap-1">
-                <InputLabel title="Give Rating" style={{}} />
+                <InputLabel title="Give a Rating?" style={{}} />
                 <div className="flex gap-2 text-base">
-                  <BiHappyBeaming
-                    style={{ fontSize: "25px" }}
-                    className={`${experience === 1 ? "text-green-500" : ""}`}
-                    onClick={() => setExperience(1)}
-                  />
-                  <BiSad
-                    style={{ fontSize: "25px" }}
-                    className={`${experience === 2 ? "text-red-500" : ""}`}
-                    onClick={() => setExperience(2)}
-                  />
+                  <Rating size="lg">
+                    <Rating.Star
+                      onClick={() => {
+                        if (rating === 1) {
+                          setRating(0);
+                          return;
+                        }
+                        setRating(1);
+                      }}
+                      filled={rating >= 1 ? true : false}
+                    />
+                    <Rating.Star
+                      onClick={() => {
+                        setRating(2);
+                      }}
+                      filled={rating >= 2 ? true : false}
+                    />
+                    <Rating.Star
+                      onClick={() => {
+                        setRating(3);
+                      }}
+                      filled={rating >= 3 ? true : false}
+                    />
+                    <Rating.Star
+                      onClick={() => {
+                        setRating(4);
+                      }}
+                      filled={rating >= 4 ? true : false}
+                    />
+                    <Rating.Star
+                      onClick={() => {
+                        setRating(5);
+                      }}
+                      filled={rating >= 5 ? true : false}
+                    />
+                  </Rating>
                 </div>
               </div>
               <SubmitButton

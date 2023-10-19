@@ -27,7 +27,7 @@ const ManageReviewList = ({
   const [viewId, setViewId] = useState(null);
   async function deleteData(id: any) {
     try {
-      const result = await axios.delete(serverURL + `/feedback/delete/${id}`, {
+      const result = await axios.delete(serverURL + `/review/delete/${id}`, {
         headers: {
           "Content-Type": "application/json",
           authorization: getLocalStorage("service-website-token"),
@@ -71,7 +71,7 @@ const ManageReviewList = ({
                   Review
                 </Table.HeadCell>
                 <Table.HeadCell className="bg-cyan-800 text-white">
-                  Experience
+                  Rating
                 </Table.HeadCell>
                 <Table.HeadCell className="bg-cyan-800 text-white">
                   <span>Actions</span>
@@ -109,33 +109,20 @@ const ManageReviewList = ({
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
-                        {faq?.review ? faq?.review : "---"}
+                        {faq?.review
+                          ? faq?.review.length > 100
+                            ? `${faq?.review.slice(0, 100)}...`
+                            : faq?.review
+                          : "---"}
                       </Table.Cell>
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
                         <div className="flex gap-2 text-base">
-                          {faq?.experience === 1 ? (
-                            <>
-                              <BiHappyBeaming
-                                style={{ fontSize: "25px" }}
-                                className={`${
-                                  faq?.experience === 1 ? "text-green-500" : ""
-                                }`}
-                              />
-                              (Happy)
-                            </>
-                          ) : (
-                            <>
-                              <BiSad
-                                style={{ fontSize: "25px" }}
-                                className={`${
-                                  faq?.experience === 2 ? "text-red-500" : ""
-                                }`}
-                              />
-                              (Sad)
-                            </>
-                          )}
+                          {faq?.rating}
+                          <Rating>
+                            <Rating.Star />
+                          </Rating>
                         </div>
                       </Table.Cell>
 
@@ -153,7 +140,7 @@ const ManageReviewList = ({
                           <AiFillEdit
                             onClick={() => {
                               router.push(
-                                `/dashboard/user/manage-feedback/edit/${faq?.id}`
+                                `/dashboard/user/manage-review/edit/${faq?.id}`
                               );
                             }}
                             className="cursor-pointer text-blue-600"

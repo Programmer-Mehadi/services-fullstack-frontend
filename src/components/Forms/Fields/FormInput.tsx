@@ -11,6 +11,7 @@ const FormInput = ({
   watch = () => {},
   readOnly = false,
   onChangeFnc = () => {},
+  className = "",
 }: {
   name?: string;
   type?: string;
@@ -24,6 +25,7 @@ const FormInput = ({
   watch?: any;
   readOnly?: boolean;
   onChangeFnc?: any;
+  className?: string;
 }) => {
   return (
     <>
@@ -39,6 +41,7 @@ const FormInput = ({
                 required: isRequired === "true" ? true : false,
               })}
               name={name}
+              className={className}
               placeholder={placeholder}
               size={size}
               defaultValue={value}
@@ -63,6 +66,7 @@ const FormInput = ({
                 required: isRequired === "true" ? true : false,
               })}
               name={name}
+              className={className}
               placeholder={placeholder}
               size={size}
               defaultValue={value}
@@ -90,6 +94,7 @@ const FormInput = ({
               required: isRequired === "true" ? true : false,
             })}
             name={name}
+            className={className}
             placeholder={placeholder}
             size={size}
             defaultValue={value}

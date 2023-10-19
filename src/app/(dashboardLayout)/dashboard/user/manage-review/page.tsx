@@ -41,7 +41,14 @@ const ManageReviewPage = () => {
         overflowX: "auto",
       }}
     >
-      <div className="flex justify-end pb-8"></div>
+      <div className="flex justify-end pb-8">
+        <Link href="/dashboard/user/manage-review/create">
+          <Button className="bg-blue-700" size="sm">
+            <AiOutlinePlus className="text-white font-bold text-base mr-3" />
+            Add Review
+          </Button>
+        </Link>
+      </div>
       <ManageReviewList
         dataList={dataList}
         reFetch={reFetch}
