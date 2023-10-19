@@ -133,12 +133,20 @@ const ManageBlogList = ({
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
-                        {blog?.title ? blog?.title : "---"}
+                        {blog?.title
+                          ? blog?.title.length > 50
+                            ? blog?.title.slice(0, 50) + "..."
+                            : blog?.title
+                          : "---"}
                       </Table.Cell>
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
-                        {blog?.desc ? blog?.desc : "---"}
+                        {blog?.desc
+                          ? blog?.desc.length > 100
+                            ? blog?.desc.slice(0, 100) + "..."
+                            : blog?.desc
+                          : "---"}
                       </Table.Cell>
                       <Table.Cell
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
