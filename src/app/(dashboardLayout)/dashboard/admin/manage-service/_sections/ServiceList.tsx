@@ -11,6 +11,8 @@ import React from "react";
 import toast from "react-hot-toast";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { parseISO, format } from "date-fns";
+import Link from "next/link";
+import { BsEyeFill } from "react-icons/bs";
 
 const ServiceList = ({
   dataList: data,
@@ -185,14 +187,15 @@ const ServiceList = ({
                               backgroundColor: "white",
                               color: "black",
                               border: "1px solid black",
+                              width: "170px",
                             }}
                           >
                             <Dropdown.Item
                               onClick={() => {
-                                statusChange(faq?.id, "Availability");
+                                statusChange(faq?.id, "Available");
                               }}
                             >
-                              Availability
+                              Available
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => {
@@ -208,6 +211,12 @@ const ServiceList = ({
                         className={`${index % 2 === 1 ? " bg-cyan-50 " : ""}`}
                       >
                         <div className="flex gap-2 text-lg">
+                          <Link
+                            href={`/services/view/${faq?.id}`}
+                            target="_blank"
+                          >
+                            <BsEyeFill className="text-slate-800" />
+                          </Link>
                           <AiFillEdit
                             onClick={() => {
                               router.push(

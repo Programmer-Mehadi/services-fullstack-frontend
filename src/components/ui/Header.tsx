@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdLogOut } from "react-icons/io";
 import { BsCartFill } from "react-icons/bs";
+import { cartSetLocalStorage, clearCart } from "@/redux/slices/cartSlice";
 const HeaderSection = () => {
   const [list, setList] = useState<any>([]);
   const userInfo = getUserInfo();
@@ -149,6 +150,9 @@ const HeaderSection = () => {
                       onClick={() => {
                         logout("service-website-token");
                         dispatch(clearUser());
+                        setProfileImg("");
+                        dispatch(clearCart());
+                        dispatch(cartSetLocalStorage());
                         setReFetch(!reFetch);
                         toast.success("Logout successfully");
                       }}

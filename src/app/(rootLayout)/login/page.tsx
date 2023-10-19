@@ -44,7 +44,7 @@ const LoginPage = () => {
       .post(serverURL + "/auth/login", data)
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(false);
+          setLoading(true);
           setLocalStorage("service-website-token", result?.data?.token);
           toast.success(result?.data?.message);
           // reset();
