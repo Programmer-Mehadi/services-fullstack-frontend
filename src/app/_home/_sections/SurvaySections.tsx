@@ -29,7 +29,7 @@ const SurvaySections = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1300px] mx-auto pb-10">
           <Card>
             <p className="text-2xl font-medium text-center text-cyan-500">
-              {data?.result?._avg?.price}
+              {data?.result?._avg?.price.toFixed(2)}
             </p>
             <h2 className="text-3xl font-bold text-center">
               Average Service Price
