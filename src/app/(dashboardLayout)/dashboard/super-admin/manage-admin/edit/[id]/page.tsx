@@ -1,13 +1,13 @@
 "use client";
 
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {useParams} from "next/navigation";
+import {useEffect, useState} from "react";
 
 const ManageAdminEditPage = () => {
-  const { id } = useParams();
+  const {id} = useParams();
 
   const [data, setdata] = useState(null);
   useEffect(() => {
@@ -28,7 +28,7 @@ const ManageAdminEditPage = () => {
     fetchdata();
   }, [id]);
 
-  return <div></div>;
+  return <div className="text-center py-14 text-3xl ">Cannot Edit Admin</div>;
 };
 
 export default ManageAdminEditPage;

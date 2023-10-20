@@ -1,20 +1,18 @@
 "use client";
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import { isLoggedIn } from "@/services/auth.services";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { Card } from "flowbite-react";
 import DropDown from "@/components/Forms/Fields/DropDown";
-import { getLocalStorage } from "@/utils/local-storage";
+import FormInput from "@/components/Forms/Fields/FormInput";
+import UploadImage from "@/components/Forms/Fields/UploadImage";
+import InputLabel from "@/components/Forms/Labels/InputLabel";
+import SubmitButton from "@/components/ui/Buttons/SubmitButton";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
+import axios from "axios";
+import {Card} from "flowbite-react";
+import {useRouter} from "next/navigation";
+import {useState} from "react";
+import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
 
 const ManageAdminAddPage = () => {
   const router = useRouter();
@@ -26,7 +24,7 @@ const ManageAdminAddPage = () => {
     reset,
     setValue,
     watch,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       role: "admin",
@@ -213,7 +211,7 @@ const ManageAdminAddPage = () => {
               <InputLabel title="Profile Image" style={{}} />
               <UploadImage
                 name="profileImg"
-                style={{ width: "100%" }}
+                style={{width: "100%"}}
                 isRequired="false"
                 register={register}
                 errors={errors}
@@ -221,7 +219,7 @@ const ManageAdminAddPage = () => {
             </div>
             <SubmitButton
               title="Create Admin"
-              style={{ width: "100%", marginTop: 20 }}
+              style={{width: "fit-content", marginTop: 20}}
               disabled={loading}
             />
           </form>
