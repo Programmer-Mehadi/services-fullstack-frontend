@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import {Swiper, SwiperSlide} from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import { getLocalStorage } from "@/utils/local-storage";
+import {getLocalStorage} from "@/utils/local-storage";
 import axios from "axios";
-import { serverURL } from "@/utils/serverUrl";
+import {serverURL} from "@/utils/serverUrl";
 import toast from "react-hot-toast";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { Card } from "flowbite-react";
+import {Card} from "flowbite-react";
 import ServiceCard from "@/components/ui/ServiceCard";
 const AvailableService = () => {
   const [data, setData] = React.useState<any>(null);
@@ -31,7 +31,6 @@ const AvailableService = () => {
         );
         setData(fdata?.data?.data);
       } catch (err) {
-        console.log(err);
         toast.error("Available Service Cannot Be Loaded");
       }
     }
