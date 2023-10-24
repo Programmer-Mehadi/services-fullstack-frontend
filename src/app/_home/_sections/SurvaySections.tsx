@@ -26,7 +26,7 @@ const SurvaySections = () => {
           <SpinLoader />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1300px] mx-auto pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1300px] mx-auto pb-10 px-5">
           <Card>
             <p className="text-2xl font-medium text-center text-cyan-500">
               {data?.result?._avg?.price.toFixed(2)}

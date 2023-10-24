@@ -1,20 +1,19 @@
 "use client";
-import { cartSetLocalStorage, setCart } from "@/redux/slices/cartSlice";
-import { Badge, Card } from "flowbite-react";
-import React from "react";
-import toast from "react-hot-toast";
-import { TbCurrencyTaka } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
-import { BsFillCartFill, BsEyeFill } from "react-icons/bs";
+import {cartSetLocalStorage, setCart} from "@/redux/slices/cartSlice";
+import {Badge, Card} from "flowbite-react";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import {BsEyeFill, BsFillCartFill} from "react-icons/bs";
+import {TbCurrencyTaka} from "react-icons/tb";
+import {useDispatch, useSelector} from "react-redux";
 const ServiceCard = (data: any) => {
   const dispatch = useDispatch();
-  const { cart } = useSelector((state: any) => state.cart);
-  const { data: cardData } = data;
-  const { title, price, image, location, category, availability } = cardData;
+  const {cart} = useSelector((state: any) => state.cart);
+  const {data: cardData} = data;
+  const {title, price, image, location, category, availability} = cardData;
   return (
     <Card
-      className="h-full p-0 m-0 service_card relative top-0 left-0"
+      className="h-full min-w-[350px]  p-0 m-0 service_card relative top-0 left-0"
       style={{
         padding: "0",
         margin: "0",

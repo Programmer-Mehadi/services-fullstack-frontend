@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect } from "react";
-import BlogCard from "./BlogCard";
-import axios from "axios";
-import { serverURL } from "@/utils/serverUrl";
-import toast from "react-hot-toast";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
+import {serverURL} from "@/utils/serverUrl";
+import axios from "axios";
+import React, {useEffect} from "react";
+import toast from "react-hot-toast";
+import BlogCard from "./BlogCard";
 
 const LatestBlog = () => {
   const [blogPosts, setBlogPosts] = React.useState(null);
@@ -42,7 +42,7 @@ const LatestBlog = () => {
               <h2 className="text-3xl font-bold text-center py-14">
                 Latest Blogs
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 pb-8">
                 {blogPosts?.map((post: any, index: number) => (
                   <BlogCard key={index} {...post} />
                 ))}

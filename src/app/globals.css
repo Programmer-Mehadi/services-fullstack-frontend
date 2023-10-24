@@ -22,13 +22,13 @@
 /* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px grey;
-  border-radius: 8px;
+  /* border-radius: 8px; */
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #00000080;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 
 /* Handle on hover */
@@ -78,4 +78,45 @@ td {
 .Sidebar button a {
   color: black;
   background-color: transparent !important;
+}
+
+/* width */
+.available_services_section::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Track */
+.available_services_section::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.available_services_section::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.available_services_section::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* width */
+.upcoming_services_section::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Track */
+.upcoming_services_section::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.upcoming_services_section::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.upcoming_services_section::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

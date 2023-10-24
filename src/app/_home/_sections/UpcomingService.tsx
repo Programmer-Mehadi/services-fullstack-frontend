@@ -9,6 +9,10 @@ import ServiceCard from "@/components/ui/ServiceCard";
 import {getLocalStorage} from "@/utils/local-storage";
 import {serverURL} from "@/utils/serverUrl";
 import axios from "axios";
+import {
+  BsFillArrowLeftCircleFill,
+  BsFillArrowRightCircleFill,
+} from "react-icons/bs";
 import "swiper/css";
 const UpcomingService = () => {
   const [data, setData] = React.useState<any>(null);
@@ -32,6 +36,13 @@ const UpcomingService = () => {
 
     fetchData();
   }, []);
+  function scrollSection(x: number, y: number) {
+    document.getElementsByClassName("upcoming_services_section")[0].scrollBy({
+      top: y,
+      left: x,
+      behavior: "smooth",
+    });
+  }
 
   return (
     <section>
@@ -45,7 +56,7 @@ const UpcomingService = () => {
             Upcoming Service
           </h2>
           {/* list */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 overflow-y-auto py-10 pb-0">
+          <div className="grid lg:grid-cols-[50px_1fr_50px] gap-0 pb-0 relative top-0 left-0">
             {data === null ? (
               <div className="flex justify-center items-center h-[300px]">
                 <SpinLoader />
@@ -58,9 +69,27 @@ const UpcomingService = () => {
                   </h1>
                 ) : (
                   <>
-                    {data?.map((item: any) => (
-                      <ServiceCard key={item?.id} data={item} />
-                    ))}
+                    <div className="hidden lg:flex items-center justify-center h-full ">
+                      <BsFillArrowLeftCircleFill
+                        className="cursor-pointer text-lg md:text-3xl text-[#32a852]"
+                        onClick={() => {
+                          scrollSection(-370, 0);
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 h-full upcoming_services_section  overflow-y-auto flex gap-8">
+                      {data?.map((item: any) => (
+                        <ServiceCard key={item?.id} data={item} />
+                      ))}
+                    </div>
+                    <div className="hidden lg:flex items-center justify-center h-full">
+                      <BsFillArrowRightCircleFill
+                        className="cursor-pointer text-lg md:text-3xl text-[#32a852]"
+                        onClick={() => {
+                          scrollSection(370, 0);
+                        }}
+                      />
+                    </div>
                   </>
                 )}
               </>

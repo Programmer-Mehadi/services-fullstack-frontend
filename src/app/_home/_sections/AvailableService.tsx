@@ -2,17 +2,19 @@
 
 import React, {useEffect} from "react";
 // Import Swiper React components
-import {Swiper, SwiperSlide} from "swiper/react";
 
 // Import Swiper styles
-import "swiper/css";
-import {getLocalStorage} from "@/utils/local-storage";
-import axios from "axios";
-import {serverURL} from "@/utils/serverUrl";
-import toast from "react-hot-toast";
 import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {Card} from "flowbite-react";
 import ServiceCard from "@/components/ui/ServiceCard";
+import {getLocalStorage} from "@/utils/local-storage";
+import {serverURL} from "@/utils/serverUrl";
+import axios from "axios";
+import toast from "react-hot-toast";
+import {
+  BsFillArrowLeftCircleFill,
+  BsFillArrowRightCircleFill,
+} from "react-icons/bs";
+import "swiper/css";
 const AvailableService = () => {
   const [data, setData] = React.useState<any>(null);
 
@@ -38,6 +40,14 @@ const AvailableService = () => {
     fetchData();
   }, []);
 
+  function scrollSection(x: number, y: number) {
+    document.getElementsByClassName("available_services_section")[0].scrollBy({
+      top: y,
+      left: x,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <section>
       {data === null ? (
@@ -50,7 +60,7 @@ const AvailableService = () => {
             Available Service
           </h2>
           {/* list */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 overflow-y-auto py-10 pb-0">
+          <div className="grid lg:grid-cols-[50px_1fr_50px] gap-0 pb-0 relative top-0 left-0">
             {data === null ? (
               <div className="flex justify-center items-center h-[300px]">
                 <SpinLoader />
@@ -63,9 +73,27 @@ const AvailableService = () => {
                   </h1>
                 ) : (
                   <>
-                    {data?.map((item: any) => (
-                      <ServiceCard key={item?.id} data={item} />
-                    ))}
+                    <div className="hidden lg:flex items-center justify-center h-full ">
+                      <BsFillArrowLeftCircleFill
+                        className="cursor-pointer text-lg md:text-3xl text-[#32a852]"
+                        onClick={() => {
+                          scrollSection(-370, 0);
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 h-full available_services_section  overflow-y-auto flex gap-8">
+                      {data?.map((item: any) => (
+                        <ServiceCard key={item?.id} data={item} />
+                      ))}
+                    </div>
+                    <div className="hidden lg:flex items-center justify-center h-full">
+                      <BsFillArrowRightCircleFill
+                        className="cursor-pointer text-lg md:text-3xl text-[#32a852]"
+                        onClick={() => {
+                          scrollSection(370, 0);
+                        }}
+                      />
+                    </div>
                   </>
                 )}
               </>
