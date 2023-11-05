@@ -1,9 +1,9 @@
-import {cartSetLocalStorage, setCart} from "@/redux/slices/cartSlice";
-import toast from "react-hot-toast";
-import {BsFillCartFill} from "react-icons/bs";
-import {useDispatch, useSelector} from "react-redux";
-
-const ServiceDetails = ({data}) => {
+import { cartSetLocalStorage, setCart } from "@/redux/slices/cartSlice"
+import toast from "react-hot-toast"
+import { BsFillCartFill } from "react-icons/bs"
+import { useDispatch, useSelector } from "react-redux"
+import { TbCurrencyTaka } from "react-icons/tb"
+const ServiceDetails = ({ data }) => {
   const {
     id,
     title,
@@ -15,12 +15,12 @@ const ServiceDetails = ({data}) => {
     price,
     upcoming,
     category,
-  } = data;
+  } = data
 
   // Split the features string into an array
-  const featureList = features.split("///").slice(1);
-  const {cart} = useSelector((state: any) => state.cart);
-  const dispatch = useDispatch();
+  const featureList = features.split("///").slice(1)
+  const { cart } = useSelector((state: any) => state.cart)
+  const dispatch = useDispatch()
 
   return (
     <div className="container mx-auto p-4">
@@ -33,7 +33,10 @@ const ServiceDetails = ({data}) => {
           <p className="text-gray-600">{description}</p>
           <p className="text-gray-600 mt-2">Availability: {availability}</p>
           <p className="text-gray-600">Location: {location}</p>
-          <p className="text-gray-600">Price: ${price}</p>
+          <p className="text-gray-600 flex gap-1 items-center">
+            Price: <TbCurrencyTaka />
+            {price}
+          </p>
           <p className="text-gray-600">
             Upcoming: {upcoming === "true" ? "Yes" : "No"}
           </p>
@@ -49,7 +52,7 @@ const ServiceDetails = ({data}) => {
           <div
             className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800 cursor-pointer flex items-center justify-center mt-10 w-fit gap-3"
             onClick={() => {
-              let found = cart?.items?.find((item: any) => item.id == data?.id);
+              let found = cart?.items?.find((item: any) => item.id == data?.id)
 
               if (!found) {
                 dispatch(
@@ -59,11 +62,11 @@ const ServiceDetails = ({data}) => {
                     price: price,
                     image: image,
                   })
-                );
-                toast.success("Added to cart");
-                dispatch(cartSetLocalStorage());
+                )
+                toast.success("Added to cart")
+                dispatch(cartSetLocalStorage())
               } else {
-                toast.error("Already added to cart");
+                toast.error("Already added to cart")
               }
             }}
           >
@@ -73,7 +76,7 @@ const ServiceDetails = ({data}) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ServiceDetails;
+export default ServiceDetails

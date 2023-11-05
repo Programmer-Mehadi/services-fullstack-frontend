@@ -1,39 +1,38 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import ManageAdminList from "@/components/Sections/ManageAdmin/ManageAdminList";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Button } from "flowbite-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { AiOutlinePlus } from "react-icons/ai";
-import ManageBlogList from "./_sections/ManageBlogList";
+import { useRouter } from "next/navigation"
+import ManageAdminList from "@/components/Sections/ManageAdmin/ManageAdminList"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Button } from "flowbite-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { AiOutlinePlus } from "react-icons/ai"
+import ManageBlogList from "./_sections/ManageBlogList"
 const ManageBlogHome = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [dataList, setDataList] = useState(null);
-  const [reFetch, setReFetch] = useState(false);
+  const [dataList, setDataList] = useState(null)
+  const [reFetch, setReFetch] = useState(false)
   useEffect(() => {
-    const token: string = getLocalStorage("service-website-token") || "";
+    const token: string = getLocalStorage("service-website-token") || ""
     const fetchData = async () => {
       const userInfo = await axios.get(serverURL + "/blog/get-all", {
         headers: {
           "Content-Type": "application/json",
           authorization: token,
         },
-      });
+      })
       if (userInfo?.data?.data) {
-        console.log(userInfo.data.data);
-        setDataList(userInfo?.data?.data);
+        setDataList(userInfo?.data?.data)
       } else {
-        toast.error(userInfo?.data?.message);
+        toast.error(userInfo?.data?.message)
       }
-    };
-    fetchData();
-  }, [reFetch]);
+    }
+    fetchData()
+  }, [reFetch])
 
   return (
     <div
@@ -56,7 +55,7 @@ const ManageBlogHome = () => {
         setReFetch={setReFetch}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ManageBlogHome;
+export default ManageBlogHome

@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import DropDown from "@/components/Forms/Fields/DropDown";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Dropdown, Table } from "flowbite-react";
-import { useRouter } from "next/navigation";
-import React from "react";
-import toast from "react-hot-toast";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import DropDown from "@/components/Forms/Fields/DropDown"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Dropdown, Table } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import React from "react"
+import toast from "react-hot-toast"
+import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 
 const CategoryListTable = ({
   dataList: data,
@@ -18,13 +18,13 @@ const CategoryListTable = ({
   setOpenEditModal,
   setEditId,
 }: {
-  dataList: any;
-  reFetch: any;
-  setReFetch: any;
-  setOpenEditModal: any;
-  setEditId: any;
+  dataList: any
+  reFetch: any
+  setReFetch: any
+  setOpenEditModal: any
+  setEditId: any
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   async function deleteData(id: any) {
     try {
@@ -33,16 +33,15 @@ const CategoryListTable = ({
           "Content-Type": "application/json",
           authorization: getLocalStorage("service-website-token"),
         },
-      });
+      })
       if (result.data?.data) {
-        setReFetch(!reFetch);
-        toast.success(result.data?.message);
+        setReFetch(!reFetch)
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
 
@@ -77,7 +76,6 @@ const CategoryListTable = ({
               </Table.Head>
               <Table.Body className="divide-y border">
                 {data.map((item: any, index: number) => {
-                  console.log(item);
                   return (
                     <Table.Row
                       key={index}
@@ -121,21 +119,21 @@ const CategoryListTable = ({
                         <div className="flex gap-2 text-lg">
                           <AiFillEdit
                             onClick={() => {
-                              setOpenEditModal(true);
-                              setEditId(item?.id);
+                              setOpenEditModal(true)
+                              setEditId(item?.id)
                             }}
                             className="cursor-pointer text-blue-600"
                           />
                           <AiFillDelete
                             onClick={() => {
-                              deleteData(item?.id);
+                              deleteData(item?.id)
                             }}
                             className=" text-red-700 cursor-pointer"
                           />
                         </div>
                       </Table.Cell>
                     </Table.Row>
-                  );
+                  )
                 })}
               </Table.Body>
             </Table>
@@ -143,7 +141,7 @@ const CategoryListTable = ({
         </section>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CategoryListTable;
+export default CategoryListTable

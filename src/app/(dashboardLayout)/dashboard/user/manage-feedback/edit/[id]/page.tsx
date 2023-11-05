@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import { getLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Card, Rating, Select } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import DropDown from "@/components/Forms/Fields/DropDown";
-import { useParams, useRouter } from "next/navigation";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { BiHappyBeaming, BiSad } from "react-icons/bi";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import { getLocalStorage, setLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Card, Rating, Select } from "flowbite-react"
+import React, { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import DropDown from "@/components/Forms/Fields/DropDown"
+import { useParams, useRouter } from "next/navigation"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { BiHappyBeaming, BiSad } from "react-icons/bi"
 
 const FeedbackEditPage = () => {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const params = useParams();
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const params = useParams()
   const {
     register,
     handleSubmit,
@@ -32,35 +32,35 @@ const FeedbackEditPage = () => {
       review: "",
       serviceId: "",
     },
-  });
+  })
 
-  const [previousData, setPreviousData] = useState<null | {}>(null);
-  const [serviceList, setServiceList] = useState<null | []>(null);
-  const [experience, setExperience] = useState(1);
+  const [previousData, setPreviousData] = useState<null | {}>(null)
+  const [serviceList, setServiceList] = useState<null | []>(null)
+  const [experience, setExperience] = useState(1)
   useEffect(() => {
     async function fetchData() {
       try {
-        const token: string = getLocalStorage("service-website-token") || "";
+        const token: string = getLocalStorage("service-website-token") || ""
         const result = await axios.get(serverURL + "/service/get-all-list", {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
           },
-        });
+        })
         if (result?.data?.success) {
-          setServiceList(result?.data?.data);
+          setServiceList(result?.data?.data)
         }
       } catch (err) {
-        setServiceList([]);
-        toast.error("Something went wrong");
+        setServiceList([])
+        toast.error("Something went wrong")
       }
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
   useEffect(() => {
     async function fetchData() {
       try {
-        const token: string = getLocalStorage("service-website-token") || "";
+        const token: string = getLocalStorage("service-website-token") || ""
         const result = await axios.get(
           serverURL + "/feedback/get/" + params?.id,
           {
@@ -69,25 +69,24 @@ const FeedbackEditPage = () => {
               authorization: token,
             },
           }
-        );
+        )
         if (result?.data?.success) {
-          console.log(result?.data?.data);
-          setExperience(result?.data?.data?.experience);
-          setValue("review", result?.data?.data?.review);
-          setValue("serviceId", result?.data?.data?.service?.id);
-          setPreviousData(result?.data?.data);
+          setExperience(result?.data?.data?.experience)
+          setValue("review", result?.data?.data?.review)
+          setValue("serviceId", result?.data?.data?.service?.id)
+          setPreviousData(result?.data?.data)
         }
       } catch (err) {
-        setPreviousData({});
-        toast.error("Something went wrong");
+        setPreviousData({})
+        toast.error("Something went wrong")
       }
     }
-    fetchData();
-  }, [params?.id]);
+    fetchData()
+  }, [params?.id])
 
   const formSubmit = async (data: any) => {
-    setLoading(true);
-    data.experience = experience;
+    setLoading(true)
+    data.experience = experience
     axios
       .put(serverURL + "/feedback/update/" + params.id, data, {
         headers: {
@@ -97,23 +96,22 @@ const FeedbackEditPage = () => {
       })
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(false);
-          toast.success(result?.data?.message);
-          reset();
-          router.push("/dashboard/user/manage-feedback");
+          setLoading(false)
+          toast.success(result?.data?.message)
+          reset()
+          router.push("/dashboard/user/manage-feedback")
         } else {
-          console.log("error");
-          setLoading(false);
-          toast.error("Something went wrong");
+          setLoading(false)
+          toast.error("Something went wrong")
         }
       })
       .catch((err) => {
         err?.response?.data?.errorMessages.forEach((element: any) => {
-          element?.message && toast.error(element?.message);
-        });
-        setLoading(false);
-      });
-  };
+          element?.message && toast.error(element?.message)
+        })
+        setLoading(false)
+      })
+  }
 
   return (
     <>
@@ -205,7 +203,7 @@ const FeedbackEditPage = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default FeedbackEditPage;
+export default FeedbackEditPage

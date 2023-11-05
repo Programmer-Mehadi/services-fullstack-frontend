@@ -1,40 +1,40 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {useParams} from "next/navigation";
-import {useEffect, useState} from "react";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
-import DropDown from "@/components/Forms/Fields/DropDown";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import {Card} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
+import DropDown from "@/components/Forms/Fields/DropDown"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
+import { Card } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 const ManageBlogEditPage = () => {
-  const {blogID} = useParams();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const { blogID } = useParams()
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     watch,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
     defaultValues: {
       status: "",
       title: "",
       desc: "",
     },
-  });
+  })
 
   const statusList = [
     {
@@ -45,7 +45,7 @@ const ManageBlogEditPage = () => {
       label: "Inactive",
       value: "inactive",
     },
-  ];
+  ]
   useEffect(() => {
     async function fetchData() {
       try {
@@ -54,30 +54,28 @@ const ManageBlogEditPage = () => {
             "Content-Type": "application/json",
             authorization: getLocalStorage("service-website-token"),
           },
-        });
+        })
         if (result?.data?.success) {
-          setData(result?.data?.data);
-          setValue("status", result?.data?.data?.status);
-          setValue("title", result?.data?.data?.title);
-          setValue("desc", result?.data?.data?.desc);
+          setData(result?.data?.data)
+          setValue("status", result?.data?.data?.status)
+          setValue("title", result?.data?.data?.title)
+          setValue("desc", result?.data?.data?.desc)
         } else {
-          toast.error(result?.data?.message);
+          toast.error(result?.data?.message)
         }
-      } catch (err) {
-        console.log("Something went wrong");
-      }
+      } catch (err) {}
     }
 
-    fetchData();
-  }, [blogID]);
+    fetchData()
+  }, [blogID])
 
   const formSubmit = async (data: any) => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("desc", data.desc);
-    formData.append("status", data.status);
-    formData.append("image", data.image[0]);
+    setLoading(true)
+    const formData = new FormData()
+    formData.append("title", data.title)
+    formData.append("desc", data.desc)
+    formData.append("status", data.status)
+    formData.append("image", data.image[0])
 
     axios
       .put(serverURL + `/blog/update/${blogID}`, formData, {
@@ -88,23 +86,22 @@ const ManageBlogEditPage = () => {
       })
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(false);
-          toast.success(result?.data?.message);
-          reset();
-          router.push("/dashboard/admin/manage-blog");
+          setLoading(false)
+          toast.success(result?.data?.message)
+          reset()
+          router.push("/dashboard/admin/manage-blog")
         } else {
-          console.log("error");
-          setLoading(false);
-          toast.error("Something went wrong");
+          setLoading(false)
+          toast.error("Something went wrong")
         }
       })
       .catch((err) => {
         err?.response?.data?.errorMessages.forEach((element: any) => {
-          element?.message && toast.error(element?.message);
-        });
-        setLoading(false);
-      });
-  };
+          element?.message && toast.error(element?.message)
+        })
+        setLoading(false)
+      })
+  }
 
   return (
     <>
@@ -210,7 +207,7 @@ const ManageBlogEditPage = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ManageBlogEditPage;
+export default ManageBlogEditPage

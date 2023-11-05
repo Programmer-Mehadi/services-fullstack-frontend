@@ -1,70 +1,69 @@
-"use client";
+"use client"
 // @ts-ignore
-import FormInput from "@/components/Forms/Fields/FormInput";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import {serverURL} from "@/utils/serverUrl";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import { serverURL } from "@/utils/serverUrl"
 
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {setUser} from "@/redux/slices/userSlice";
-import {getUserInfo, isLoggedIn} from "@/services/auth.services";
-import {setLocalStorage} from "@/utils/local-storage";
-import axios from "axios";
-import {Card} from "flowbite-react";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
-import {useDispatch} from "react-redux";
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { setUser } from "@/redux/slices/userSlice"
+import { getUserInfo, isLoggedIn } from "@/services/auth.services"
+import { setLocalStorage } from "@/utils/local-storage"
+import axios from "axios"
+import { Card } from "flowbite-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { useDispatch } from "react-redux"
 const LoginPage = () => {
-  const router = useRouter();
-  const [isLogIn, setIsLogIn] = useState<boolean | null>(null);
+  const router = useRouter()
+  const [isLogIn, setIsLogIn] = useState<boolean | null>(null)
 
   useEffect(() => {
-    setIsLogIn(isLoggedIn());
+    setIsLogIn(isLoggedIn())
     if (isLogIn) {
-      router.push("/");
+      router.push("/")
     }
-  }, []);
+  }, [])
 
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
     reset,
     setValue,
-    formState: {errors},
-  } = useForm();
+    formState: { errors },
+  } = useForm()
 
   const formSubmit = async (data: any) => {
-    setLoading(true);
+    setLoading(true)
 
     axios
       .post(serverURL + "/auth/login", data)
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(true);
-          setLocalStorage("service-website-token", result?.data?.token);
-          toast.success(result?.data?.message);
-          reset();
-          const userInfo = getUserInfo();
-          dispatch(setUser(userInfo));
-          router.push("/");
+          setLoading(true)
+          setLocalStorage("service-website-token", result?.data?.token)
+          toast.success(result?.data?.message)
+          reset()
+          const userInfo = getUserInfo()
+          dispatch(setUser(userInfo))
+          router.push("/")
         } else {
-          console.log("error");
-          setLoading(false);
-          toast.error("Something went wrong");
+          setLoading(false)
+          toast.error("Something went wrong")
         }
       })
       .catch((err) => {
         err?.response?.data?.errorMessages.forEach((element: any) => {
-          element?.message && toast.error(element?.message);
-        });
-        setLoading(false);
-      });
-  };
+          element?.message && toast.error(element?.message)
+        })
+        setLoading(false)
+      })
+  }
 
   if (isLogIn === null) {
     return (
@@ -78,7 +77,7 @@ const LoginPage = () => {
       >
         <SpinLoader />
       </section>
-    );
+    )
   }
 
   return (
@@ -177,7 +176,7 @@ const LoginPage = () => {
         </Card>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

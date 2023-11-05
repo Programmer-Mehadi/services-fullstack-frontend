@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import DropDown from "@/components/Forms/Fields/DropDown";
-import FormInput from "@/components/Forms/Fields/FormInput";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Card} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import {useState} from "react";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
+import DropDown from "@/components/Forms/Fields/DropDown"
+import FormInput from "@/components/Forms/Fields/FormInput"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Card } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 
 const BlogCreatePage = () => {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     watch,
-    formState: {errors},
-  } = useForm();
+    formState: { errors },
+  } = useForm()
 
   const statusList = [
     {
@@ -35,14 +35,14 @@ const BlogCreatePage = () => {
       label: "Inactive",
       value: "inactive",
     },
-  ];
+  ]
   const formSubmit = async (data: any) => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("desc", data.desc);
-    formData.append("status", data.status);
-    formData.append("image", data.image[0]);
+    setLoading(true)
+    const formData = new FormData()
+    formData.append("title", data.title)
+    formData.append("desc", data.desc)
+    formData.append("status", data.status)
+    formData.append("image", data.image[0])
     axios
       .post(serverURL + "/blog", formData, {
         headers: {
@@ -52,23 +52,22 @@ const BlogCreatePage = () => {
       })
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(false);
-          toast.success(result?.data?.message);
-          reset();
-          router.push("/dashboard/admin/manage-blog");
+          setLoading(false)
+          toast.success(result?.data?.message)
+          reset()
+          router.push("/dashboard/admin/manage-blog")
         } else {
-          console.log("error");
-          setLoading(false);
-          toast.error("Something went wrong");
+          setLoading(false)
+          toast.error("Something went wrong")
         }
       })
       .catch((err) => {
         err?.response?.data?.errorMessages.forEach((element: any) => {
-          element?.message && toast.error(element?.message);
-        });
-        setLoading(false);
-      });
-  };
+          element?.message && toast.error(element?.message)
+        })
+        setLoading(false)
+      })
+  }
   return (
     <div className="lg:py-14">
       <Card
@@ -145,7 +144,7 @@ const BlogCreatePage = () => {
         </form>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default BlogCreatePage;
+export default BlogCreatePage

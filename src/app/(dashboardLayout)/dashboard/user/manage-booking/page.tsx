@@ -80,7 +80,7 @@ const ManageBookingHomePage = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        
         toast.error("Something went wrong");
       });
   }
@@ -101,7 +101,7 @@ const ManageBookingHomePage = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+       
         toast.error("Something went wrong");
       });
   }

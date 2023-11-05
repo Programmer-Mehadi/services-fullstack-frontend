@@ -1,29 +1,28 @@
-"use client";
+"use client"
 
-import React, { useEffect } from "react";
-import BlogCard from "./_sections/BlogCard";
-import axios from "axios";
-import { serverURL } from "@/utils/serverUrl";
-import toast from "react-hot-toast";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
+import React, { useEffect } from "react"
+import BlogCard from "./_sections/BlogCard"
+import axios from "axios"
+import { serverURL } from "@/utils/serverUrl"
+import toast from "react-hot-toast"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
 
 const BlogPage = () => {
-  const [blogPosts, setBlogPosts] = React.useState(null);
+  const [blogPosts, setBlogPosts] = React.useState(null)
   useEffect(() => {
     async function fetchData() {
       axios
         .get(serverURL + "/blog/get-public-list")
         .then((res) => {
-          setBlogPosts(res?.data?.data);
+          setBlogPosts(res?.data?.data)
         })
         .catch((err) => {
-          console.log(err);
-          toast.error("Something went wrong");
-        });
+          toast.error("Something went wrong")
+        })
     }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
   return (
     <>
       {blogPosts === null ? (
@@ -48,7 +47,7 @@ const BlogPage = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default BlogPage;
+export default BlogPage

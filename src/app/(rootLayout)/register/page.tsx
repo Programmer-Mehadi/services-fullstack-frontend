@@ -1,50 +1,50 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {isLoggedIn} from "@/services/auth.services";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Card} from "flowbite-react";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { isLoggedIn } from "@/services/auth.services"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Card } from "flowbite-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 
 const RegisterPage = () => {
-  const router = useRouter();
-  const [isLogIn, setIsLogIn] = useState<boolean | null>(null);
+  const router = useRouter()
+  const [isLogIn, setIsLogIn] = useState<boolean | null>(null)
 
   useEffect(() => {
-    setIsLogIn(isLoggedIn());
+    setIsLogIn(isLoggedIn())
     if (isLogIn) {
-      router.push("/");
+      router.push("/")
     }
-  }, []);
-  const [loading, setLoading] = useState(false);
+  }, [])
+  const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
     reset,
     setValue,
-    formState: {errors},
-  } = useForm();
+    formState: { errors },
+  } = useForm()
 
   const formSubmit = async (data: any) => {
-    setLoading(true);
-    data.role = "user";
-    const formData = new FormData();
-    formData.append("profileImg", data.profileImg[0]);
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("role", data.role);
-    formData.append("contactNo", data.contactNo);
-    formData.append("address", data.address);
+    setLoading(true)
+    data.role = "user"
+    const formData = new FormData()
+    formData.append("profileImg", data.profileImg[0])
+    formData.append("name", data.name)
+    formData.append("email", data.email)
+    formData.append("password", data.password)
+    formData.append("role", data.role)
+    formData.append("contactNo", data.contactNo)
+    formData.append("address", data.address)
 
     try {
       const result = await axios.post(
@@ -55,21 +55,21 @@ const RegisterPage = () => {
             "Content-Type": "multipart/form-data",
           },
         }
-      );
+      )
       if (result?.data?.statusCode || result?.data?.success) {
-        setLoading(false);
-        toast.success(result?.data?.message);
-        reset();
-        router.push("/login");
+        setLoading(false)
+        toast.success(result?.data?.message)
+        reset()
+        router.push("/login")
       } else {
-        setLoading(false);
-        toast.error("Something went wrong");
+        setLoading(false)
+        toast.error("Something went wrong")
       }
     } catch (err) {
-      setLoading(false);
-      toast.error("Something went wrong");
+      setLoading(false)
+      toast.error("Something went wrong")
     }
-  };
+  }
 
   if (isLogIn === null) {
     return (
@@ -83,10 +83,8 @@ const RegisterPage = () => {
       >
         <SpinLoader />
       </section>
-    );
+    )
   }
-
-  console.log(loading);
 
   return (
     <div
@@ -201,7 +199,7 @@ const RegisterPage = () => {
               <InputLabel title="Profile Image" style={{}} />
               <UploadImage
                 name="profileImg"
-                style={{width: "100%"}}
+                style={{ width: "100%" }}
                 isRequired="false"
                 register={register}
                 errors={errors}
@@ -230,7 +228,7 @@ const RegisterPage = () => {
         </Card>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage

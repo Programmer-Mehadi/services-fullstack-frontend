@@ -1,46 +1,45 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Button } from "flowbite-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { AiOutlinePlus } from "react-icons/ai";
+import { useRouter } from "next/navigation"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Button } from "flowbite-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { AiOutlinePlus } from "react-icons/ai"
 
-import CategoryListTable from "./_sections/CategoryListTable";
-import AddCategoryModal from "./_sections/AddCategoryModal";
-import EditCategoryModal from "./_sections/EditCategoryModal";
+import CategoryListTable from "./_sections/CategoryListTable"
+import AddCategoryModal from "./_sections/AddCategoryModal"
+import EditCategoryModal from "./_sections/EditCategoryModal"
 const ManageCategoryPage = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [dataList, setDataList] = useState(null);
-  const [reFetch, setReFetch] = useState(false);
+  const [dataList, setDataList] = useState(null)
+  const [reFetch, setReFetch] = useState(false)
 
-  const [openAddModal, setOpenAddModal] = useState<string | boolean>(false);
-  const [openEditModal, setOpenEditModal] = useState<string | boolean>(false);
-  const [editId, setEditId] = useState<string>("");
+  const [openAddModal, setOpenAddModal] = useState<string | boolean>(false)
+  const [openEditModal, setOpenEditModal] = useState<string | boolean>(false)
+  const [editId, setEditId] = useState<string>("")
 
   useEffect(() => {
-    const token: string = getLocalStorage("service-website-token") || "";
+    const token: string = getLocalStorage("service-website-token") || ""
     const fetchData = async () => {
       const infoData = await axios.get(serverURL + "/category/get-all", {
         headers: {
           "Content-Type": "application/json",
           authorization: token,
         },
-      });
+      })
       if (infoData?.data?.data) {
-        console.log(infoData.data.data);
-        setDataList(infoData.data.data);
+        setDataList(infoData.data.data)
       } else {
-        toast.error(infoData?.data?.message);
+        toast.error(infoData?.data?.message)
       }
-    };
-    fetchData();
-  }, [reFetch]);
+    }
+    fetchData()
+  }, [reFetch])
 
   return (
     <div
@@ -84,7 +83,7 @@ const ManageCategoryPage = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ManageCategoryPage;
+export default ManageCategoryPage

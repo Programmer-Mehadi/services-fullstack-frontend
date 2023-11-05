@@ -1,47 +1,46 @@
-"use client";
+"use client"
 
-import React, {useEffect} from "react";
+import React, { useEffect } from "react"
 // Import Swiper React components
 
 // Import Swiper styles
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import ServiceCard from "@/components/ui/ServiceCard";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import ServiceCard from "@/components/ui/ServiceCard"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
 import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
-} from "react-icons/bs";
-import "swiper/css";
+} from "react-icons/bs"
+import "swiper/css"
 const UpcomingService = () => {
-  const [data, setData] = React.useState<any>(null);
+  const [data, setData] = React.useState<any>(null)
 
   useEffect(() => {
     async function fetchData() {
-      const token: string = getLocalStorage("service-website-token") || "";
+      const token: string = getLocalStorage("service-website-token") || ""
       try {
         const fdata = await axios.get(serverURL + "/service/upcoming-service", {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
           },
-        });
-        setData(fdata?.data?.data);
+        })
+        setData(fdata?.data?.data)
       } catch (err) {
-        console.log(err);
         // toast.error("Upcoming Service Cannot Be Loaded");
       }
     }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
   function scrollSection(x: number, y: number) {
     document.getElementsByClassName("upcoming_services_section")[0].scrollBy({
       top: y,
       left: x,
       behavior: "smooth",
-    });
+    })
   }
 
   return (
@@ -73,7 +72,7 @@ const UpcomingService = () => {
                       <BsFillArrowLeftCircleFill
                         className="cursor-pointer text-lg md:text-3xl text-[#32a852]"
                         onClick={() => {
-                          scrollSection(-370, 0);
+                          scrollSection(-370, 0)
                         }}
                       />
                     </div>
@@ -86,7 +85,7 @@ const UpcomingService = () => {
                       <BsFillArrowRightCircleFill
                         className="cursor-pointer text-lg md:text-3xl text-[#32a852]"
                         onClick={() => {
-                          scrollSection(370, 0);
+                          scrollSection(370, 0)
                         }}
                       />
                     </div>
@@ -98,7 +97,7 @@ const UpcomingService = () => {
         </div>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default UpcomingService;
+export default UpcomingService

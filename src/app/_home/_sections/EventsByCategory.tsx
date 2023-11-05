@@ -1,45 +1,45 @@
-"use client";
+"use client"
 
-import React, {useEffect} from "react";
+import React, { useEffect } from "react"
 // Import Swiper React components
 
 // Import Swiper styles
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import ServiceCard from "@/components/ui/ServiceCard";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Card} from "flowbite-react";
-import toast from "react-hot-toast";
-import "swiper/css";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import ServiceCard from "@/components/ui/ServiceCard"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Card } from "flowbite-react"
+import toast from "react-hot-toast"
+import "swiper/css"
 const EventsByCategory = () => {
-  const [data, setData] = React.useState<any>(null);
-  const [categoryList, setCategoryList] = React.useState<any>(null);
-  const [selectCategory, setSelectCategory] = React.useState<any>(null);
+  const [data, setData] = React.useState<any>(null)
+  const [categoryList, setCategoryList] = React.useState<any>(null)
+  const [selectCategory, setSelectCategory] = React.useState<any>(null)
   useEffect(() => {
     async function fetchData() {
-      const token: string = getLocalStorage("service-website-token") || "";
+      const token: string = getLocalStorage("service-website-token") || ""
       try {
         const fdata = await axios.get(serverURL + "/category/get-all-list", {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
           },
-        });
-        setCategoryList(fdata?.data?.data);
+        })
+        setCategoryList(fdata?.data?.data)
       } catch (err) {
-        setCategoryList([]);
+        setCategoryList([])
         // toast.error("Upcoming Service Cannot Be Loaded");
       }
     }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   useEffect(() => {
     async function fetchData() {
-      setData(null);
-      const token: string = getLocalStorage("service-website-token") || "";
+      setData(null)
+      const token: string = getLocalStorage("service-website-token") || ""
       try {
         const fdata = await axios.get(
           serverURL + "/service/service-by-category/" + selectCategory,
@@ -49,20 +49,19 @@ const EventsByCategory = () => {
               authorization: token,
             },
           }
-        );
-        setData(fdata?.data?.data);
+        )
+        setData(fdata?.data?.data)
       } catch (err) {
-        console.log(err);
-        toast.error("Upcoming Service Cannot Be Loaded");
+        toast.error("Upcoming Service Cannot Be Loaded")
       }
     }
 
     if (selectCategory) {
-      fetchData();
+      fetchData()
     } else {
-      setData([]);
+      setData([])
     }
-  }, [selectCategory]);
+  }, [selectCategory])
 
   return (
     <section>
@@ -115,7 +114,7 @@ const EventsByCategory = () => {
         </div>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default EventsByCategory;
+export default EventsByCategory

@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import ServiceCard from "@/components/ui/ServiceCard";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Button, Select, TextInput} from "flowbite-react";
-import {useRouter, useSearchParams} from "next/navigation";
-import React, {useEffect} from "react";
-import toast from "react-hot-toast";
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import ServiceCard from "@/components/ui/ServiceCard"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Button, Select, TextInput } from "flowbite-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import React, { useEffect } from "react"
+import toast from "react-hot-toast"
 
 const ServicesHomePage = () => {
-  const query = useSearchParams();
-  const router = useRouter();
+  const query = useSearchParams()
+  const router = useRouter()
   const [searchdata, setSearchdata] = React.useState({
     name: "",
     location: "",
     category: "",
-  });
+  })
   const bangladeshDistricts = [
     "Bagerhat",
     "Bandarban",
@@ -83,33 +83,33 @@ const ServicesHomePage = () => {
     "Sylhet",
     "Tangail",
     "Thakurgaon",
-  ];
-  const [categoryList, setCategoryList] = React.useState(null);
-  const [serviceList, setServiceList] = React.useState(null);
+  ]
+  const [categoryList, setCategoryList] = React.useState(null)
+  const [serviceList, setServiceList] = React.useState(null)
 
   useEffect(() => {
     axios
       .get(serverURL + "/category/get-all-list")
       .then((res) => {
-        setCategoryList(res?.data?.data);
+        setCategoryList(res?.data?.data)
       })
       .catch((err) => {
-        setCategoryList([]);
-      });
-  }, []);
+        setCategoryList([])
+      })
+  }, [])
 
   useEffect(() => {
-    const name = query.get("name") || "";
-    const location = query.get("location") || "";
-    const category = query.get("category") || "";
+    const name = query.get("name") || ""
+    const location = query.get("location") || ""
+    const category = query.get("category") || ""
     setSearchdata({
       ...searchdata,
       name: name,
       location: location,
       category: category,
-    });
-    fetchData(name, location, category);
-  }, [query]);
+    })
+    fetchData(name, location, category)
+  }, [query])
   async function fetchData(name: string, location: string, category: string) {
     axios
       .get(
@@ -117,18 +117,17 @@ const ServicesHomePage = () => {
           `/service/get-public-list?name=${name}&location=${location}&category=${category}`
       )
       .then((res) => {
-        setServiceList(res?.data?.data);
+        setServiceList(res?.data?.data)
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
+        toast.error("Something went wrong")
+      })
   }
   async function searchData() {
     router.push(
       `/services?name=${searchdata.name}&location=${searchdata.location}&category=${searchdata.category}`
-    );
-    fetchData(searchdata.name, searchdata.location, searchdata.category);
+    )
+    fetchData(searchdata.name, searchdata.location, searchdata.category)
   }
 
   return (
@@ -143,7 +142,7 @@ const ServicesHomePage = () => {
               setSearchdata({
                 ...searchdata,
                 name: e.target.value,
-              });
+              })
             }}
           />
         </div>
@@ -152,7 +151,7 @@ const ServicesHomePage = () => {
           <Select
             value={searchdata.location}
             onChange={(e) =>
-              setSearchdata({...searchdata, location: e.target.value})
+              setSearchdata({ ...searchdata, location: e.target.value })
             }
           >
             <option value="">None</option>
@@ -168,7 +167,7 @@ const ServicesHomePage = () => {
           <Select
             value={searchdata.category}
             onChange={(e) =>
-              setSearchdata({...searchdata, category: e.target.value})
+              setSearchdata({ ...searchdata, category: e.target.value })
             }
           >
             <option value="">None</option>
@@ -208,7 +207,7 @@ const ServicesHomePage = () => {
               {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {serviceList?.map((service: any) => {
-                    return <ServiceCard key={service.id} data={service} />;
+                    return <ServiceCard key={service.id} data={service} />
                   })}
                 </div>
               }
@@ -217,7 +216,7 @@ const ServicesHomePage = () => {
         </>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default ServicesHomePage;
+export default ServicesHomePage

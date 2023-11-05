@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {useParams} from "next/navigation";
-import {useEffect, useState} from "react";
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const ManageAdminEditPage = () => {
-  const {id} = useParams();
+  const { id } = useParams()
 
-  const [data, setdata] = useState(null);
+  const [data, setdata] = useState(null)
   useEffect(() => {
     async function fetchdata() {
       try {
@@ -18,15 +18,12 @@ const ManageAdminEditPage = () => {
             "Content-Type": "application/json",
             authorization: getLocalStorage("service-website-token"),
           },
-        });
-        console.log(result);
-      } catch (err) {
-        console.log(err);
-      }
+        })
+      } catch (err) {}
     }
 
-    fetchdata();
-  }, [id]);
+    fetchdata()
+  }, [id])
 
   return (
     <div className="flex justify-center items-center min-h-[400px]">
@@ -37,7 +34,7 @@ const ManageAdminEditPage = () => {
         </span>
       </h2>
     </div>
-  );
-};
+  )
+}
 
-export default ManageAdminEditPage;
+export default ManageAdminEditPage

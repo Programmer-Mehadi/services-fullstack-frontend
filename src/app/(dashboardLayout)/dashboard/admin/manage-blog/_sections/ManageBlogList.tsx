@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Dropdown, Table} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import toast from "react-hot-toast";
-import {AiFillDelete, AiFillEdit, AiFillEye} from "react-icons/ai";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Dropdown, Table } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai"
 
 const ManageBlogList = ({
   dataList: data,
   reFetch,
   setReFetch,
 }: {
-  dataList: any;
-  reFetch: any;
-  setReFetch: any;
+  dataList: any
+  reFetch: any
+  setReFetch: any
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   async function statusChange(id: any, status: any) {
     try {
@@ -33,17 +33,16 @@ const ManageBlogList = ({
             authorization: getLocalStorage("service-website-token"),
           },
         }
-      );
+      )
 
       if (result.data?.data) {
-        toast.success(result.data?.message);
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
-      setReFetch(!reFetch);
+      setReFetch(!reFetch)
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
   async function deleteItem(id: any) {
@@ -53,16 +52,15 @@ const ManageBlogList = ({
           "Content-Type": "application/json",
           authorization: getLocalStorage("service-website-token"),
         },
-      });
+      })
       if (result.data?.data) {
-        toast.success(result.data?.message);
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
-      setReFetch(!reFetch);
+      setReFetch(!reFetch)
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
 
@@ -170,14 +168,14 @@ const ManageBlogList = ({
                           >
                             <Dropdown.Item
                               onClick={() => {
-                                statusChange(blog?.id, "active");
+                                statusChange(blog?.id, "active")
                               }}
                             >
                               Active
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => {
-                                statusChange(blog?.id, "inactive");
+                                statusChange(blog?.id, "inactive")
                               }}
                             >
                               InActive
@@ -194,27 +192,27 @@ const ManageBlogList = ({
                             onClick={() => {
                               router.push(
                                 `/dashboard/admin/manage-blog/view/${blog?.id}`
-                              );
+                              )
                             }}
                           />
                           <AiFillEdit
                             onClick={() => {
                               router.push(
                                 `/dashboard/admin/manage-blog/edit/${blog?.id}`
-                              );
+                              )
                             }}
                             className="cursor-pointer text-blue-600"
                           />
                           <AiFillDelete
                             onClick={() => {
-                              deleteItem(blog?.id);
+                              deleteItem(blog?.id)
                             }}
                             className=" text-red-700 cursor-pointer"
                           />
                         </div>
                       </Table.Cell>
                     </Table.Row>
-                  );
+                  )
                 })}
               </Table.Body>
             </Table>
@@ -222,7 +220,7 @@ const ManageBlogList = ({
         </section>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ManageBlogList;
+export default ManageBlogList

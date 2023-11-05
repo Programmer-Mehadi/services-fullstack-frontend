@@ -1,20 +1,20 @@
-"use client";
+"use client"
 // @ts-ignore
-import FormInput from "@/components/Forms/Fields/FormInput";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Button, Card, Select, TextInput, ToggleSwitch} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
-import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Button, Card, Select, TextInput, ToggleSwitch } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai"
 const CreateServicePage = () => {
-  const router = useRouter();
+  const router = useRouter()
   const bangladeshDistricts = [
     "Bagerhat",
     "Bandarban",
@@ -80,12 +80,12 @@ const CreateServicePage = () => {
     "Sylhet",
     "Tangail",
     "Thakurgaon",
-  ];
+  ]
   const [upcoming, setUpcoming] = useState<boolean | string | number | any>(
     false
-  );
-  const [serviceListLength, setServiceListLength] = useState([]);
-  const [categoryList, setCategoryList] = useState([]);
+  )
+  const [serviceListLength, setServiceListLength] = useState([])
+  const [categoryList, setCategoryList] = useState([])
   const {
     setValue,
     watch,
@@ -93,80 +93,79 @@ const CreateServicePage = () => {
     register,
     handleSubmit,
     unregister,
-    formState: {errors},
+    formState: { errors },
   } = useForm<any>({
     defaultValues: {
       features: [],
     },
-  });
+  })
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const token: string = getLocalStorage("service-website-token") || "";
+        const token: string = getLocalStorage("service-website-token") || ""
         const result = await axios.get(serverURL + "/category/get-all-list", {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
           },
-        });
+        })
         if (result?.data?.success) {
-          setCategoryList(result?.data?.data);
+          setCategoryList(result?.data?.data)
         }
       } catch (err) {
-        console.log(err);
-        toast.error("Something went wrong");
+        toast.error("Something went wrong")
       }
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   async function addService(data: any) {
-    data.features = serviceListLength;
+    data.features = serviceListLength
     try {
-      let price = parseFloat(data.price);
+      let price = parseFloat(data.price)
       if (Number.isNaN(price)) {
-        toast.error("Price Must be a number or float.");
-        return;
+        toast.error("Price Must be a number or float.")
+        return
       }
     } catch (err) {
-      toast.error("Price Must be a number or float.");
-      return;
+      toast.error("Price Must be a number or float.")
+      return
     }
 
-    let featuresText = "";
+    let featuresText = ""
     data.features.forEach((feature: any) => {
-      featuresText += `///${feature.title}`;
-    });
+      featuresText += `///${feature.title}`
+    })
 
-    data.features = featuresText;
+    data.features = featuresText
 
-    const formData = new FormData();
-    formData.append("features", data.features);
-    formData.append("image", data.image[0]);
-    formData.append("title", data.title);
-    formData.append("categoryId", data.categoryID);
-    formData.append("price", data.price);
-    formData.append("description", data.description);
-    formData.append("availability", data.availability);
-    formData.append("location", data.location);
-    formData.append("upcoming", upcoming);
+    const formData = new FormData()
+    formData.append("features", data.features)
+    formData.append("image", data.image[0])
+    formData.append("title", data.title)
+    formData.append("categoryId", data.categoryID)
+    formData.append("price", data.price)
+    formData.append("description", data.description)
+    formData.append("availability", data.availability)
+    formData.append("location", data.location)
+    formData.append("upcoming", upcoming)
     try {
       const result = await axios.post(serverURL + "/service", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           authorization: getLocalStorage("service-website-token"),
         },
-      });
+      })
       if (result?.data?.success) {
-        router.push("/dashboard/admin/manage-service");
-        reset();
-        toast.success(result?.data?.message);
+        router.push("/dashboard/admin/manage-service")
+        reset()
+        toast.success(result?.data?.message)
       } else {
-        toast.success(result?.data?.message);
+        toast.success(result?.data?.message)
       }
     } catch (err) {
-      toast(err?.response?.data?.message);
+      toast(err?.response?.data?.message)
     }
   }
 
@@ -190,7 +189,7 @@ const CreateServicePage = () => {
               <InputLabel title="Service Category" />
               <Select
                 id="category"
-                {...register("categoryID", {required: true})}
+                {...register("categoryID", { required: true })}
                 style={{
                   maxHeight: "200px",
                   overflow: "auto",
@@ -201,7 +200,7 @@ const CreateServicePage = () => {
                   Select Category
                 </option>
                 {categoryList.map(
-                  (item: {id: string; title: string}, index) => (
+                  (item: { id: string; title: string }, index) => (
                     <option
                       key={index}
                       value={item?.id}
@@ -231,7 +230,7 @@ const CreateServicePage = () => {
               />
               <Select
                 id="availability"
-                {...register("availability", {required: true})}
+                {...register("availability", { required: true })}
                 style={{
                   maxHeight: "200px",
                   overflow: "auto",
@@ -253,7 +252,7 @@ const CreateServicePage = () => {
               <InputLabel title="Location" />
               <Select
                 id="location"
-                {...register("location", {required: true})}
+                {...register("location", { required: true })}
                 style={{
                   maxHeight: "200px",
                   overflow: "auto",
@@ -268,7 +267,7 @@ const CreateServicePage = () => {
                     <option key={i} className="text-base py-1" value={d}>
                       {d}
                     </option>
-                  );
+                  )
                 })}
               </Select>
             </div>
@@ -313,18 +312,18 @@ const CreateServicePage = () => {
                     }}
                     className="flex-1"
                     onChange={(e) => {
-                      let newList = [];
+                      let newList = []
                       serviceListLength.forEach((item, i) => {
                         if (index === i) {
                           item = {
                             title: e.target.value,
-                          };
-                          newList.push(item);
+                          }
+                          newList.push(item)
                         } else {
-                          newList.push(item);
+                          newList.push(item)
                         }
-                      });
-                      setServiceListLength([...newList]);
+                      })
+                      setServiceListLength([...newList])
                     }}
                   />
                   <Button
@@ -332,8 +331,8 @@ const CreateServicePage = () => {
                     onClick={() => {
                       const newList = serviceListLength.filter(
                         (item, i) => index !== i
-                      );
-                      setServiceListLength([...newList]);
+                      )
+                      setServiceListLength([...newList])
                     }}
                   >
                     <AiOutlineMinus className="text-lg  text-white font-bold" />
@@ -360,7 +359,7 @@ const CreateServicePage = () => {
         </form>
       </Card>
     </section>
-  );
-};
+  )
+}
 
-export default CreateServicePage;
+export default CreateServicePage

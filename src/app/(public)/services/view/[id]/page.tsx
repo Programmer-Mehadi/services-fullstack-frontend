@@ -1,41 +1,40 @@
-"use client";
+"use client"
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
-import toast from "react-hot-toast";
-import ServiceDetails from "../../_view/ServiceDetails";
-import { Card, Rating } from "flowbite-react";
-import { format } from "date-fns";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { useParams } from "next/navigation"
+import React, { useEffect } from "react"
+import toast from "react-hot-toast"
+import ServiceDetails from "../../_view/ServiceDetails"
+import { Card, Rating } from "flowbite-react"
+import { format } from "date-fns"
 
 const SingleServicePage = () => {
-  const { id } = useParams();
-  const [serviceData, setServiceData] = React.useState(null);
-  const [reviewList, setReviewList] = React.useState(null);
+  const { id } = useParams()
+  const [serviceData, setServiceData] = React.useState(null)
+  const [reviewList, setReviewList] = React.useState(null)
   useEffect(() => {
     axios
       .get(serverURL + "/service/get/" + id)
       .then((res) => {
-        setServiceData(res?.data?.data);
+        setServiceData(res?.data?.data)
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
-  }, [id]);
+        toast.error("Something went wrong")
+      })
+  }, [id])
 
   useEffect(() => {
     axios
       .get(serverURL + "/review/get-all-by-service/" + id)
       .then((res) => {
-        setReviewList(res?.data?.data);
+        setReviewList(res?.data?.data)
       })
       .catch((err) => {
-        toast.error("Something went wrong");
-      });
-  }, [id]);
+        toast.error("Something went wrong")
+      })
+  }, [id])
 
   return (
     <section className="min-h-[80vh]">
@@ -97,7 +96,7 @@ const SingleServicePage = () => {
                             </div>
                           </div>
                         </div>
-                      );
+                      )
                     })
                   )}
                 </div>
@@ -107,7 +106,7 @@ const SingleServicePage = () => {
         </>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default SingleServicePage;
+export default SingleServicePage

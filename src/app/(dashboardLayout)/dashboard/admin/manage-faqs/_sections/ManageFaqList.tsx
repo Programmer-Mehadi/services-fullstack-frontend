@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Dropdown, Table} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import toast from "react-hot-toast";
-import {AiFillDelete, AiFillEdit} from "react-icons/ai";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Dropdown, Table } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import { AiFillDelete, AiFillEdit } from "react-icons/ai"
 
 const ManageFaqList = ({
   dataList: data,
   reFetch,
   setReFetch,
 }: {
-  dataList: any;
-  reFetch: any;
-  setReFetch: any;
+  dataList: any
+  reFetch: any
+  setReFetch: any
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   async function statusChange(id: any, status: any) {
     try {
@@ -33,17 +33,16 @@ const ManageFaqList = ({
             authorization: getLocalStorage("service-website-token"),
           },
         }
-      );
+      )
 
       if (result.data?.data) {
-        toast.success(result.data?.message);
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
-      setReFetch(!reFetch);
+      setReFetch(!reFetch)
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
   async function deleteFaq(id: any) {
@@ -53,16 +52,15 @@ const ManageFaqList = ({
           "Content-Type": "application/json",
           authorization: getLocalStorage("service-website-token"),
         },
-      });
+      })
       if (result.data?.data) {
-        toast.success(result.data?.message);
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
-      setReFetch(!reFetch);
+      setReFetch(!reFetch)
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
 
@@ -158,14 +156,14 @@ const ManageFaqList = ({
                           >
                             <Dropdown.Item
                               onClick={() => {
-                                statusChange(faq?.id, "active");
+                                statusChange(faq?.id, "active")
                               }}
                             >
                               Active
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => {
-                                statusChange(faq?.id, "inactive");
+                                statusChange(faq?.id, "inactive")
                               }}
                             >
                               InActive
@@ -181,20 +179,20 @@ const ManageFaqList = ({
                             onClick={() => {
                               router.push(
                                 `/dashboard/admin/manage-faqs/edit/${faq?.id}`
-                              );
+                              )
                             }}
                             className="cursor-pointer text-blue-600"
                           />
                           <AiFillDelete
                             onClick={() => {
-                              deleteFaq(faq?.id);
+                              deleteFaq(faq?.id)
                             }}
                             className=" text-red-700 cursor-pointer"
                           />
                         </div>
                       </Table.Cell>
                     </Table.Row>
-                  );
+                  )
                 })}
               </Table.Body>
             </Table>
@@ -202,7 +200,7 @@ const ManageFaqList = ({
         </section>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ManageFaqList;
+export default ManageFaqList

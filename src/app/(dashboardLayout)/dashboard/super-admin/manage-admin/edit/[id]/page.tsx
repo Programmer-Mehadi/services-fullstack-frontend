@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {useParams} from "next/navigation";
-import {useEffect, useState} from "react";
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const ManageAdminEditPage = () => {
-  const {id} = useParams();
+  const { id } = useParams()
 
-  const [data, setdata] = useState(null);
+  const [data, setdata] = useState(null)
   useEffect(() => {
     async function fetchdata() {
       try {
@@ -18,17 +18,14 @@ const ManageAdminEditPage = () => {
             "Content-Type": "application/json",
             authorization: getLocalStorage("service-website-token"),
           },
-        });
-        console.log(result);
-      } catch (err) {
-        console.log(err);
-      }
+        })
+      } catch (err) {}
     }
 
-    fetchdata();
-  }, [id]);
+    fetchdata()
+  }, [id])
 
-  return <div className="text-center py-14 text-3xl ">Cannot Edit Admin</div>;
-};
+  return <div className="text-center py-14 text-3xl ">Cannot Edit Admin</div>
+}
 
-export default ManageAdminEditPage;
+export default ManageAdminEditPage

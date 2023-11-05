@@ -1,30 +1,29 @@
-"use client";
+"use client"
 // @ts-ignore
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { useParams } from "next/navigation";
-import { format } from "date-fns";
-import React, { useEffect } from "react";
-import toast from "react-hot-toast";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { useParams } from "next/navigation"
+import { format } from "date-fns"
+import React, { useEffect } from "react"
+import toast from "react-hot-toast"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
 
 const SingleBlogPage = () => {
-  const params = useParams();
-  const [data, setData] = React.useState(null);
+  const params = useParams()
+  const [data, setData] = React.useState(null)
   useEffect(() => {
     async function fetchData() {
       axios
         .get(serverURL + "/blog/get-public-single/" + params?.id)
         .then((res) => {
-          setData(res?.data?.data);
+          setData(res?.data?.data)
         })
         .catch((err) => {
-          console.log(err);
-          toast.error("Something went wrong");
-        });
+          toast.error("Something went wrong")
+        })
     }
-    fetchData();
-  }, [params?.id]);
+    fetchData()
+  }, [params?.id])
 
   return (
     <div className="container mx-auto p-4 py-14">
@@ -72,7 +71,7 @@ const SingleBlogPage = () => {
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SingleBlogPage;
+export default SingleBlogPage

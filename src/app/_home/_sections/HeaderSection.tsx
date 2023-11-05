@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { Carousel } from "flowbite-react";
+import { Carousel } from "flowbite-react"
 
 export default function HeaderSection() {
   return (
@@ -13,7 +13,7 @@ export default function HeaderSection() {
           backgroundImage: `url("https://media.architecturaldigest.com/photos/596fbe4af1daa20469ac12d7/2:1/w_1280%2Cc_limit/neustadt-9.jpg")`,
           backgroundSize: "cover",
         }}
-        className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
+        className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white rounded-none"
       >
         <div className="w-full h-full bg-[#00000070] text-white flex justify-center items-center">
           <div className=" max-w-[250px] md:max-w-[400px] lg:max-w-[500px] text-center">
@@ -26,7 +26,7 @@ export default function HeaderSection() {
           backgroundImage: `url("https://media.architecturaldigest.com/photos/596fbe4af1daa20469ac12d7/2:1/w_1280%2Cc_limit/neustadt-9.jpg")`,
           backgroundSize: "cover",
         }}
-        className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
+        className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white rounded-none"
       >
         <div className="w-full h-full bg-[#00000070] text-white flex justify-center items-center">
           <div className=" max-w-[250px] md:max-w-[400px] lg:max-w-[500px] text-center">
@@ -39,7 +39,7 @@ export default function HeaderSection() {
           backgroundImage: `url("https://media.architecturaldigest.com/photos/596fbe4af1daa20469ac12d7/2:1/w_1280%2Cc_limit/neustadt-9.jpg")`,
           backgroundSize: "cover",
         }}
-        className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"
+        className="flex h-full text-xl font-bold md:text-2xl lg:text-4xl items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white rounded-none"
       >
         <div className="w-full h-full bg-[#00000070] text-white flex justify-center items-center">
           <div className=" max-w-[250px] md:max-w-[400px] lg:max-w-[500px] text-center">
@@ -48,5 +48,5 @@ export default function HeaderSection() {
         </div>
       </div>
     </Carousel>
-  );
+  )
 }

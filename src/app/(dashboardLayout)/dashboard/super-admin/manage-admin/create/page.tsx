@@ -1,35 +1,35 @@
-"use client";
+"use client"
 
-import DropDown from "@/components/Forms/Fields/DropDown";
-import FormInput from "@/components/Forms/Fields/FormInput";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Card} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import {useState} from "react";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
+import DropDown from "@/components/Forms/Fields/DropDown"
+import FormInput from "@/components/Forms/Fields/FormInput"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Card } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 
 const ManageAdminAddPage = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     watch,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
     defaultValues: {
       role: "admin",
     },
-  });
+  })
   const roleList = [
     {
       label: "Admin",
@@ -39,17 +39,17 @@ const ManageAdminAddPage = () => {
       label: "Super Admin",
       value: "super_admin",
     },
-  ];
+  ]
   const formSubmit = async (data: any) => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("profileImg", data.profileImg[0]);
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("contactNo", data.contactNo);
-    formData.append("address", data.address);
-    formData.append("role", data.role);
+    setLoading(true)
+    const formData = new FormData()
+    formData.append("profileImg", data.profileImg[0])
+    formData.append("name", data.name)
+    formData.append("email", data.email)
+    formData.append("password", data.password)
+    formData.append("contactNo", data.contactNo)
+    formData.append("address", data.address)
+    formData.append("role", data.role)
 
     try {
       const result = await axios.post(
@@ -61,26 +61,26 @@ const ManageAdminAddPage = () => {
             authorization: getLocalStorage("service-website-token") || "",
           },
         }
-      );
-      console.log(result);
+      )
+
       if (result?.data?.statusCode || result?.data?.success) {
-        setLoading(false);
-        toast.success(result?.data?.message);
-        reset();
-        router.push("/dashboard/super-admin/manage-admin");
+        setLoading(false)
+        toast.success(result?.data?.message)
+        reset()
+        router.push("/dashboard/super-admin/manage-admin")
       } else {
-        setLoading(false);
-        toast.error("Something went wrong");
+        setLoading(false)
+        toast.error("Something went wrong")
       }
-      setLoading(false);
+      setLoading(false)
     } catch (err) {
-      setLoading(false);
-      console.log(err?.response?.data?.errorMessages);
+      setLoading(false)
+
       err?.response?.data?.errorMessages?.forEach((item: any) => {
-        toast.error(item?.message);
-      });
+        toast.error(item?.message)
+      })
     }
-  };
+  }
 
   return (
     <div
@@ -211,7 +211,7 @@ const ManageAdminAddPage = () => {
               <InputLabel title="Profile Image" style={{}} />
               <UploadImage
                 name="profileImg"
-                style={{width: "100%"}}
+                style={{ width: "100%" }}
                 isRequired="false"
                 register={register}
                 errors={errors}
@@ -219,14 +219,14 @@ const ManageAdminAddPage = () => {
             </div>
             <SubmitButton
               title="Create Admin"
-              style={{width: "fit-content", marginTop: 20}}
+              style={{ width: "fit-content", marginTop: 20 }}
               disabled={loading}
             />
           </form>
         </Card>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ManageAdminAddPage;
+export default ManageAdminAddPage

@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Select, Table} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import toast from "react-hot-toast";
-import {AiFillDelete, AiFillEye} from "react-icons/ai";
-import {TbCurrencyTaka} from "react-icons/tb";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Select, Table } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { AiFillDelete, AiFillEye } from "react-icons/ai"
+import { TbCurrencyTaka } from "react-icons/tb"
 
 const ManageBookingHomePage = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [dataList, setDataList] = useState(null);
-  const [reFetch, setReFetch] = useState(false);
+  const [dataList, setDataList] = useState(null)
+  const [reFetch, setReFetch] = useState(false)
   const statusList = [
     {
       value: "pending",
@@ -37,24 +37,24 @@ const ManageBookingHomePage = () => {
       value: "canceled",
       label: "Canceled",
     },
-  ];
+  ]
   useEffect(() => {
-    const token: string = getLocalStorage("service-website-token") || "";
+    const token: string = getLocalStorage("service-website-token") || ""
     const fetchData = async () => {
       const dataInfo = await axios.get(serverURL + "/booking/get-all", {
         headers: {
           "Content-Type": "application/json",
           authorization: token,
         },
-      });
+      })
       if (dataInfo?.data?.data) {
-        setDataList(dataInfo.data.data);
+        setDataList(dataInfo.data.data)
       } else {
-        toast.error(dataInfo?.data?.message);
+        toast.error(dataInfo?.data?.message)
       }
-    };
-    fetchData();
-  }, [reFetch]);
+    }
+    fetchData()
+  }, [reFetch])
 
   function statusChange(id, status) {
     axios
@@ -72,16 +72,15 @@ const ManageBookingHomePage = () => {
       )
       .then((res) => {
         if (res.data?.data) {
-          toast.success(res.data?.message);
-          setReFetch(!reFetch);
+          toast.success(res.data?.message)
+          setReFetch(!reFetch)
         } else {
-          toast.error(res.data?.message);
+          toast.error(res.data?.message)
         }
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
+        toast.error("Something went wrong")
+      })
   }
   function deleteData(id) {
     axios
@@ -93,16 +92,15 @@ const ManageBookingHomePage = () => {
       })
       .then((res) => {
         if (res.data?.data) {
-          toast.success(res.data?.message);
-          setReFetch(!reFetch);
+          toast.success(res.data?.message)
+          setReFetch(!reFetch)
         } else {
-          toast.error(res.data?.message);
+          toast.error(res.data?.message)
         }
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
+        toast.error("Something went wrong")
+      })
   }
 
   return (
@@ -189,7 +187,7 @@ const ManageBookingHomePage = () => {
                           <Select
                             value={faq?.status}
                             onChange={(e) => {
-                              statusChange(faq?.id, e.target.value);
+                              statusChange(faq?.id, e.target.value)
                             }}
                           >
                             {statusList.map((status: any, ind: number) => {
@@ -197,7 +195,7 @@ const ManageBookingHomePage = () => {
                                 <option key={ind} value={status.value}>
                                   {status.label}
                                 </option>
-                              );
+                              )
                             })}
                           </Select>
                         </Table.Cell>
@@ -212,14 +210,14 @@ const ManageBookingHomePage = () => {
                             />
                             <AiFillDelete
                               onClick={() => {
-                                deleteData(faq?.id);
+                                deleteData(faq?.id)
                               }}
                               className=" text-red-700 cursor-pointer"
                             />
                           </div>
                         </Table.Cell>
                       </Table.Row>
-                    );
+                    )
                   })}
                 </Table.Body>
               </Table>
@@ -228,7 +226,7 @@ const ManageBookingHomePage = () => {
         )}
       </>
     </section>
-  );
-};
+  )
+}
 
-export default ManageBookingHomePage;
+export default ManageBookingHomePage

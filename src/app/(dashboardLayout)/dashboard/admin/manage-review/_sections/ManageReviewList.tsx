@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import DropDown from "@/components/Forms/Fields/DropDown";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Dropdown, Rating, Table } from "flowbite-react";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
-import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
-import { BiHappyBeaming, BiSad } from "react-icons/bi";
-import ViewFeedback from "./ViewFeedback";
+import DropDown from "@/components/Forms/Fields/DropDown"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Dropdown, Rating, Table } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import React, { useState } from "react"
+import toast from "react-hot-toast"
+import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai"
+import { BiHappyBeaming, BiSad } from "react-icons/bi"
+import ViewFeedback from "./ViewFeedback"
 
 const ManageReviewList = ({
   dataList: data,
   reFetch,
   setReFetch,
 }: {
-  dataList: any;
-  reFetch: any;
-  setReFetch: any;
+  dataList: any
+  reFetch: any
+  setReFetch: any
 }) => {
-  const router = useRouter();
-  const [showViewModal, setShowViewModal] = useState(false);
-  const [viewId, setViewId] = useState(null);
+  const router = useRouter()
+  const [showViewModal, setShowViewModal] = useState(false)
+  const [viewId, setViewId] = useState(null)
   async function deleteData(id: any) {
     try {
       const result = await axios.delete(serverURL + `/review/delete/${id}`, {
@@ -32,16 +32,15 @@ const ManageReviewList = ({
           "Content-Type": "application/json",
           authorization: getLocalStorage("service-website-token"),
         },
-      });
+      })
       if (result.data?.data) {
-        toast.success(result.data?.message);
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
-      setReFetch(!reFetch);
+      setReFetch(!reFetch)
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
 
@@ -132,15 +131,15 @@ const ManageReviewList = ({
                         <div className="flex gap-2 text-lg">
                           <AiFillEye
                             onClick={() => {
-                              setViewId(faq?.id);
-                              setShowViewModal(true);
+                              setViewId(faq?.id)
+                              setShowViewModal(true)
                             }}
                             className="text-slate-800 cursor-pointer"
                           />
                         </div>
                       </Table.Cell>
                     </Table.Row>
-                  );
+                  )
                 })}
               </Table.Body>
             </Table>
@@ -151,7 +150,7 @@ const ManageReviewList = ({
         </section>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ManageReviewList;
+export default ManageReviewList

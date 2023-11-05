@@ -1,26 +1,26 @@
-"use client";
+"use client"
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import FormInput from "@/components/Forms/Fields/FormInput";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import FormInput from "@/components/Forms/Fields/FormInput"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
 
-import { Card } from "flowbite-react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import DropDown from "@/components/Forms/Fields/DropDown";
-import { useRouter } from "next/navigation";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
+import { Card } from "flowbite-react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import DropDown from "@/components/Forms/Fields/DropDown"
+import { useRouter } from "next/navigation"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
 const ManageBlogViewPage = () => {
-  const { blogID } = useParams();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const { blogID } = useParams()
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -34,7 +34,7 @@ const ManageBlogViewPage = () => {
       title: "",
       desc: "",
     },
-  });
+  })
 
   const statusList = [
     {
@@ -45,7 +45,7 @@ const ManageBlogViewPage = () => {
       label: "Inactive",
       value: "inactive",
     },
-  ];
+  ]
   useEffect(() => {
     async function fetchData() {
       try {
@@ -54,22 +54,20 @@ const ManageBlogViewPage = () => {
             "Content-Type": "application/json",
             authorization: getLocalStorage("service-website-token"),
           },
-        });
+        })
         if (result?.data?.success) {
-          setData(result?.data?.data);
-          setValue("status", result?.data?.data?.status);
-          setValue("title", result?.data?.data?.title);
-          setValue("desc", result?.data?.data?.desc);
+          setData(result?.data?.data)
+          setValue("status", result?.data?.data?.status)
+          setValue("title", result?.data?.data?.title)
+          setValue("desc", result?.data?.data?.desc)
         } else {
-          toast.error(result?.data?.message);
+          toast.error(result?.data?.message)
         }
-      } catch (err) {
-        console.log("Something went wrong");
-      }
+      } catch (err) {}
     }
 
-    fetchData();
-  }, [blogID]);
+    fetchData()
+  }, [blogID])
 
   return (
     <>
@@ -165,7 +163,7 @@ const ManageBlogViewPage = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ManageBlogViewPage;
+export default ManageBlogViewPage

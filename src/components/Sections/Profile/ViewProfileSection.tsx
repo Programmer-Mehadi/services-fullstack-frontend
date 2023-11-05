@@ -1,15 +1,15 @@
-import React from "react";
+import React from "react"
 
-import Link from "next/link";
-import { Card, Dropdown } from "flowbite-react";
-import { AiFillEdit } from "react-icons/ai";
-import { Avatar } from "flowbite-react";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
+import Link from "next/link"
+import { Card, Dropdown } from "flowbite-react"
+import { AiFillEdit } from "react-icons/ai"
+import { Avatar } from "flowbite-react"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
 const ViewProfileSection = ({ userData = null }: { userData: any }) => {
   return (
     <>
       {userData ? (
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid max-w-[800px] gap-8">
           <Card>
             <div className="flex justify-end px-4 pt-4">
               {userData?.role === "super_admin" && (
@@ -95,7 +95,7 @@ const ViewProfileSection = ({ userData = null }: { userData: any }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ViewProfileSection;
+export default ViewProfileSection

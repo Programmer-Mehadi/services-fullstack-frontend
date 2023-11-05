@@ -1,25 +1,25 @@
-"use client";
+"use client"
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Dropdown, Table} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import toast from "react-hot-toast";
-import {AiFillDelete, AiFillEdit} from "react-icons/ai";
-import {getUserInfo} from "../../../services/auth.services";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Dropdown, Table } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import { AiFillDelete, AiFillEdit } from "react-icons/ai"
+import { getUserInfo } from "../../../services/auth.services"
 const ManageAdminList = ({
   dataList: data,
   reFetch,
   setReFetch,
 }: {
-  dataList: any;
-  reFetch: any;
-  setReFetch: any;
+  dataList: any
+  reFetch: any
+  setReFetch: any
 }) => {
-  const router = useRouter();
-  const userInfo: any = getUserInfo();
+  const router = useRouter()
+  const userInfo: any = getUserInfo()
   const roleChange = async (id: string, value: string) => {
     try {
       const result = await axios.post(
@@ -33,20 +33,20 @@ const ManageAdminList = ({
             authorization: getLocalStorage("service-website-token"),
           },
         }
-      );
-      console.log(result);
+      )
+
       if (result?.data?.statusCode || result?.data?.success) {
-        setReFetch(!reFetch);
-        toast.success(result?.data?.message);
+        setReFetch(!reFetch)
+        toast.success(result?.data?.message)
       } else {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong")
       }
     } catch (err) {
       err?.response?.data?.errorMessages?.forEach((item: any) => {
-        toast.error(item?.message);
-      });
+        toast.error(item?.message)
+      })
     }
-  };
+  }
 
   return (
     <>
@@ -141,14 +141,14 @@ const ManageAdminList = ({
                         >
                           <Dropdown.Item
                             onClick={() => {
-                              roleChange(admin?.id, "admin");
+                              roleChange(admin?.id, "admin")
                             }}
                           >
                             Admin
                           </Dropdown.Item>
                           <Dropdown.Item
                             onClick={() => {
-                              roleChange(admin?.id, "super_admin");
+                              roleChange(admin?.id, "super_admin")
                             }}
                           >
                             Super Admin
@@ -165,11 +165,11 @@ const ManageAdminList = ({
                             if (userInfo?.role === "super_admin") {
                               router.push(
                                 `/dashboard/super-admin/manage-admin/edit/${admin?.id}`
-                              );
+                              )
                             } else {
                               router.push(
                                 `/dashboard/admin/manage-admin/edit/${admin?.id}`
-                              );
+                              )
                             }
                           }}
                           className="cursor-pointer text-blue-600"
@@ -178,14 +178,14 @@ const ManageAdminList = ({
                       </div>
                     </Table.Cell>
                   </Table.Row>
-                );
+                )
               })}
             </Table.Body>
           </Table>
         </section>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ManageAdminList;
+export default ManageAdminList

@@ -65,7 +65,7 @@ const ReviewCreatePage = () => {
           reset();
           router.push("/dashboard/user/manage-review");
         } else {
-          console.log("error");
+          
           setLoading(false);
           toast.error("Something went wrong");
         }

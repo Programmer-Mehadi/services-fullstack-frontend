@@ -65,7 +65,7 @@ const FeedbackCreatePage = () => {
           reset();
           router.push("/dashboard/user/manage-feedback");
         } else {
-          console.log("error");
+          
           setLoading(false);
           toast.error("Something went wrong");
         }
