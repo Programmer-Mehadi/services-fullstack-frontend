@@ -1,27 +1,28 @@
-"use client";
+"use client"
 
-import {Footer} from "flowbite-react";
-import Link from "next/link";
+import { Footer } from "flowbite-react"
+import Image from "next/image"
+import Link from "next/link"
 import {
   BsDribbble,
   BsFacebook,
   BsGithub,
   BsInstagram,
   BsTwitter,
-} from "react-icons/bs";
+} from "react-icons/bs"
 
 export default function FooterSection() {
   return (
-    <Footer container className="mt-10">
+    <Footer container className="mt-10 shadow-none">
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:flex-col lg:flex-row sm:justify-between md:flex md:grid-cols-1 gap-2">
           <div>
-            <Footer.Brand
-              alt="Flowbite Logo"
-              href="https://flowbite.com"
-              name="EleganceInteriors"
-              src="https://flowbite.com/docs/images/logo.svg"
-            />
+            <Link href="/" className="flex gap-2">
+              <Image src="/images/logo.png" alt="logo" width={40} height={40} />{" "}
+              <span className="self-center whitespace-nowrap text-xl md:text-2xl lg:text-4xl font-semibold dark:text-white">
+                EleganceInteriors
+              </span>
+            </Link>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
             <div>
@@ -68,5 +69,5 @@ export default function FooterSection() {
         </div>
       </div>
     </Footer>
-  );
+  )
 }

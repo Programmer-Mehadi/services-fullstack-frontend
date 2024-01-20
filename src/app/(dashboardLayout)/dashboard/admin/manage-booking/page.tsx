@@ -83,6 +83,8 @@ const ManageBookingHomePage = () => {
       })
   }
   function deleteData(id) {
+    toast.error("Delete are pause for now, But the feature already done.")
+    return
     axios
       .delete(`${serverURL}/booking/delete/${id}`, {
         headers: {

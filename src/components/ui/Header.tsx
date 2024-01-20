@@ -1,36 +1,37 @@
-"use client";
+"use client"
 
-import {cartSetLocalStorage, clearCart} from "@/redux/slices/cartSlice";
-import {clearUser, setUser} from "@/redux/slices/userSlice";
-import {getUserInfo, isLoggedIn, logout} from "@/services/auth.services";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Avatar} from "flowbite-react";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import toast from "react-hot-toast";
-import {BsCartFill} from "react-icons/bs";
-import {IoMdLogOut} from "react-icons/io";
-import {useDispatch, useSelector} from "react-redux";
+import { cartSetLocalStorage, clearCart } from "@/redux/slices/cartSlice"
+import { clearUser, setUser } from "@/redux/slices/userSlice"
+import { getUserInfo, isLoggedIn, logout } from "@/services/auth.services"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Avatar } from "flowbite-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { BsCartFill } from "react-icons/bs"
+import { IoMdLogOut } from "react-icons/io"
+import { useDispatch, useSelector } from "react-redux"
 const HeaderSection = () => {
-  const [list, setList] = useState<any>([]);
-  const userInfo = getUserInfo();
-  const isLogIn = isLoggedIn();
-  const token: string = getLocalStorage("service-website-token") || "";
-  const [reFetch, setReFetch] = useState(false);
-  const [profileImg, setProfileImg] = useState<string>("");
-  const dispatch = useDispatch();
+  const [list, setList] = useState<any>([])
+  const userInfo = getUserInfo()
+  const isLogIn = isLoggedIn()
+  const token: string = getLocalStorage("service-website-token") || ""
+  const [reFetch, setReFetch] = useState(false)
+  const [profileImg, setProfileImg] = useState<string>("")
+  const dispatch = useDispatch()
   // dispatch(setUser(userInfo));
 
-  const user = useSelector((state: any) => state.user);
-  const {cart} = useSelector((state: any) => state.cart);
-  const router = useRouter();
+  const user = useSelector((state: any) => state.user)
+  const { cart } = useSelector((state: any) => state.cart)
+  const router = useRouter()
   useEffect(() => {
-    const userInfo = getUserInfo();
-    dispatch(setUser(userInfo));
-  }, []);
+    const userInfo = getUserInfo()
+    dispatch(setUser(userInfo))
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,20 +40,20 @@ const HeaderSection = () => {
           "Content-Type": "application/json",
           authorization: token,
         },
-      });
+      })
       if (userData?.data?.data) {
-        setProfileImg(userData?.data.data?.profileImg);
+        setProfileImg(userData?.data.data?.profileImg)
       } else {
-        setProfileImg("");
-        toast.error(userData?.data?.message);
+        setProfileImg("")
+        toast.error(userData?.data?.message)
       }
-    };
-    if (isLogIn) {
-      fetchData();
-    } else {
-      setProfileImg("");
     }
-  }, [user]);
+    if (isLogIn) {
+      fetchData()
+    } else {
+      setProfileImg("")
+    }
+  }, [user])
 
   useEffect(() => {
     if (!isLogIn) {
@@ -81,7 +82,7 @@ const HeaderSection = () => {
           name: "Login",
           href: "/login",
         },
-      ]);
+      ])
     } else {
       setList([
         {
@@ -111,17 +112,19 @@ const HeaderSection = () => {
         {
           name: "Logout",
         },
-      ]);
+      ])
     }
-  }, [user, reFetch, isLogIn]);
+  }, [user, reFetch, isLogIn])
 
   return (
     <nav className="bg-white dark:bg-gray-900  w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-full flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center">
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8 mr-3"
+          <Image
+            width={50}
+            height={50}
+            src="/images/logo.png"
+            className="h-8 w-8 mr-3"
             alt="Flowbite Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
@@ -154,21 +157,21 @@ const HeaderSection = () => {
                       }`}
                       aria-current="page"
                       onClick={() => {
-                        logout("service-website-token");
-                        router.push("/");
-                        dispatch(clearUser());
-                        setProfileImg("");
-                        dispatch(clearCart());
-                        dispatch(cartSetLocalStorage());
-                        setReFetch(!reFetch);
-                        toast.success("Logout successfully");
+                        logout("service-website-token")
+                        router.push("/")
+                        dispatch(clearUser())
+                        setProfileImg("")
+                        dispatch(clearCart())
+                        dispatch(cartSetLocalStorage())
+                        setReFetch(!reFetch)
+                        toast.success("Logout successfully")
                       }}
                     >
                       <IoMdLogOut /> {item?.name}
                     </p>
                   )}
                 </li>
-              );
+              )
             })}
           </ul>
         </div>
@@ -178,7 +181,7 @@ const HeaderSection = () => {
             onClick={() => {
               document
                 .getElementById("cart-drawer-navigation")
-                ?.classList.toggle("hidden");
+                ?.classList.toggle("hidden")
             }}
           >
             <BsCartFill className="text-slate-800 text-lg" />
@@ -198,7 +201,7 @@ const HeaderSection = () => {
             onClick={() => {
               document
                 .getElementById("navbar-sticky")
-                ?.classList.toggle("hidden");
+                ?.classList.toggle("hidden")
             }}
           >
             <span className="sr-only">Open main menu</span>
@@ -221,7 +224,7 @@ const HeaderSection = () => {
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default HeaderSection;
+export default HeaderSection

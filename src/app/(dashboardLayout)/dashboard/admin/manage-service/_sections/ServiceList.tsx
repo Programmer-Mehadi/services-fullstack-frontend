@@ -1,27 +1,27 @@
-"use client";
+"use client"
 
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {format, parseISO} from "date-fns";
-import {Dropdown, Table} from "flowbite-react";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
-import toast from "react-hot-toast";
-import {AiFillDelete, AiFillEdit} from "react-icons/ai";
-import {BsEyeFill} from "react-icons/bs";
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { format, parseISO } from "date-fns"
+import { Dropdown, Table } from "flowbite-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import { AiFillDelete, AiFillEdit } from "react-icons/ai"
+import { BsEyeFill } from "react-icons/bs"
 
 const ServiceList = ({
   dataList: data,
   reFetch,
   setReFetch,
 }: {
-  dataList: any;
-  reFetch: any;
-  setReFetch: any;
+  dataList: any
+  reFetch: any
+  setReFetch: any
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   async function statusChange(id: any, status: any) {
     try {
@@ -36,34 +36,36 @@ const ServiceList = ({
             authorization: getLocalStorage("service-website-token"),
           },
         }
-      );
+      )
 
       if (result.data?.data) {
-        toast.success(result.data?.message);
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
-      setReFetch(!reFetch);
+      setReFetch(!reFetch)
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
   async function deleteData(id: any) {
+    toast.error("Delete are pause for now, But the feature already done.")
+    return
     try {
       const result = await axios.delete(serverURL + `/service/delete/${id}`, {
         headers: {
           "Content-Type": "application/json",
           authorization: getLocalStorage("service-website-token"),
         },
-      });
+      })
       if (result.data?.data) {
-        toast.success(result.data?.message);
+        toast.success(result.data?.message)
       } else {
-        toast.error(result.data?.message);
+        toast.error(result.data?.message)
       }
-      setReFetch(!reFetch);
+      setReFetch(!reFetch)
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong")
     }
   }
 
@@ -198,14 +200,14 @@ const ServiceList = ({
                             >
                               <Dropdown.Item
                                 onClick={() => {
-                                  statusChange(faq?.id, "Available");
+                                  statusChange(faq?.id, "Available")
                                 }}
                               >
                                 Available
                               </Dropdown.Item>
                               <Dropdown.Item
                                 onClick={() => {
-                                  statusChange(faq?.id, "Not Available");
+                                  statusChange(faq?.id, "Not Available")
                                 }}
                               >
                                 Not Available
@@ -227,20 +229,20 @@ const ServiceList = ({
                               onClick={() => {
                                 router.push(
                                   `/dashboard/admin/manage-service/edit/${faq?.id}`
-                                );
+                                )
                               }}
                               className="cursor-pointer text-blue-600"
                             />
                             <AiFillDelete
                               onClick={() => {
-                                deleteData(faq?.id);
+                                deleteData(faq?.id)
                               }}
                               className=" text-red-700 cursor-pointer"
                             />
                           </div>
                         </Table.Cell>
                       </Table.Row>
-                    );
+                    )
                   })}
                 </Table.Body>
               </Table>
@@ -249,7 +251,7 @@ const ServiceList = ({
         </section>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ServiceList;
+export default ServiceList

@@ -8,11 +8,13 @@ import Newsletter from "./_sections/Newsletter"
 import PricingSection from "./_sections/PricingSection"
 import SurvaySections from "./_sections/SurvaySections"
 import UpcomingService from "./_sections/UpcomingService"
+import ElevateYourInteriors from "@/app/_home/_sections/ElevateYourInteriors"
 
 const HomePage = () => {
   return (
     <section>
       <HeaderSection />
+      <ElevateYourInteriors />
       <AvailableService />
       <UpcomingService />
       <EventsByCategory />

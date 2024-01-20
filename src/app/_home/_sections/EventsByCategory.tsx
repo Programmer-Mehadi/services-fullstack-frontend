@@ -104,7 +104,11 @@ const EventsByCategory = () => {
                 ) : (
                   <>
                     {data?.map((item: any) => (
-                      <ServiceCard key={item?.id} data={item} />
+                      <ServiceCard
+                        key={item?.id}
+                        data={item}
+                        customClassName="w-full max-w-full h-full min-w-full p-0"
+                      />
                     ))}
                   </>
                 )}

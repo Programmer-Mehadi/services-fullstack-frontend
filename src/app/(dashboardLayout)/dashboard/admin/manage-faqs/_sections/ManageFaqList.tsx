@@ -46,6 +46,8 @@ const ManageFaqList = ({
     }
   }
   async function deleteFaq(id: any) {
+    toast.error("Delete are pause for now, But the feature already done.")
+    return
     try {
       const result = await axios.delete(serverURL + `/faq/delete/${id}`, {
         headers: {
