@@ -1,13 +1,13 @@
-import FooterSection from "@/components/ui/FooterSection";
-import AvailableService from "./_sections/AvailableService";
-import CallToActionCard from "./_sections/CallToActionCard";
-import EventsByCategory from "./_sections/EventsByCategory";
-import HeaderSection from "./_sections/HeaderSection";
-import LatestBlog from "./_sections/LatestBlog";
-import Newsletter from "./_sections/Newsletter";
-import PricingSection from "./_sections/PricingSection";
-import SurvaySections from "./_sections/SurvaySections";
-import UpcomingService from "./_sections/UpcomingService";
+import FooterSection from "@/components/ui/FooterSection"
+import AvailableService from "./_sections/AvailableService"
+import CallToActionCard from "./_sections/CallToActionCard"
+import EventsByCategory from "./_sections/EventsByCategory"
+import HeaderSection from "./_sections/HeaderSection"
+import LatestBlog from "./_sections/LatestBlog"
+import Newsletter from "./_sections/Newsletter"
+import PricingSection from "./_sections/PricingSection"
+import SurvaySections from "./_sections/SurvaySections"
+import UpcomingService from "./_sections/UpcomingService"
 
 const HomePage = () => {
   return (
@@ -24,7 +24,7 @@ const HomePage = () => {
 
       <FooterSection />
     </section>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

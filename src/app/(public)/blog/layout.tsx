@@ -1,17 +1,11 @@
-import FooterSection from "@/components/ui/FooterSection"
 import React from "react"
 
 import { Metadata } from "next"
 export const metadata: Metadata = {
-  title: "Services - EleganceInteriors",
+  title: "Blog - EleganceInteriors",
 }
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div>
-      {children}
-      <FooterSection />
-    </div>
-  )
+  return <div>{children}</div>
 }
 
 export default PublicLayout

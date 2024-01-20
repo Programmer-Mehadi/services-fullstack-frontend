@@ -1,22 +1,23 @@
-"use client";
+"use client"
 
-import Sidebar from "@/components/ui/Sidebar";
-import {getUserInfo, isLoggedIn} from "@/services/auth.services";
-import {useRouter} from "next/navigation";
-import {useEffect} from "react";
+import Sidebar from "@/components/ui/Sidebar"
+import { getUserInfo, isLoggedIn } from "@/services/auth.services"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
-const DashboardLayout = ({children}: {children: React.ReactNode}) => {
-  const isLogIn = isLoggedIn();
-  const router = useRouter();
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const isLogIn = isLoggedIn()
+  const router = useRouter()
+
   useEffect(() => {
     if (!isLogIn) {
-      router.push("/login");
+      router.push("/login")
     }
-    const userInfo: any = getUserInfo();
+    const userInfo: any = getUserInfo()
     if (!userInfo?.role) {
-      router.push("/login");
+      router.push("/login")
     }
-  }, []);
+  }, [])
   return (
     <section
       className="flex max-w-[100vw] w-full"
@@ -29,7 +30,7 @@ const DashboardLayout = ({children}: {children: React.ReactNode}) => {
         {children}
       </section>
     </section>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout
