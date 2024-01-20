@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Button, Modal } from "flowbite-react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { IoMdAdd } from "react-icons/io";
-import { AiOutlineClose } from "react-icons/ai";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Button, Modal } from "flowbite-react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { IoMdAdd } from "react-icons/io"
+import { AiOutlineClose } from "react-icons/ai"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
 export default function AddCategoryModal({
   isOpen = false,
   setOpenModal,
@@ -18,11 +18,11 @@ export default function AddCategoryModal({
   reFetch,
   setReFetch,
 }: {
-  isOpen?: boolean | string;
-  setOpenModal?: any;
-  props?: any;
-  reFetch?: boolean;
-  setReFetch?: any;
+  isOpen?: boolean | string
+  setOpenModal?: any
+  props?: any
+  reFetch?: boolean
+  setReFetch?: any
 }) {
   const {
     setValue,
@@ -31,32 +31,56 @@ export default function AddCategoryModal({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
   async function formSubmit(data: any) {
     try {
-      const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("image", data.image[0]);
+      const formData = new FormData()
+      formData.append("title", data.title)
+
+     
+
+      // image upload start
+      const newFormData = new FormData()
+      newFormData.append("image", data.image[0])
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        newFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          params: {
+            key: "b548eace19391a615e67a68939963e4c",
+          },
+        }
+      )
+
+      formData.append(
+        "image",
+        response?.data?.data?.url ? response?.data?.data?.url : ""
+      )
+      // image upload end
+
       const result = await axios.post(serverURL + "/category", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           authorization: getLocalStorage("service-website-token"),
         },
-      });
+      })
 
       if (result?.data?.success) {
-        toast.success(result?.data?.message);
-        reset();
-        setOpenModal(false);
-        setReFetch(!reFetch);
+        toast.success(result?.data?.message)
+        reset()
+        setOpenModal(false)
+        setReFetch(!reFetch)
       } else {
-        toast.error(result?.data?.message);
+        toast.error(result?.data?.message)
       }
     } catch (err) {
       err?.response?.data?.errorMessages?.forEach((element: any) => {
-        toast.error(element?.message);
-      });
+        toast.error(element?.message)
+      })
     }
   }
 
@@ -104,5 +128,5 @@ export default function AddCategoryModal({
         </form>
       </Modal>
     </>
-  );
+  )
 }

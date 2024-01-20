@@ -1,42 +1,42 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import {serverURL} from "@/utils/serverUrl";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
+import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import { serverURL } from "@/utils/serverUrl"
 
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SpinLoader from "@/components/ui/Loader/SpinLoader";
-import {getUserInfo} from "@/services/auth.services";
-import {getLocalStorage} from "@/utils/local-storage";
-import axios from "axios";
-import {Card} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SpinLoader from "@/components/ui/Loader/SpinLoader"
+import { getUserInfo } from "@/services/auth.services"
+import { getLocalStorage } from "@/utils/local-storage"
+import axios from "axios"
+import { Card } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 
 const EditProfileSection = ({
   userData,
   reFetch,
   setReFetch,
 }: {
-  userData: any;
-  reFetch: any;
-  setReFetch: any;
+  userData: any
+  reFetch: any
+  setReFetch: any
 }) => {
-  const router = useRouter();
-  const userInfo: any = getUserInfo();
+  const router = useRouter()
+  const userInfo: any = getUserInfo()
 
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState<string | null>("");
+  const [loading, setLoading] = useState(false)
+  const [token, setToken] = useState<string | null>("")
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     watch,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
     defaultValues: {
       name: userData?.name,
@@ -48,39 +48,54 @@ const EditProfileSection = ({
       id: userData?.id,
       role: userData?.role,
     },
-  });
+  })
 
   useEffect(() => {
-    setValue("name", userData?.name);
-    setValue("email", userData?.email);
-    setValue("password", userData?.password);
-    setValue("contactNo", userData?.contactNo);
-    setValue("address", userData?.address);
-    setValue("profileImg", userData?.profileImg);
-    setValue("id", userData?.id);
-    setValue("role", userData?.role);
-    setToken(getLocalStorage("service-website-token"));
-  }, [userData]);
+    setValue("name", userData?.name)
+    setValue("email", userData?.email)
+    setValue("password", userData?.password)
+    setValue("contactNo", userData?.contactNo)
+    setValue("address", userData?.address)
+    setValue("profileImg", userData?.profileImg)
+    setValue("id", userData?.id)
+    setValue("role", userData?.role)
+    setToken(getLocalStorage("service-website-token"))
+  }, [userData])
 
   const formSubmit = async (data: any) => {
-    setLoading(false);
+    setLoading(false)
 
     // return;
-    delete data.id;
-    delete data.role;
+    delete data.id
+    delete data.role
 
-    const formData = new FormData();
+    const formData = new FormData()
     if (typeof data.profileImg !== "string") {
       if (data.profileImg?.length !== 0) {
-        formData.append("profileImg", data.profileImg[0]);
+        const newFormData = new FormData()
+        newFormData.append("image", data.profileImg[0])
+        const response = await axios.post(
+          "https://api.imgbb.com/1/upload",
+          newFormData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            params: {
+              key: "3c773401815d2547d657ce6e072e797a",
+            },
+          }
+        )
+
+        formData.append("profileImg", response?.data?.data?.url)
       }
     }
 
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("contactNo", data.contactNo);
-    formData.append("address", data.address);
+    formData.append("name", data.name)
+    formData.append("email", data.email)
+    formData.append("password", data.password)
+    formData.append("contactNo", data.contactNo)
+    formData.append("address", data.address)
 
     const result = await axios.post(
       serverURL + "/profile/edit-info",
@@ -91,24 +106,24 @@ const EditProfileSection = ({
           authorization: token,
         },
       }
-    );
+    )
     if (result?.data?.statusCode || result?.data?.success) {
-      setLoading(true);
-      setReFetch(!reFetch);
-      toast.success(result?.data?.message);
-      reset();
+      setLoading(true)
+      setReFetch(!reFetch)
+      toast.success(result?.data?.message)
+      reset()
       if (userInfo?.role === "super_admin") {
-        router.push("/dashboard/super-admin/profile");
+        router.push("/dashboard/super-admin/profile")
       } else if (userInfo?.role === "admin") {
-        router.push("/dashboard/admin/profile");
+        router.push("/dashboard/admin/profile")
       } else if (userInfo?.role === "user") {
-        router.push("/dashboard/user/profile");
+        router.push("/dashboard/user/profile")
       }
     } else {
-      setLoading(false);
-      toast.error("Something went wrong");
+      setLoading(false)
+      toast.error("Something went wrong")
     }
-  };
+  }
 
   return (
     <>
@@ -228,7 +243,7 @@ const EditProfileSection = ({
                     <InputLabel title="Profile Image" style={{}} />
                     <UploadImage
                       name="profileImg"
-                      style={{width: "100%"}}
+                      style={{ width: "100%" }}
                       isRequired="false"
                       register={register}
                       errors={errors}
@@ -250,7 +265,7 @@ const EditProfileSection = ({
                     />
                     <img
                       src={userData?.profileImg}
-                      style={{width: "50%"}}
+                      style={{ width: "50%" }}
                       alt=""
                     />
                   </div>
@@ -271,7 +286,7 @@ const EditProfileSection = ({
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default EditProfileSection;
+export default EditProfileSection

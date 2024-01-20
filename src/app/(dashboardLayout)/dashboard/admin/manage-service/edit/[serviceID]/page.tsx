@@ -197,7 +197,6 @@ const EditServicePage = () => {
 
     const formData = new FormData()
     formData.append("features", data.features)
-    formData.append("image", data.image[0])
     formData.append("title", data.title)
     formData.append("categoryId", data.categoryID)
     formData.append("price", data.price)
@@ -206,6 +205,26 @@ const EditServicePage = () => {
     formData.append("location", data.location)
     formData.append("upcoming", upcoming)
     try {
+      // image upload start
+      const newFormData = new FormData()
+      newFormData.append("image", data.image[0])
+   
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        newFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          params: {
+            key: "b548eace19391a615e67a68939963e4c",
+          },
+        }
+      )
+
+      formData.append("image", response?.data?.data?.url)
+      // image upload end
+
       const result = await axios.put(
         serverURL + `/service/update/${param.serviceID}`,
         formData,
@@ -224,6 +243,7 @@ const EditServicePage = () => {
         toast.success(result?.data?.message)
       }
     } catch (err) {
+      console.log("Error:", err)
       toast(err?.response?.data?.message)
     }
   }

@@ -43,7 +43,7 @@ const ManageAdminAddPage = () => {
   const formSubmit = async (data: any) => {
     setLoading(true)
     const formData = new FormData()
-    formData.append("profileImg", data.profileImg[0])
+
     formData.append("name", data.name)
     formData.append("email", data.email)
     formData.append("password", data.password)
@@ -52,6 +52,26 @@ const ManageAdminAddPage = () => {
     formData.append("role", data.role)
 
     try {
+      // image upload start
+      const newFormData = new FormData()
+      newFormData.append("image", data.profileImg[0])
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        newFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          params: {
+            key: "b548eace19391a615e67a68939963e4c",
+          },
+        }
+      )
+
+      formData.append("profileImg", response?.data?.data?.url || "")
+
+      // image upload end
+
       const result = await axios.post(
         serverURL + "/user/create-admin",
         formData,

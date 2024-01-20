@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import { getLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Button, Modal } from "flowbite-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { IoMdAdd } from "react-icons/io";
-import { AiOutlineClose } from "react-icons/ai";
-import UploadImage from "@/components/Forms/Fields/UploadImage";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Button, Modal } from "flowbite-react"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import { IoMdAdd } from "react-icons/io"
+import { AiOutlineClose } from "react-icons/ai"
+import UploadImage from "@/components/Forms/Fields/UploadImage"
 
 export default function EditCategoryModal({
   isOpen = false,
@@ -21,12 +21,12 @@ export default function EditCategoryModal({
   setReFetch,
   editId = "",
 }: {
-  isOpen?: boolean | string;
-  setOpenModal?: any;
-  props?: any;
-  reFetch?: boolean;
-  setReFetch?: any;
-  editId?: string;
+  isOpen?: boolean | string
+  setOpenModal?: any
+  props?: any
+  reFetch?: boolean
+  setReFetch?: any
+  editId?: string
 }) {
   const {
     setValue,
@@ -40,8 +40,8 @@ export default function EditCategoryModal({
       title: "",
       image: "",
     },
-  });
-  const [preData, setPreData] = useState(null);
+  })
+  const [preData, setPreData] = useState(null)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -50,31 +50,53 @@ export default function EditCategoryModal({
             "Content-Type": "application/json",
             authorization: getLocalStorage("service-website-token"),
           },
-        });
+        })
         if (result?.data?.success) {
-          setValue("title", result?.data?.data?.title);
-          setValue("image", result?.data?.data?.image);
-          setPreData(result?.data?.data);
+          setValue("title", result?.data?.data?.title)
+          setValue("image", result?.data?.data?.image)
+          setPreData(result?.data?.data)
         } else {
-          toast.error(result?.data?.message);
-          setOpenModal(false);
+          toast.error(result?.data?.message)
+          setOpenModal(false)
         }
       } catch (err) {
-        toast.error("Something went wrong");
-        setOpenModal(false);
+        toast.error("Something went wrong")
+        setOpenModal(false)
       }
     }
 
     if (editId) {
-      fetchData();
+      fetchData()
     }
-  }, [editId]);
+  }, [editId])
 
   async function formSubmit(data: any) {
     try {
-      const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("image", data.image[0]);
+      const formData = new FormData()
+      formData.append("title", data.title)
+      // image upload start
+ 
+      if (data.image.length === 0) {
+        // formData.append("image", data.image[0])
+      } else {
+        const newFormData = new FormData()
+        newFormData.append("image", data.image[0])
+        const response = await axios.post(
+          "https://api.imgbb.com/1/upload",
+          newFormData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            params: {
+              key: "b548eace19391a615e67a68939963e4c",
+            },
+          }
+        )
+
+        formData.append("image", response?.data?.data?.url)
+      }
+      // image upload end
       const result = await axios.put(
         serverURL + "/category/update/" + editId,
         formData,
@@ -84,20 +106,20 @@ export default function EditCategoryModal({
             authorization: getLocalStorage("service-website-token"),
           },
         }
-      );
+      )
 
       if (result?.data?.success) {
-        toast.success(result?.data?.message);
-        reset();
-        setOpenModal(false);
-        setReFetch(!reFetch);
+        toast.success(result?.data?.message)
+        reset()
+        setOpenModal(false)
+        setReFetch(!reFetch)
       } else {
-        toast.error(result?.data?.message);
+        toast.error(result?.data?.message)
       }
     } catch (err) {
       err?.response?.data?.errorMessages?.forEach((element: any) => {
-        toast.error(element?.message);
-      });
+        toast.error(element?.message)
+      })
     }
   }
 
@@ -151,5 +173,5 @@ export default function EditCategoryModal({
         </form>
       </Modal>
     </>
-  );
+  )
 }

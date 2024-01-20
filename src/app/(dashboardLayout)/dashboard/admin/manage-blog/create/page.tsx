@@ -42,7 +42,27 @@ const BlogCreatePage = () => {
     formData.append("title", data.title)
     formData.append("desc", data.desc)
     formData.append("status", data.status)
-    formData.append("image", data.image[0])
+    // image upload start
+    const newFormData = new FormData()
+    newFormData.append("image", data.image[0])
+    const response = await axios.post(
+      "https://api.imgbb.com/1/upload",
+      newFormData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        params: {
+          key: "b548eace19391a615e67a68939963e4c",
+        },
+      }
+    )
+
+    formData.append(
+      "image",
+      response?.data?.data?.url ? response?.data?.data?.url : ""
+    )
+    // image upload end
     axios
       .post(serverURL + "/blog", formData, {
         headers: {

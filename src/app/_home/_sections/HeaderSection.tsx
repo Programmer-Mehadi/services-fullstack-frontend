@@ -5,7 +5,7 @@ import { Carousel } from "flowbite-react"
 export default function HeaderSection() {
   return (
     <Carousel
-      className="h-[250px] md:h-[400px] lg:h-[500px] rounded-none"
+      className="home_carousel_section h-[250px] md:h-[400px] lg:h-[500px] rounded-none"
       slideInterval={5000}
     >
       <div

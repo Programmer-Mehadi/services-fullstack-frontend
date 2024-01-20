@@ -38,7 +38,6 @@ const RegisterPage = () => {
     setLoading(true)
     data.role = "user"
     const formData = new FormData()
-    formData.append("profileImg", data.profileImg[0])
     formData.append("name", data.name)
     formData.append("email", data.email)
     formData.append("password", data.password)
@@ -46,7 +45,25 @@ const RegisterPage = () => {
     formData.append("contactNo", data.contactNo)
     formData.append("address", data.address)
 
+    const newFormData = new FormData()
+    newFormData.append("image", data.profileImg[0])
+
     try {
+      const response = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        newFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          params: {
+            key: "3c773401815d2547d657ce6e072e797a",
+          },
+        }
+      )
+
+      formData.append("profileImg", response?.data?.data?.url)
+
       const result = await axios.post(
         serverURL + "/user/user-register",
         formData,
@@ -67,6 +84,7 @@ const RegisterPage = () => {
       }
     } catch (err) {
       setLoading(false)
+      console.log(err)
       toast.error("Something went wrong")
     }
   }
