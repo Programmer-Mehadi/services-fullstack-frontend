@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import {Card} from "flowbite-react";
-import TeamMemberCard from "./_sections/TeamMemberCard";
+import { Card } from "flowbite-react"
+import TeamMemberCard from "./_sections/TeamMemberCard"
 
 const ContactPage = () => {
   const teamMembers = [
@@ -9,7 +9,7 @@ const ContactPage = () => {
       name: "Muhammad Mehadi",
       role: "CEO",
       imageUrl:
-        "https://media.licdn.com/dms/image/D5603AQGYCH9IQBBljw/profile-displayphoto-shrink_200_200/0/1695850907991?e=1702512000&v=beta&t=JUvO7gX3qRTonLX-VFFBhnw53yujPnR8m6J34ZS8rGU",
+        "https://md-mehadi.netlify.app/static/media/Md%20Zahirul%20Islam%20Mehadi%20image%20full%20hd.c6517ae49558ebe39ba2.png",
     },
     {
       name: "Sakib Al Hassan",
@@ -39,62 +39,89 @@ const ContactPage = () => {
       imageUrl:
         "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/316500/316529.png",
     },
-  ];
+  ]
   return (
     <div>
       <div className="container mx-auto p-4">
         {/* form */}
-        <div className="container mx-auto py-4">
+        <div className="container mx-auto py-14">
           <h2 className="text-4xl font-bold mb-8">Contact Us</h2>
-          <Card>
-            <form onClick={(e) => e.preventDefault()}>
-              <div className="mb-4">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="mt-1 p-2 block w-full border rounded-md"
-                />
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card>
+              <form onClick={(e) => e.preventDefault()}>
+                <div className="mb-4">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className="mt-1 p-2 block w-full border rounded-md"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="mt-1 p-2 block w-full border rounded-md"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    className="mt-1 p-2 block w-full border rounded-md"
+                  ></textarea>
+                </div>
+                <p className="text-red-500 font-bold mb-4">
+                  The form doesn't work.*
+                </p>
+                <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                  Submit
+                </button>
+              </form>
+            </Card>
+            {/* details */}
+            <Card className="h-fit">
+              <div className="grid lg:grid-cols-2 gap-8">
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">
+                    Company Details
+                  </h2>
+                  <p>Elegance Interiors</p>
+                  <p>Address: 123 Main St, City, Country</p>
+                  <p>Phone: +1 (123) 456-7890</p>
+                  <p>Email: info@company.com</p>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">Our Locations</h2>
+                  <ul>
+                    <li>Location 1: 456 Branch Ave, City1</li>
+                    <li>Location 2: 789 Street Rd, City2</li>
+                    {/* Add more locations as needed */}
+                  </ul>
+                </div>
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="mt-1 p-2 block w-full border rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  className="mt-1 p-2 block w-full border rounded-md"
-                ></textarea>
-              </div>
-              <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-                Submit
-              </button>
-            </form>
-          </Card>
+            </Card>
+          </div>
         </div>
         {/* out team */}
         <div className="container mx-auto py-14">
@@ -105,29 +132,9 @@ const ContactPage = () => {
             ))}
           </div>
         </div>
-        {/* details */}
-        <Card>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Company Details</h2>
-              <p>Company Name</p>
-              <p>Address: 123 Main St, City, Country</p>
-              <p>Phone: +1 (123) 456-7890</p>
-              <p>Email: info@company.com</p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Our Locations</h2>
-              <ul>
-                <li>Location 1: 456 Branch Ave, City1</li>
-                <li>Location 2: 789 Street Rd, City2</li>
-                {/* Add more locations as needed */}
-              </ul>
-            </div>
-          </div>
-        </Card>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ContactPage;
+export default ContactPage
