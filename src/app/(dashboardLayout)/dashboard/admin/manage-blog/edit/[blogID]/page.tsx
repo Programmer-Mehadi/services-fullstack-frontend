@@ -2,7 +2,7 @@
 
 import FormInput from "@/components/Forms/Fields/FormInput"
 import InputLabel from "@/components/Forms/Labels/InputLabel"
-import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import SubmitButton from "@/components/ui/Buttons/OnCLickButton"
 import SpinLoader from "@/components/ui/Loader/SpinLoader"
 import { getLocalStorage } from "@/utils/local-storage"
 import { serverURL } from "@/utils/serverUrl"

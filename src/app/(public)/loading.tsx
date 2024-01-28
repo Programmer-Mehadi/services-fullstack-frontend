@@ -1,4 +1,5 @@
 import SpinLoader from "@/components/ui/Loader/SpinLoader"
+
 import { Metadata } from "next"
 export const metadata: Metadata = {
   title: "EleganceInteriors",

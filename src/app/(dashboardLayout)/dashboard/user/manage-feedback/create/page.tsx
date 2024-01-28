@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import { getLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import { serverURL } from "@/utils/serverUrl";
-import axios from "axios";
-import { Card, Rating, Select } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import DropDown from "@/components/Forms/Fields/DropDown";
-import { useRouter } from "next/navigation";
-import { BiHappyBeaming, BiSad } from "react-icons/bi";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/OnCLickButton"
+import { getLocalStorage, setLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Card, Rating, Select } from "flowbite-react"
+import React, { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
+import DropDown from "@/components/Forms/Fields/DropDown"
+import { useRouter } from "next/navigation"
+import { BiHappyBeaming, BiSad } from "react-icons/bi"
 const FeedbackCreatePage = () => {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -23,34 +23,34 @@ const FeedbackCreatePage = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
-  const [serviceList, setServiceList] = useState<null | []>(null);
-  const [experience, setExperience] = useState(1);
+  const [serviceList, setServiceList] = useState<null | []>(null)
+  const [experience, setExperience] = useState(1)
   useEffect(() => {
     async function fetchData() {
       try {
-        const token: string = getLocalStorage("service-website-token") || "";
+        const token: string = getLocalStorage("service-website-token") || ""
         const result = await axios.get(serverURL + "/service/get-all-list", {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
           },
-        });
+        })
         if (result?.data?.success) {
-          setServiceList(result?.data?.data);
+          setServiceList(result?.data?.data)
         }
       } catch (err) {
-        setServiceList([]);
-        toast.error("Something went wrong");
+        setServiceList([])
+        toast.error("Something went wrong")
       }
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const formSubmit = async (data: any) => {
-    setLoading(true);
-    data.experience = experience;
+    setLoading(true)
+    data.experience = experience
     axios
       .post(serverURL + "/feedback", data, {
         headers: {
@@ -60,23 +60,22 @@ const FeedbackCreatePage = () => {
       })
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(false);
-          toast.success(result?.data?.message);
-          reset();
-          router.push("/dashboard/user/manage-feedback");
+          setLoading(false)
+          toast.success(result?.data?.message)
+          reset()
+          router.push("/dashboard/user/manage-feedback")
         } else {
-          
-          setLoading(false);
-          toast.error("Something went wrong");
+          setLoading(false)
+          toast.error("Something went wrong")
         }
       })
       .catch((err) => {
         err?.response?.data?.errorMessages.forEach((element: any) => {
-          element?.message && toast.error(element?.message);
-        });
-        setLoading(false);
-      });
-  };
+          element?.message && toast.error(element?.message)
+        })
+        setLoading(false)
+      })
+  }
 
   return (
     <div className="lg:py-14">
@@ -157,7 +156,7 @@ const FeedbackCreatePage = () => {
         </form>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default FeedbackCreatePage;
+export default FeedbackCreatePage

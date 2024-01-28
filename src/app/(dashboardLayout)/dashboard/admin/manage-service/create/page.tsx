@@ -3,7 +3,7 @@
 import FormInput from "@/components/Forms/Fields/FormInput"
 import UploadImage from "@/components/Forms/Fields/UploadImage"
 import InputLabel from "@/components/Forms/Labels/InputLabel"
-import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import SubmitButton from "@/components/ui/Buttons/OnCLickButton"
 import { getLocalStorage } from "@/utils/local-storage"
 import { serverURL } from "@/utils/serverUrl"
 import axios from "axios"
@@ -153,7 +153,7 @@ const CreateServicePage = () => {
       // image upload start
       const newFormData = new FormData()
       newFormData.append("image", data.image[0])
- 
+
       const response = await axios.post(
         "https://api.imgbb.com/1/upload",
         newFormData,

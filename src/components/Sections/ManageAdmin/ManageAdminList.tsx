@@ -21,6 +21,10 @@ const ManageAdminList = ({
   const router = useRouter()
   const userInfo: any = getUserInfo()
   const roleChange = async (id: string, value: string) => {
+    toast.error(
+      "The role change functionality is not available yet, But the functionality is done in the backend"
+    )
+    return
     try {
       const result = await axios.post(
         `${serverURL}/user/role-change/${id}`,

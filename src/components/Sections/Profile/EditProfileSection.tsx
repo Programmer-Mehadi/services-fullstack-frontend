@@ -2,7 +2,7 @@
 
 import FormInput from "@/components/Forms/Fields/FormInput"
 import UploadImage from "@/components/Forms/Fields/UploadImage"
-import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import SubmitButton from "@/components/ui/Buttons/OnCLickButton"
 import { serverURL } from "@/utils/serverUrl"
 
 import InputLabel from "@/components/Forms/Labels/InputLabel"

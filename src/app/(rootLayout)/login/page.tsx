@@ -17,10 +17,18 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useDispatch } from "react-redux"
+import OnCLickButton from "@/components/ui/Buttons/OnCLickButton"
 const LoginPage = () => {
   const router = useRouter()
   const [isLogIn, setIsLogIn] = useState<boolean | null>(null)
-
+  const [superAdminLoginCredentials, setSuperAdminLoginCredentials] = useState({
+    email: "super.admin@gmail.com",
+    password: "123456",
+  })
+  const [adminLoginCredentials, setAdminLoginCredentials] = useState({
+    email: "admin@gmail.com",
+    password: "123456",
+  })
   useEffect(() => {
     setIsLogIn(isLoggedIn())
     if (isLogIn) {
@@ -151,19 +159,55 @@ const LoginPage = () => {
                 register={register}
                 errors={errors}
               />
+              <span className="text-sm text-red-500">
+                Password is visible only for demo***
+              </span>
             </div>
 
-            <SubmitButton
-              title="Login"
-              style={{
-                width: "fit-content",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-              }}
-              className="text-center flex justify-center px-3"
-              disabled={loading}
-            />
+            <div className="flex items-center gap-6 flex-wrap">
+              <SubmitButton
+                title="Login"
+                style={{
+                  width: "fit-content",
+                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                className="text-center flex justify-center px-3"
+                disabled={loading}
+              />
+              <OnCLickButton
+                title="Super Admin Login"
+                style={{
+                  width: "fit-content",
+                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                className="text-center flex justify-center px-3 bg-cyan-700"
+                onClickFnc={() => {
+                  if (loading) return
+                  setValue("email", superAdminLoginCredentials.email)
+                  setValue("password", superAdminLoginCredentials.password)
+                }}
+              />
+              <OnCLickButton
+                onClickFnc={() => {
+                  if (loading) return
+                  setValue("email", adminLoginCredentials.email)
+                  setValue("password", adminLoginCredentials.password)
+                }}
+                title="Admin Login"
+                style={{
+                  width: "fit-content",
+                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                className="text-center flex justify-center px-3 bg-green-800"
+              />
+            </div>
+
             <div>
               <p className="text-sm">
                 Haven{"'"}t an account?{" "}

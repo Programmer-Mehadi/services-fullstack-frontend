@@ -8,7 +8,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import FormInput from "@/components/Forms/Fields/FormInput"
 import InputLabel from "@/components/Forms/Labels/InputLabel"
-import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import SubmitButton from "@/components/ui/Buttons/OnCLickButton"
 
 import { Card } from "flowbite-react"
 import { useForm } from "react-hook-form"

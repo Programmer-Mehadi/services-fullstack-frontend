@@ -1,56 +1,56 @@
-"use client";
+"use client"
 
-import FormInput from "@/components/Forms/Fields/FormInput";
-import InputLabel from "@/components/Forms/Labels/InputLabel";
-import SubmitButton from "@/components/ui/Buttons/SubmitButton";
-import {getLocalStorage} from "@/utils/local-storage";
-import {serverURL} from "@/utils/serverUrl";
-import axios from "axios";
-import {Card, Rating, Select} from "flowbite-react";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
+import FormInput from "@/components/Forms/Fields/FormInput"
+import InputLabel from "@/components/Forms/Labels/InputLabel"
+import SubmitButton from "@/components/ui/Buttons/OnCLickButton"
+import { getLocalStorage } from "@/utils/local-storage"
+import { serverURL } from "@/utils/serverUrl"
+import axios from "axios"
+import { Card, Rating, Select } from "flowbite-react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 const ReviewCreatePage = () => {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     watch,
-    formState: {errors},
-  } = useForm();
+    formState: { errors },
+  } = useForm()
 
-  const [serviceList, setServiceList] = useState<null | []>(null);
-  const [selectedService, setSelectedService] = useState<{} | any>({});
-  const [rating, setRating] = useState(0);
+  const [serviceList, setServiceList] = useState<null | []>(null)
+  const [selectedService, setSelectedService] = useState<{} | any>({})
+  const [rating, setRating] = useState(0)
   useEffect(() => {
     async function fetchData() {
       try {
-        const token: string = getLocalStorage("service-website-token") || "";
+        const token: string = getLocalStorage("service-website-token") || ""
         const result = await axios.get(serverURL + "/booking/get-all", {
           headers: {
             "Content-Type": "application/json",
             authorization: token,
           },
-        });
+        })
         if (result?.data?.success) {
-          setServiceList(result?.data?.data);
+          setServiceList(result?.data?.data)
         }
       } catch (err) {
-        setServiceList([]);
-        toast.error("Something went wrong");
+        setServiceList([])
+        toast.error("Something went wrong")
       }
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const formSubmit = async (data: any) => {
-    setLoading(true);
-    data.rating = rating;
-    data.serviceId = selectedService?.id;
+    setLoading(true)
+    data.rating = rating
+    data.serviceId = selectedService?.id
     axios
       .post(serverURL + "/review", data, {
         headers: {
@@ -60,23 +60,22 @@ const ReviewCreatePage = () => {
       })
       .then((result) => {
         if (result?.data?.statusCode || result?.data?.success) {
-          setLoading(true);
-          toast.success(result?.data?.message);
-          reset();
-          router.push("/dashboard/user/manage-review");
+          setLoading(true)
+          toast.success(result?.data?.message)
+          reset()
+          router.push("/dashboard/user/manage-review")
         } else {
-          
-          setLoading(false);
-          toast.error("Something went wrong");
+          setLoading(false)
+          toast.error("Something went wrong")
         }
       })
       .catch((err) => {
         err?.response?.data?.errorMessages.forEach((element: any) => {
-          element?.message && toast.error(element?.message);
-        });
-        setLoading(false);
-      });
-  };
+          element?.message && toast.error(element?.message)
+        })
+        setLoading(false)
+      })
+  }
 
   return (
     <div className="lg:py-14">
@@ -94,7 +93,7 @@ const ReviewCreatePage = () => {
             <InputLabel title="Service Name" />
             <Select
               id="service"
-              {...register("serviceId", {required: true})}
+              {...register("serviceId", { required: true })}
               defaultValue={selectedService?.id}
               style={{
                 maxHeight: "200px",
@@ -141,34 +140,34 @@ const ReviewCreatePage = () => {
                 <Rating.Star
                   onClick={() => {
                     if (rating === 1) {
-                      setRating(0);
-                      return;
+                      setRating(0)
+                      return
                     }
-                    setRating(1);
+                    setRating(1)
                   }}
                   filled={rating >= 1 ? true : false}
                 />
                 <Rating.Star
                   onClick={() => {
-                    setRating(2);
+                    setRating(2)
                   }}
                   filled={rating >= 2 ? true : false}
                 />
                 <Rating.Star
                   onClick={() => {
-                    setRating(3);
+                    setRating(3)
                   }}
                   filled={rating >= 3 ? true : false}
                 />
                 <Rating.Star
                   onClick={() => {
-                    setRating(4);
+                    setRating(4)
                   }}
                   filled={rating >= 4 ? true : false}
                 />
                 <Rating.Star
                   onClick={() => {
-                    setRating(5);
+                    setRating(5)
                   }}
                   filled={rating >= 5 ? true : false}
                 />
@@ -187,7 +186,7 @@ const ReviewCreatePage = () => {
         </form>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default ReviewCreatePage;
+export default ReviewCreatePage

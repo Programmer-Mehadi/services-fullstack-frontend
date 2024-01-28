@@ -3,7 +3,7 @@
 import FormInput from "@/components/Forms/Fields/FormInput"
 import UploadImage from "@/components/Forms/Fields/UploadImage"
 import InputLabel from "@/components/Forms/Labels/InputLabel"
-import SubmitButton from "@/components/ui/Buttons/SubmitButton"
+import SubmitButton from "@/components/ui/Buttons/OnCLickButton"
 import SpinLoader from "@/components/ui/Loader/SpinLoader"
 import { isLoggedIn } from "@/services/auth.services"
 import { serverURL } from "@/utils/serverUrl"
@@ -185,6 +185,9 @@ const RegisterPage = () => {
                 register={register}
                 errors={errors}
               />
+              <span className="text-sm text-red-500">
+                Password is visible only for demo***
+              </span>
             </div>
             <div>
               <InputLabel title="Contact Number" style={{}} />
